@@ -51,9 +51,13 @@ void Robot::run(MessageQueue * messageQueue)
     Message msg = _messageQueue->pop();
     while (msg.getType() != Message::ABORT)
     {
-        //std::cout << "_";
         if (msg.getType() == Message::EMPTY)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            if (!_messageQueue->empty())
+                msg = _messageQueue->pop();
             continue;
+        }
 
         std::cout << msg.getId() << " : ";
         for (auto & s : msg.getParameters())
@@ -69,6 +73,8 @@ void Robot::run(MessageQueue * messageQueue)
     for (auto & s : msg.getParameters())
         std::cout << s << " ";
     std::cout << "\n";
+    
+    return;
 
     _ledControl.on(LedControl::RED_ALL);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -77,13 +83,13 @@ void Robot::run(MessageQueue * messageQueue)
     _ledControl.on(LedControl::RED_ALL, 100);
     _ledControl.on(LedControl::GREEN_ALL, 250);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
-     _ledControl.off(LedControl::RED_ALL);
+    _ledControl.off(LedControl::RED_ALL);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     _ledControl.onExclusive(LedControl::RED_ALL);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     _ledControl.onExclusive(LedControl::GREEN_ALL);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    
+
     _ledControl.off(LedControl::ALL);
     _ledControl.flash(200, 5, 50);
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
@@ -91,7 +97,7 @@ void Robot::run(MessageQueue * messageQueue)
     _ledControl.flash(200, 0, 50);
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
     _ledControl.endFlashing();
-    
+
     _ledControl.onExclusive(LedControl::GREEN_ALL);
     return;
 

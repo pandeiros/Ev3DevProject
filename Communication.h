@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MessageQueue.h"
+#include "CommUtils.h"
 #include <thread>
 
 namespace ev3
@@ -15,6 +16,11 @@ namespace ev3
         void run(MessageQueue * messageQueue);
     private:
         MessageQueue * _messageQueue;
+        CommUtils _commUtils;
+        
+        unsigned int _socket;
+        unsigned int _port = DEFAULT_PORT;
+       
     };
 }
 

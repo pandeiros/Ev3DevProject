@@ -17,6 +17,7 @@ namespace ev3
 
         void push(Message message);
         Message pop();
+        bool empty();
 
     private:
         std::queue<Message> _messages;

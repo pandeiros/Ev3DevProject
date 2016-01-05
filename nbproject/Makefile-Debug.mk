@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Behaviour.o \
 	${OBJECTDIR}/ButtonTest.o \
 	${OBJECTDIR}/ColorUtils.o \
+	${OBJECTDIR}/CommUtils.o \
 	${OBJECTDIR}/Command.o \
 	${OBJECTDIR}/CommandMotor.o \
 	${OBJECTDIR}/Communication.o \
@@ -101,6 +102,11 @@ ${OBJECTDIR}/ColorUtils.o: ColorUtils.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ColorUtils.o ColorUtils.cpp
+
+${OBJECTDIR}/CommUtils.o: CommUtils.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommUtils.o CommUtils.cpp
 
 ${OBJECTDIR}/Command.o: Command.cpp 
 	${MKDIR} -p ${OBJECTDIR}
