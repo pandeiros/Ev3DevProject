@@ -31,14 +31,15 @@ Robot::Robot(RequiredDevices devices, AvailableActions actions)
 
 Robot::~Robot() { }
 
-std::thread Robot::createThread(MessageQueue* messageQueue)
+std::thread Robot::createThread(MessageQueue * sendQueue, MessageQueue * receiveQueue)
 {
-    return std::thread([ = ]{run(messageQueue);});
+    return std::thread([ = ]{run(sendQueue, receiveQueue);});
 }
 
-void Robot::run(MessageQueue * messageQueue)
+void Robot::run(MessageQueue * sendQueue, MessageQueue * receiveQueue)
 {
-    this->_messageQueue = messageQueue;
+    _sendQueue = sendQueue;
+    _receiveQueue = receiveQueue;
 
     if (!this->checkDevices())
     {
@@ -48,14 +49,14 @@ void Robot::run(MessageQueue * messageQueue)
     else
         std::cout << "Devices correct.\n";
 
-    Message msg = _messageQueue->pop();
+    Message msg = receiveQueue->pop();
     while (msg.getType() != Message::ABORT)
     {
         if (msg.getType() == Message::EMPTY)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            if (!_messageQueue->empty())
-                msg = _messageQueue->pop();
+            if (!receiveQueue->empty())
+                msg = receiveQueue->pop();
             continue;
         }
 
@@ -66,7 +67,7 @@ void Robot::run(MessageQueue * messageQueue)
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
-        msg = _messageQueue->pop();
+        msg = receiveQueue->pop();
     }
 
     std::cout << msg.getId() << " : ";

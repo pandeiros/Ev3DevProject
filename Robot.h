@@ -38,8 +38,8 @@ namespace ev3
         Robot(RequiredDevices devices, AvailableActions actions);
         virtual ~Robot();
 
-        std::thread createThread(MessageQueue * messageQueue);
-        virtual void run(MessageQueue * messageQueue);
+        std::thread createThread(MessageQueue * sendQueue, MessageQueue * receiveQueue);
+        virtual void run(MessageQueue * sendQueue, MessageQueue * receiveQueue);
 
         void stop();
 
@@ -56,7 +56,8 @@ namespace ev3
         AvailableActions _availableActions;
 
         Behaviour _currentBehaviour;
-        MessageQueue * _messageQueue;
+        MessageQueue * _sendQueue;
+        MessageQueue * _receiveQueue;
         
         LedControl _ledControl;
 

@@ -12,10 +12,12 @@ namespace ev3
     public:
         Communication();
 
-        std::thread createThread(MessageQueue * messageQueue);
-        void run(MessageQueue * messageQueue);
+        std::thread createThread(MessageQueue * sendQueue, MessageQueue * receiveQueue);
+        void run(MessageQueue * sendQueue, MessageQueue * receiveQueue);
     private:
-        MessageQueue * _messageQueue;
+        MessageQueue * _sendQueue;
+        MessageQueue * _receiveQueue;
+        
         CommUtils _commUtils;
         
         unsigned int _socket;

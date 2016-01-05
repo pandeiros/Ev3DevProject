@@ -1,6 +1,7 @@
 #include "RobotModelA.h"
 #include "SignalHandler.h"
-#include "Communication.h"
+#include "Communication.h"  
+#include "Utils.h"
 
 #include <signal.h>
 #include <errno.h>
@@ -8,27 +9,65 @@
 
 int main(int argc, char * argv[])
 {
-    ev3::Communication comm;
-    ev3::RobotModelA * robot = new ev3::RobotModelA;
-    ev3::MessageQueue * messageQueue = new ev3::MessageQueue;
+    /* Acquire parameters in specific order in case one was provided. */
+    if (argc > 2)
+    {
+        std::cout << ev3::ERR_WRONG_NO_OF_ARGS;
+        return -1;
+    }  
     
-    signal(SIGINT, ev3::SignalHandler::HandleSignal);
-    ev3::SignalHandler::robot = robot;
+    std::string mode = "";
 
-//    Wrapper *w = new Wrapper();
-   //std::thread robotThread = robot->createThread(messageQueue);
-   std::thread communicationThread = comm.createThread(messageQueue);
+    if (argc > 1)
+    {
+        mode = std::string(argv[1]);
+    }
+    
+    if (mode == ev3::MODE_MASTER)
+    {
+        ev3::Communication comm;
+        // <- Master
+        
+        // TEMP
+        ev3::RobotModelA * robot = new ev3::RobotModelA;
+        signal(SIGINT, ev3::SignalHandler::HandleSignal);
+        ev3::SignalHandler::robot = robot;
+        
+        ev3::MessageQueue * sendQueue = new ev3::MessageQueue;
+        ev3::MessageQueue * receiveQueue = new ev3::MessageQueue;
+        
+        comm.run(sendQueue, receiveQueue);
+        
+        delete robot;
+        delete sendQueue;
+        delete receiveQueue;
+    }
+    else if (mode == ev3::MODE_SLAVE || mode == "")
+    {
+        ev3::Communication comm;
+        ev3::RobotModelA * robot = new ev3::RobotModelA;
+        ev3::MessageQueue * sendQueue = new ev3::MessageQueue;
+        ev3::MessageQueue * receiveQueue = new ev3::MessageQueue;
+    
+        signal(SIGINT, ev3::SignalHandler::HandleSignal);
+        ev3::SignalHandler::robot = robot;
+        
+        std::thread communicationThread = comm.createThread(sendQueue, receiveQueue);
    
-   robot->run(messageQueue);
-//   std::thread tw2 = w->member2Thread("hello", 100);
-//    std::thread robotThread(&, messageQueue);
-//    std::thread communicationThread(&comm.run, messageQueue);
+        // MIND SWITCHED QUEUES!
+        robot->run(receiveQueue, sendQueue);
+  
+        communicationThread.join();
+
+        delete robot;
+        delete sendQueue;
+        delete receiveQueue;
+    }
+    else
+    {
+        std::cout << ev3::ERR_WRONG_MODE;
+        return -1;
+    }
     
-    //robotThread.join();
-    communicationThread.join();
-
-    delete robot;
-    delete messageQueue;
-
     return 0;
 }
