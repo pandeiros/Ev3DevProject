@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Agent.o \
 	${OBJECTDIR}/Behaviour.o \
 	${OBJECTDIR}/ButtonTest.o \
+	${OBJECTDIR}/CircularBuffer.o \
 	${OBJECTDIR}/ColorUtils.o \
 	${OBJECTDIR}/CommUtils.o \
 	${OBJECTDIR}/Command.o \
@@ -53,7 +54,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/LedControl.o \
 	${OBJECTDIR}/Master.o \
 	${OBJECTDIR}/Message.o \
-	${OBJECTDIR}/MessageQueue.o \
 	${OBJECTDIR}/Program.o \
 	${OBJECTDIR}/Robot.o \
 	${OBJECTDIR}/RobotModelA.o \
@@ -104,6 +104,11 @@ ${OBJECTDIR}/ButtonTest.o: ButtonTest.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ButtonTest.o ButtonTest.cpp
+
+${OBJECTDIR}/CircularBuffer.o: CircularBuffer.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CircularBuffer.o CircularBuffer.cpp
 
 ${OBJECTDIR}/ColorUtils.o: ColorUtils.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -174,11 +179,6 @@ ${OBJECTDIR}/Message.o: Message.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Message.o Message.cpp
-
-${OBJECTDIR}/MessageQueue.o: MessageQueue.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MessageQueue.o MessageQueue.cpp
 
 ${OBJECTDIR}/Program.o: Program.cpp 
 	${MKDIR} -p ${OBJECTDIR}

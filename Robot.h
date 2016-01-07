@@ -3,7 +3,7 @@
 #include "Behaviour.h"
 #include "Action.h"
 #include "Utils.h"
-#include "MessageQueue.h"
+#include "Queue.h"
 #include "LedControl.h"
 #include <vector>
 #include <thread>
@@ -38,8 +38,8 @@ namespace ev3
         Robot(RequiredDevices devices, AvailableActions actions);
         virtual ~Robot();
 
-        std::thread createThread(MessageQueue * sendQueue, MessageQueue * receiveQueue);
-        virtual void run(MessageQueue * sendQueue, MessageQueue * receiveQueue);
+        std::thread createThread(Queue<Message> * sendQueue, Queue<Message> * receiveQueue);
+        virtual void run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue);
 
         void stop();
 
@@ -59,8 +59,8 @@ namespace ev3
         AvailableActions _availableActions;
 
         Behaviour _currentBehaviour;
-        MessageQueue * _sendQueue;
-        MessageQueue * _receiveQueue;
+        Queue<Message> * _sendQueue;
+        Queue<Message> * _receiveQueue;
         
         LedControl _ledControl;
 

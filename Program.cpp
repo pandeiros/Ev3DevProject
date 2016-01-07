@@ -2,6 +2,7 @@
 #include "SignalHandler.h"
 #include "Communication.h"  
 #include "Utils.h"
+//#include "Message.h"
 
 #include <signal.h>
 #include <errno.h>
@@ -9,6 +10,8 @@
 
 int main(int argc, char * argv[])
 {
+    std::srand(std::time(0));
+    
     /* Acquire parameters in specific order in case one was provided. */
     if (argc > 2)
     {
@@ -31,8 +34,8 @@ int main(int argc, char * argv[])
         signal(SIGINT, ev3::SignalHandler::HandleSignal);
         ev3::SignalHandler::master = &master;
         
-        ev3::MessageQueue * sendQueue = new ev3::MessageQueue;
-        ev3::MessageQueue * receiveQueue = new ev3::MessageQueue;
+        ev3::Queue<ev3::Message> * sendQueue = new ev3::Queue<ev3::Message>;
+        ev3::Queue<ev3::Message> * receiveQueue = new ev3::Queue<ev3::Message>;
         std::thread communicationThread = comm.createThread(sendQueue, receiveQueue, true);
    
         // MIND SWITCHED QUEUES!
@@ -51,8 +54,8 @@ int main(int argc, char * argv[])
         signal(SIGINT, ev3::SignalHandler::HandleSignal);
         ev3::SignalHandler::robot = robot;
         
-        ev3::MessageQueue * sendQueue = new ev3::MessageQueue;
-        ev3::MessageQueue * receiveQueue = new ev3::MessageQueue;
+        ev3::Queue<ev3::Message> * sendQueue = new ev3::Queue<ev3::Message>;
+        ev3::Queue<ev3::Message> * receiveQueue = new ev3::Queue<ev3::Message>;
         std::thread communicationThread = comm.createThread(sendQueue, receiveQueue);
    
         // MIND SWITCHED QUEUES!

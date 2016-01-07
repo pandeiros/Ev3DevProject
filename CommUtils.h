@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Message.h"
+#include "CircularBuffer.h"
 #include <string>
 #include <netinet/in.h>
 #include <map>
@@ -13,10 +14,12 @@ namespace ev3
     static const unsigned int DEFAULT_RECEIVE_DELAY = 1; // In milliseconds.
     static const unsigned int MASTER_ID = 1;
     static const unsigned int SENT_MESSAGE_COPIES = 5;
+    static const unsigned int DEFAULT_PACKET_BUFFER_LIMIT = 50;
 
     class CommUtils
     {
     public:
+        CommUtils();
 
         struct NetworkNode
         {
@@ -48,6 +51,8 @@ namespace ev3
 
         std::map<unsigned int, NetworkNode> _remotes;
         std::queue<NetworkNode> _unregisteredRemotes;
+        
+        CircularBuffer<std::string> _packetBuffer;
     };
 }
 

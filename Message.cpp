@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <iomanip>
 
 using namespace ev3;
 
@@ -42,20 +43,29 @@ bool Message::empty()
     return _type == EMPTY;
 }
 
+void Message::print() {
+    std::cout << "Sender: " << std::setw(5) << _sender << " | ";
+    std::cout << "Receiver: " << std::setw(5) << _receiver << " | ";
+    std::cout << "Msg. Id: " << std::setw(5) << _id << " | ";
+    std::cout << "Type: " << std::setw(5) << _type << " | ";
+    std::cout << "Parameters: ";
+    for (auto & s : _parameters)
+        std::cout << s << " | ";
+    std::cout << "\n";
+}
+
+
 Message Message::decodeMessage(const std::string msg)
 {
-    std::cout << "DECODED: " << msg << "\n";
+//    std::cout << "DECODED: " << msg << "\n";
     
     std::vector<std::string> parts;
     std::istringstream f(msg);
     std::string s;
     while (std::getline(f, s, MESSAGE_DELIM))
     {
-//        std::cout << s << " ";
         parts.push_back(s);
     }
-
-//    std::cout << "\n";
 
     std::vector<std::string> params;
     if (parts.size() >= 5)
@@ -82,7 +92,7 @@ std::string Message::encodeMessage(Message& message)
     for (auto & s : message.getParameters())
         msg += s + MESSAGE_DELIM;
     
-    std::cout << "ENCODED: " << msg << "\n";
+//    std::cout << "ENCODED: " << msg << "\n";
 
     return msg;
 }

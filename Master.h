@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MessageQueue.h"
+#include "Queue.h"
 #include "Agent.h"
 #include <thread>
 #include <map>
@@ -13,15 +13,15 @@ namespace ev3
     public:
         typedef std::map<unsigned int, Agent> AgentMap;
 
-        std::thread createThread(MessageQueue * sendQueue, MessageQueue * receiveQueue);
-        void run(MessageQueue * sendQueue, MessageQueue * receiveQueue);
+        std::thread createThread(Queue<Message> * sendQueue, Queue<Message> * receiveQueue);
+        void run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue);
 
         void stop();
     private:
         AgentMap _agents;
         
-        MessageQueue * _sendQueue;
-        MessageQueue * _receiveQueue;
+        Queue<Message> * _sendQueue;
+        Queue<Message> * _receiveQueue;
         
         unsigned int _agentId = MASTER_ID;
     };

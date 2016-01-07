@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MessageQueue.h"
+#include "Queue.h"
 #include "CommUtils.h"
 #include <thread>
 
@@ -14,15 +14,15 @@ namespace ev3
     public:
         Communication();
 
-        std::thread createThread(MessageQueue * sendQueue, MessageQueue * receiveQueue, bool isMaster = false);
-        void run(MessageQueue * sendQueue, MessageQueue * receiveQueue, bool isMaster = false);
+        std::thread createThread(Queue<Message> * sendQueue, Queue<Message> * receiveQueue, bool isMaster = false);
+        void run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue, bool isMaster = false);
     private:
         void receive();
         void send();
         
         bool _isMaster = false;
-        MessageQueue * _sendQueue;
-        MessageQueue * _receiveQueue;
+        Queue<Message> * _sendQueue;
+        Queue<Message> * _receiveQueue;
         
         CommUtils _commUtils;
         

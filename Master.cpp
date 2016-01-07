@@ -7,12 +7,12 @@
 
 using namespace ev3;
 
-std::thread Master::createThread(MessageQueue * sendQueue, MessageQueue * receiveQueue)
+std::thread Master::createThread(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 {
     return std::thread([ = ]{run(sendQueue, receiveQueue);});
 }
 
-void Master::run(MessageQueue * sendQueue, MessageQueue * receiveQueue)
+void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 {
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;

@@ -6,12 +6,12 @@ using namespace ev3;
 
 Communication::Communication() { }
 
-std::thread Communication::createThread(MessageQueue * sendQueue, MessageQueue * receiveQueue, bool isMaster)
+std::thread Communication::createThread(Queue<Message> * sendQueue, Queue<Message> * receiveQueue, bool isMaster)
 {
     return std::thread([ = ]{run(sendQueue, receiveQueue, isMaster);});
 }
 
-void Communication::run(MessageQueue * sendQueue, MessageQueue * receiveQueue, bool isMaster)
+void Communication::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue, bool isMaster)
 {
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;

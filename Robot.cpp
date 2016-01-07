@@ -32,12 +32,12 @@ Robot::Robot(RequiredDevices devices, AvailableActions actions)
 
 Robot::~Robot() { }
 
-std::thread Robot::createThread(MessageQueue * sendQueue, MessageQueue * receiveQueue)
+std::thread Robot::createThread(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 {
     return std::thread([ = ]{run(sendQueue, receiveQueue);});
 }
 
-void Robot::run(MessageQueue * sendQueue, MessageQueue * receiveQueue)
+void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 {
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;
@@ -50,7 +50,7 @@ void Robot::run(MessageQueue * sendQueue, MessageQueue * receiveQueue)
     else
         std::cout << "Devices correct.\n";
 
-    Message agentMsg(0, MASTER_ID, _commId++, Message::AGENT,{});
+    Message agentMsg(std::rand(), MASTER_ID, _commId++, Message::AGENT, { });
 
     sendQueue->push(agentMsg);
 
@@ -61,14 +61,10 @@ void Robot::run(MessageQueue * sendQueue, MessageQueue * receiveQueue)
     {
         if (msg.getType() == Message::MASTER_OVER)
             break;
-        
+
         if (msg.getType() == Message::MASTER)
         {
             _id = msg.getReceiverId();
-        }
-        
-        if (msg.getType() == Message::MASTER)
-        {
             unsigned int id = msg.getSenderId();
             if (id == MASTER_ID)
             {
@@ -79,38 +75,38 @@ void Robot::run(MessageQueue * sendQueue, MessageQueue * receiveQueue)
                 }
             }
         }
-        
+
         if (_id)
-            _sendQueue->push(Message(_id, MASTER_ID, _commId++, Message::PING, {}));
+            _sendQueue->push(Message(_id, MASTER_ID, _commId++, Message::PING,{}));
 
         if (msg.empty())
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(200));
-            
+
             if (!receiveQueue->empty())
                 msg = receiveQueue->pop();
             continue;
         }
-        
-//        if (_id)
-//            _sendQueue->push(Message(_id, MASTER_ID, _commId++, Message::PING, {}));
+
+        //        if (_id)
+        //            _sendQueue->push(Message(_id, MASTER_ID, _commId++, Message::PING, {}));
 
         //parseMessage(msg);
 
-//        std::cout << msg.getMessageId() << " : ";
-//        for (auto & s : msg.getParameters())
-//            std::cout << s << " ";
-//        std::cout << "\n";
+        //        std::cout << msg.getMessageId() << " : ";
+        //        for (auto & s : msg.getParameters())
+        //            std::cout << s << " ";
+        //        std::cout << "\n";
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
         msg = receiveQueue->pop();
     }
 
-//    std::cout << msg.getMessageId() << " : ";
-//    for (auto & s : msg.getParameters())
-//        std::cout << s << " ";
-//    std::cout << "\n";
+    //    std::cout << msg.getMessageId() << " : ";
+    //    for (auto & s : msg.getParameters())
+    //        std::cout << s << " ";
+    //    std::cout << "\n";
 
     return;
 

@@ -22,8 +22,6 @@
       <itemPath>Communication.h</itemPath>
       <itemPath>Message.cpp</itemPath>
       <itemPath>Message.h</itemPath>
-      <itemPath>MessageQueue.cpp</itemPath>
-      <itemPath>MessageQueue.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f6" displayName="Control" projectFiles="true">
       <itemPath>LedControl.cpp</itemPath>
@@ -36,6 +34,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>CircularBuffer.h</itemPath>
       <itemPath>ColorUtils.h</itemPath>
       <itemPath>DriveTest.h</itemPath>
       <itemPath>EV3Buttons.h</itemPath>
@@ -49,6 +48,8 @@
       <itemPath>Master.cpp</itemPath>
       <itemPath>Master.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="f7" displayName="Master" projectFiles="true">
+    </logicalFolder>
     <logicalFolder name="f2" displayName="Robot" projectFiles="true">
       <itemPath>Robot.cpp</itemPath>
       <itemPath>Robot.h</itemPath>
@@ -59,6 +60,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>ButtonTest.cpp</itemPath>
+      <itemPath>CircularBuffer.cpp</itemPath>
       <itemPath>ColorUtils.cpp</itemPath>
       <itemPath>DriveTest.cpp</itemPath>
       <itemPath>EV3Buttons.cpp</itemPath>
@@ -72,6 +74,11 @@
       <itemPath>SignalHandler.cpp</itemPath>
       <itemPath>SignalHandler.h</itemPath>
       <itemPath>Utils.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -107,6 +114,10 @@
       <item path="Behaviour.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ButtonTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ColorUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -161,10 +172,6 @@
       <item path="Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Message.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="MessageQueue.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MessageQueue.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Program.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -223,6 +230,10 @@
       </item>
       <item path="ButtonTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CircularBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ColorUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ColorUtils.h" ex="false" tool="3" flavor2="0">
@@ -277,10 +288,6 @@
       </item>
       <item path="Message.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="MessageQueue.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MessageQueue.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Program.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
@@ -328,6 +335,10 @@
       <item path="Behaviour.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ButtonTest.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ColorUtils.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -382,10 +393,6 @@
       <item path="Message.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Message.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="MessageQueue.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="MessageQueue.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Program.cpp" ex="false" tool="1" flavor2="8">
       </item>

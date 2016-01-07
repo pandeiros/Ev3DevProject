@@ -35,6 +35,7 @@ namespace ev3
         StringVector getParameters();
         
         bool empty();
+        void print();
         
         static std::string encodeMessage(Message & message);
         static Message decodeMessage(const std::string msg);
