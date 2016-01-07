@@ -7,6 +7,7 @@
 #include "ev3dev.h"
 
 #include "Behaviour.h"
+#include "Agent.h"
 
 using namespace ev3;
 
@@ -49,32 +50,68 @@ void Robot::run(MessageQueue * sendQueue, MessageQueue * receiveQueue)
     else
         std::cout << "Devices correct.\n";
 
+    Message agentMsg(0, MASTER_ID, _commId++, Message::AGENT,{});
+
+    sendQueue->push(agentMsg);
+
+    bool stop = false;
+
     Message msg = receiveQueue->pop();
-    while (msg.getType() != Message::ABORT)
+    while (!stop)
     {
-        if (msg.getType() == Message::EMPTY)
+        if (msg.getType() == Message::MASTER_OVER)
+            break;
+        
+        if (msg.getType() == Message::MASTER)
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            _id = msg.getReceiverId();
+        }
+        
+        if (msg.getType() == Message::MASTER)
+        {
+            unsigned int id = msg.getSenderId();
+            if (id == MASTER_ID)
+            {
+                if (_commId < msg.getMessageId())
+                {
+                    //_sendQueue->push(Message(MASTER_ID, id, msg.getMessageId(), Message::PONG, {}));
+                    _commId = msg.getMessageId();
+                }
+            }
+        }
+        
+        if (_id)
+            _sendQueue->push(Message(_id, MASTER_ID, _commId++, Message::PING, {}));
+
+        if (msg.empty())
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(200));
+            
             if (!receiveQueue->empty())
                 msg = receiveQueue->pop();
             continue;
         }
+        
+//        if (_id)
+//            _sendQueue->push(Message(_id, MASTER_ID, _commId++, Message::PING, {}));
 
-        std::cout << msg.getId() << " : ";
-        for (auto & s : msg.getParameters())
-            std::cout << s << " ";
-        std::cout << "\n";
+        //parseMessage(msg);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+//        std::cout << msg.getMessageId() << " : ";
+//        for (auto & s : msg.getParameters())
+//            std::cout << s << " ";
+//        std::cout << "\n";
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
         msg = receiveQueue->pop();
     }
 
-    std::cout << msg.getId() << " : ";
-    for (auto & s : msg.getParameters())
-        std::cout << s << " ";
-    std::cout << "\n";
-    
+//    std::cout << msg.getMessageId() << " : ";
+//    for (auto & s : msg.getParameters())
+//        std::cout << s << " ";
+//    std::cout << "\n";
+
     return;
 
     _ledControl.on(LedControl::RED_ALL);
@@ -180,6 +217,8 @@ void Robot::stop()
     {
         m.second.stop();
     }
+
+    _receiveQueue->push(Message(0, 0, 0, Message::ABORT));
 }
 
 //RobotStatus & Robot::getRobotStatus()

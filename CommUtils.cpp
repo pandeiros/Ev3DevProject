@@ -39,9 +39,51 @@ int CommUtils::preparePassiveSocket(unsigned int portNumber)
     return sockfd;
 }
 
+int CommUtils::sendMessage(unsigned int socket, unsigned int port, Message message, bool isMaster, unsigned int repeat)
+{
+    int result = -1;
+
+    if (isMaster)
+    {
+        NetworkNode receiver;
+        if (_remotes.find(message.getReceiverId()) != _remotes.end())
+            receiver = _remotes[message.getReceiverId()];
+        else if (message.getType() == Message::MASTER && _unregisteredRemotes.size() > 0)
+        {
+            receiver = _unregisteredRemotes.front();
+            _unregisteredRemotes.pop();
+        }
+        else
+            return -1;
+
+        for (unsigned int i = 0; i < repeat; ++i)
+        {
+            int tempResult = sendMessageTo(socket, receiver.ipAddress, receiver.port, message);
+            if (result < 0)
+                result = tempResult;
+        }
+    }
+    else
+    {
+        int result;
+        for (unsigned int i = 0; i < repeat; ++i)
+        {
+            int tempResult;
+            if (_remotes.find(MASTER_ID) != _remotes.end())
+                tempResult = sendMessageTo(socket, _remotes[MASTER_ID].ipAddress, _remotes[MASTER_ID].port, message);
+            else
+                tempResult = sendBroadcastMessage(socket, port, message);
+            if (result < 0)
+                result = tempResult;
+        }
+    }
+
+    return result;
+}
+
 int CommUtils::sendBroadcastMessage(unsigned int socket, unsigned int port, Message message)
 {
-    Buffer buffer = prepareBuffer(encodeMessage(message));
+    Buffer buffer = getBufferFromString(Message::encodeMessage(message));
 
     struct ifaddrs* interfaces;
     if (getifaddrs(&interfaces) == -1)
@@ -91,7 +133,23 @@ int CommUtils::sendBroadcastMessage(unsigned int socket, unsigned int port, Mess
     return max_return_code;
 }
 
-int CommUtils::receiveMessage(unsigned int socket, Message& msg, Sender& sender)
+int CommUtils::sendMessageTo(unsigned int socket, std::string ipAddress, unsigned int destinationPort, Message message)
+{
+    Buffer buffer = getBufferFromString(Message::encodeMessage(message));
+
+    struct sockaddr_in addr;
+    if (makeSockAddr(ipAddress, destinationPort, &addr) < 0)
+    {
+        return -1;
+    }
+
+    int return_code = sendto(socket, buffer.buffer, buffer.size, 0, (struct sockaddr*) &addr, sizeof (addr));
+    free(buffer.buffer);
+
+    return return_code;
+}
+
+int CommUtils::receiveMessage(unsigned int socket, Message& msg, NetworkNode & sender)
 {
     Buffer buffer;
     buffer.buffer = malloc(MAX_PACKET_LENGTH);
@@ -101,25 +159,91 @@ int CommUtils::receiveMessage(unsigned int socket, Message& msg, Sender& sender)
 
     if (return_code < 0)
     {
+        free(buffer.buffer);
         return -1;
     }
 
     buffer.size = return_code;
-    msg = decodeMessage(buffer);
+    msg = Message::decodeMessage(getStringFromBuffer(buffer));
 
     char * ipAddress = (char*) malloc(INET_ADDRSTRLEN);
     if (inet_ntop(AF_INET, &(sender_addr.sin_addr), ipAddress, (socklen_t) INET_ADDRSTRLEN) == NULL)
     {
-        return -1;
+        free(buffer.buffer);
+        return -2;
     }
     sender.ipAddress = std::string(ipAddress);
     sender.port = ntohs(sender_addr.sin_port);
+
+    if (!msg.empty())
+        _remotes[msg.getSenderId()] = sender;
+    
+    if (msg.getSenderId() == 0)
+        _unregisteredRemotes.push(sender);
 
     free(buffer.buffer);
     return return_code;
 }
 
-CommUtils::Buffer CommUtils::prepareBuffer(std::string msg)
+int CommUtils::receiveMessageDelay(unsigned int socket, Message& msg, NetworkNode& sender, unsigned int delay)
+{
+    Buffer buffer;
+    buffer.buffer = malloc(MAX_PACKET_LENGTH);
+    struct sockaddr_in sender_addr;
+    socklen_t addr_len = sizeof (sender_addr);
+
+    struct timeval tv;
+    tv.tv_sec = delay / 1000;
+    tv.tv_usec = delay % 1000 * 1000;
+    setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO, (char *) &tv, sizeof (struct timeval));
+
+    int return_code = recvfrom(socket, buffer.buffer, MAX_PACKET_LENGTH, 0, (struct sockaddr*) &sender_addr, (socklen_t*) & addr_len);
+    if (return_code < 0)
+    {
+        free(buffer.buffer);
+        return -1;
+    }
+
+    buffer.size = return_code;
+    msg = Message::decodeMessage(getStringFromBuffer(buffer));
+
+    char * ipAddress = (char*) malloc(INET_ADDRSTRLEN);
+    if (inet_ntop(AF_INET, &(sender_addr.sin_addr), ipAddress, (socklen_t) INET_ADDRSTRLEN) == NULL)
+    {
+        free(buffer.buffer);
+        return -2;
+    }
+    sender.ipAddress = std::string(ipAddress);
+    sender.port = ntohs(sender_addr.sin_port);
+
+    if (!msg.empty())
+        _remotes[msg.getSenderId()] = sender;
+    
+    if (msg.getSenderId() == 0)
+        _unregisteredRemotes.push(sender);
+
+    free(buffer.buffer);
+    return return_code;
+}
+
+int CommUtils::makeSockAddr(std::string ipAddress, int portNumber, sockaddr_in * sockaddr)
+{
+    struct sockaddr_in addr;
+    memset((char*) &addr, 0, sizeof (addr));
+
+    if (inet_pton(AF_INET, ipAddress.c_str(), &(addr.sin_addr)) != 1)
+    {
+        return -1;
+    }
+
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(portNumber);
+    *sockaddr = addr;
+
+    return 0;
+}
+
+CommUtils::Buffer CommUtils::getBufferFromString(std::string msg)
 {
     Buffer result;
     void* buffer;
@@ -134,37 +258,10 @@ CommUtils::Buffer CommUtils::prepareBuffer(std::string msg)
     return result;
 }
 
-std::string CommUtils::encodeMessage(Message& message)
+std::string CommUtils::getStringFromBuffer(const Buffer buffer)
 {
-    std::string msg = "";
-    msg += std::to_string(message.getId());
-    msg += ":";
-    msg += std::to_string(message.getType());
-    msg += ":";
-    for (auto & s : message.getParameters())
-        msg += s + ":";
-
-    return msg;
-}
-
-Message CommUtils::decodeMessage(const Buffer buffer)
-{
-    Message message(0, Message::PING,{"Test", "Testing...."});
-
     char* c_str = (char*) malloc(buffer.size);
     strcpy(c_str, (char*) buffer.buffer);
 
-    std::string str(c_str);
-
-    std::vector<std::string> params;
-    std::istringstream f(c_str);
-    std::string s;
-    while (std::getline(f, s, ':'))
-        params.push_back(s);
-
-    std::cout << str << "\n";
-
-    return message;
+    return std::string(c_str);
 }
-
-

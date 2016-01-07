@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Action.o \
+	${OBJECTDIR}/Agent.o \
 	${OBJECTDIR}/Behaviour.o \
 	${OBJECTDIR}/ButtonTest.o \
 	${OBJECTDIR}/ColorUtils.o \
@@ -50,6 +51,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/EV3Status.o \
 	${OBJECTDIR}/Ev3Main.o \
 	${OBJECTDIR}/LedControl.o \
+	${OBJECTDIR}/Master.o \
 	${OBJECTDIR}/Message.o \
 	${OBJECTDIR}/MessageQueue.o \
 	${OBJECTDIR}/Program.o \
@@ -87,6 +89,11 @@ ${OBJECTDIR}/Action.o: Action.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Action.o Action.cpp
+
+${OBJECTDIR}/Agent.o: Agent.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Agent.o Agent.cpp
 
 ${OBJECTDIR}/Behaviour.o: Behaviour.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -157,6 +164,11 @@ ${OBJECTDIR}/LedControl.o: LedControl.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LedControl.o LedControl.cpp
+
+${OBJECTDIR}/Master.o: Master.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Master.o Master.cpp
 
 ${OBJECTDIR}/Message.o: Message.cpp 
 	${MKDIR} -p ${OBJECTDIR}

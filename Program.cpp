@@ -26,19 +26,20 @@ int main(int argc, char * argv[])
     if (mode == ev3::MODE_MASTER)
     {
         ev3::Communication comm;
-        // <- Master
+        ev3::Master master;
         
-        // TEMP
-        ev3::RobotModelA * robot = new ev3::RobotModelA;
         signal(SIGINT, ev3::SignalHandler::HandleSignal);
-        ev3::SignalHandler::robot = robot;
+        ev3::SignalHandler::master = &master;
         
         ev3::MessageQueue * sendQueue = new ev3::MessageQueue;
         ev3::MessageQueue * receiveQueue = new ev3::MessageQueue;
+        std::thread communicationThread = comm.createThread(sendQueue, receiveQueue, true);
+   
+        // MIND SWITCHED QUEUES!
+        master.run(receiveQueue, sendQueue);
+  
+        communicationThread.join();
         
-        comm.run(sendQueue, receiveQueue);
-        
-        delete robot;
         delete sendQueue;
         delete receiveQueue;
     }
@@ -46,12 +47,12 @@ int main(int argc, char * argv[])
     {
         ev3::Communication comm;
         ev3::RobotModelA * robot = new ev3::RobotModelA;
-        ev3::MessageQueue * sendQueue = new ev3::MessageQueue;
-        ev3::MessageQueue * receiveQueue = new ev3::MessageQueue;
     
         signal(SIGINT, ev3::SignalHandler::HandleSignal);
         ev3::SignalHandler::robot = robot;
         
+        ev3::MessageQueue * sendQueue = new ev3::MessageQueue;
+        ev3::MessageQueue * receiveQueue = new ev3::MessageQueue;
         std::thread communicationThread = comm.createThread(sendQueue, receiveQueue);
    
         // MIND SWITCHED QUEUES!

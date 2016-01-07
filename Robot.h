@@ -46,6 +46,9 @@ namespace ev3
         //RobotStatus & getRobotStatus();
 
     protected:
+        unsigned int _id = 0;
+        unsigned int _commId = 0;
+        
         float _pulsePerUnitRatio = 1.f;
         bool checkDevices();
 
