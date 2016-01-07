@@ -2,3 +2,11 @@ build/*
 dist/*
 nbproject/private/*
 .dep.inc
+latex/*.aux
+latex/*.toc
+latex/*.bbl
+latex/*.bcf
+latex/*.blg
+latex/*.log
+latex/main.out
+latex/main.run.xml

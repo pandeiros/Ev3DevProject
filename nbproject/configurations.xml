@@ -2,83 +2,66 @@
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="f3" displayName="Actions" projectFiles="true">
-      <logicalFolder name="ResourceFiles"
-                     displayName="Resource Files"
-                     projectFiles="true">
-      </logicalFolder>
-      <itemPath>Action.cpp</itemPath>
-      <itemPath>Action.h</itemPath>
-      <itemPath>Behaviour.cpp</itemPath>
-      <itemPath>Behaviour.h</itemPath>
-      <itemPath>Command.cpp</itemPath>
-      <itemPath>Command.h</itemPath>
-      <itemPath>CommandMotor.cpp</itemPath>
-      <itemPath>CommandMotor.h</itemPath>
+      <itemPath>src/action/Action.cpp</itemPath>
+      <itemPath>include/action/Action.h</itemPath>
+      <itemPath>src/action/Behaviour.cpp</itemPath>
+      <itemPath>include/action/Behaviour.h</itemPath>
+      <itemPath>src/action/Command.cpp</itemPath>
+      <itemPath>include/action/Command.h</itemPath>
+      <itemPath>src/action/CommandMotor.cpp</itemPath>
+      <itemPath>include/action/CommandMotor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f5" displayName="Communication" projectFiles="true">
-      <itemPath>CommUtils.cpp</itemPath>
-      <itemPath>CommUtils.h</itemPath>
-      <itemPath>Communication.cpp</itemPath>
-      <itemPath>Communication.h</itemPath>
-      <itemPath>Message.cpp</itemPath>
-      <itemPath>Message.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f6" displayName="Control" projectFiles="true">
-      <itemPath>LedControl.cpp</itemPath>
-      <itemPath>LedControl.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f1" displayName="Ev3Dev" projectFiles="true">
-      <itemPath>ev3dev.cpp</itemPath>
-      <itemPath>ev3dev.h</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>CircularBuffer.h</itemPath>
-      <itemPath>ColorUtils.h</itemPath>
-      <itemPath>DriveTest.h</itemPath>
-      <itemPath>EV3Buttons.h</itemPath>
-      <itemPath>EV3Config.h</itemPath>
-      <itemPath>EV3Motor.h</itemPath>
-      <itemPath>EV3Status.h</itemPath>
-    </logicalFolder>
-    <logicalFolder name="f7" displayName="Master" projectFiles="true" kind="ROOT">
-      <itemPath>Agent.cpp</itemPath>
-      <itemPath>Agent.h</itemPath>
-      <itemPath>Master.cpp</itemPath>
-      <itemPath>Master.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f7" displayName="Master" projectFiles="true">
     </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
     <logicalFolder name="f2" displayName="Robot" projectFiles="true">
-      <itemPath>Robot.cpp</itemPath>
-      <itemPath>Robot.h</itemPath>
-      <itemPath>RobotModelA.cpp</itemPath>
-      <itemPath>RobotModelA.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>ButtonTest.cpp</itemPath>
-      <itemPath>CircularBuffer.cpp</itemPath>
-      <itemPath>ColorUtils.cpp</itemPath>
-      <itemPath>DriveTest.cpp</itemPath>
-      <itemPath>EV3Buttons.cpp</itemPath>
-      <itemPath>EV3Config.cpp</itemPath>
-      <itemPath>EV3Motor.cpp</itemPath>
-      <itemPath>EV3Status.cpp</itemPath>
-      <itemPath>Ev3Main.cpp</itemPath>
-      <itemPath>Program.cpp</itemPath>
+      <itemPath>src/master/Agent.cpp</itemPath>
+      <itemPath>include/master/Agent.h</itemPath>
+      <itemPath>src/utils/CircularBuffer.cpp</itemPath>
+      <itemPath>include/utils/CircularBuffer.h</itemPath>
+      <itemPath>src/utils/ColorUtils.cpp</itemPath>
+      <itemPath>include/utils/ColorUtils.h</itemPath>
+      <itemPath>src/communication/CommUtils.cpp</itemPath>
+      <itemPath>include/communication/CommUtils.h</itemPath>
+      <itemPath>src/communication/Communication.cpp</itemPath>
+      <itemPath>include/communication/Communication.h</itemPath>
+      <itemPath>src/control/LedControl.cpp</itemPath>
+      <itemPath>include/control/LedControl.h</itemPath>
+      <itemPath>src/master/Master.cpp</itemPath>
+      <itemPath>include/master/Master.h</itemPath>
+      <itemPath>src/communication/Message.cpp</itemPath>
+      <itemPath>include/communication/Message.h</itemPath>
+      <itemPath>src/Program.cpp</itemPath>
+      <itemPath>src/utils/Queue.cpp</itemPath>
+      <itemPath>include/utils/Queue.h</itemPath>
+      <itemPath>src/robot/Robot.cpp</itemPath>
+      <itemPath>include/robot/Robot.h</itemPath>
+      <itemPath>src/robot/RobotModelA.cpp</itemPath>
+      <itemPath>include/robot/RobotModelA.h</itemPath>
+      <itemPath>src/utils/SignalHandler.cpp</itemPath>
+      <itemPath>include/utils/SignalHandler.h</itemPath>
+      <itemPath>include/utils/Utils.h</itemPath>
+      <itemPath>src/ev3dev/ev3dev.cpp</itemPath>
+      <itemPath>include/ev3dev/ev3dev.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="Utils" projectFiles="true">
-      <itemPath>SignalHandler.cpp</itemPath>
-      <itemPath>SignalHandler.h</itemPath>
-      <itemPath>Utils.h</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -86,6 +69,10 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>include/action</Elem>
+    <Elem>src/action</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -98,100 +85,95 @@
         <ccTool>
           <standard>8</standard>
           <commandlineTool>arm-linux-gnueabi-g++</commandlineTool>
+          <incDir>
+            <pElem>include/communication</pElem>
+            <pElem>include/control</pElem>
+            <pElem>include/ev3dev</pElem>
+            <pElem>include/master</pElem>
+            <pElem>include/robot</pElem>
+            <pElem>include/utils</pElem>
+            <pElem>include/action</pElem>
+          </incDir>
           <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11</commandLine>
         </ccTool>
       </compileType>
-      <item path="Action.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/action/Action.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Action.h" ex="false" tool="3" flavor2="0">
+      <item path="include/action/Behaviour.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Agent.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/action/Command.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Agent.h" ex="false" tool="3" flavor2="0">
+      <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Behaviour.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Behaviour.h" ex="false" tool="3" flavor2="0">
+      <item path="include/communication/Communication.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="ButtonTest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/communication/Message.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/control/LedControl.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CircularBuffer.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ev3dev/ev3dev.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ColorUtils.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/master/Agent.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ColorUtils.h" ex="false" tool="3" flavor2="0">
+      <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommUtils.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/robot/Robot.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommUtils.h" ex="false" tool="3" flavor2="0">
+      <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Command.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Command.h" ex="false" tool="3" flavor2="0">
+      <item path="include/utils/ColorUtils.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommandMotor.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/utils/Queue.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommandMotor.h" ex="false" tool="3" flavor2="0">
+      <item path="include/utils/SignalHandler.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Communication.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/utils/Utils.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Communication.h" ex="false" tool="3" flavor2="0">
+      <item path="src/Program.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="DriveTest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/action/Action.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="DriveTest.h" ex="false" tool="3" flavor2="0">
+      <item path="src/action/Behaviour.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Buttons.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Buttons.h" ex="false" tool="3" flavor2="0">
+      <item path="src/action/CommandMotor.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Config.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/communication/CommUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Config.h" ex="false" tool="3" flavor2="0">
+      <item path="src/communication/Communication.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="EV3Motor.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/communication/Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Motor.h" ex="false" tool="3" flavor2="0">
+      <item path="src/control/LedControl.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Status.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ev3dev/ev3dev.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Status.h" ex="false" tool="3" flavor2="0">
+      <item path="src/master/Agent.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Ev3Main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="LedControl.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="LedControl.h" ex="false" tool="3" flavor2="0">
+      <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Master.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Master.h" ex="false" tool="3" flavor2="0">
+      <item path="src/utils/ColorUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Message.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/utils/Queue.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Message.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Program.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Robot.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="RobotModelA.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="RobotModelA.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SignalHandler.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="SignalHandler.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Utils.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ev3dev.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ev3dev.h" ex="false" tool="3" flavor2="0">
+      <item path="src/utils/SignalHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -207,6 +189,15 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <commandlineTool>arm-linux-gnueabi-g++</commandlineTool>
+          <incDir>
+            <pElem>include/communication</pElem>
+            <pElem>include/control</pElem>
+            <pElem>include/ev3dev</pElem>
+            <pElem>include/master</pElem>
+            <pElem>include/robot</pElem>
+            <pElem>include/utils</pElem>
+            <pElem>include/action</pElem>
+          </incDir>
           <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread</commandLine>
         </ccTool>
         <fortranCompilerTool>
@@ -216,97 +207,83 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Action.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/action/Action.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Action.h" ex="false" tool="3" flavor2="0">
+      <item path="include/action/Behaviour.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Agent.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/action/Command.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Agent.h" ex="false" tool="3" flavor2="0">
+      <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Behaviour.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Behaviour.h" ex="false" tool="3" flavor2="0">
+      <item path="include/communication/Communication.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="ButtonTest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/communication/Message.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/control/LedControl.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CircularBuffer.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ev3dev/ev3dev.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ColorUtils.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/master/Agent.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ColorUtils.h" ex="false" tool="3" flavor2="0">
+      <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommUtils.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/robot/Robot.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommUtils.h" ex="false" tool="3" flavor2="0">
+      <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Command.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Command.h" ex="false" tool="3" flavor2="0">
+      <item path="include/utils/ColorUtils.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommandMotor.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/utils/Queue.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommandMotor.h" ex="false" tool="3" flavor2="0">
+      <item path="include/utils/SignalHandler.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Communication.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/utils/Utils.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Communication.h" ex="false" tool="3" flavor2="0">
+      <item path="src/Program.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="DriveTest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/action/Action.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="DriveTest.h" ex="false" tool="3" flavor2="0">
+      <item path="src/action/Behaviour.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Buttons.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Buttons.h" ex="false" tool="3" flavor2="0">
+      <item path="src/action/CommandMotor.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Config.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/communication/CommUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Config.h" ex="false" tool="3" flavor2="0">
+      <item path="src/communication/Communication.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="EV3Motor.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/communication/Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Motor.h" ex="false" tool="3" flavor2="0">
+      <item path="src/control/LedControl.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Status.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ev3dev/ev3dev.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Status.h" ex="false" tool="3" flavor2="0">
+      <item path="src/master/Agent.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Ev3Main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="LedControl.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="LedControl.h" ex="false" tool="3" flavor2="0">
+      <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Master.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Master.h" ex="false" tool="3" flavor2="0">
+      <item path="src/utils/ColorUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Message.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/utils/Queue.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Message.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Program.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Robot.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="RobotModelA.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="RobotModelA.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SignalHandler.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="SignalHandler.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Utils.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ev3dev.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ev3dev.h" ex="false" tool="3" flavor2="0">
+      <item path="src/utils/SignalHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Debug_Intel" type="1">
@@ -319,100 +296,95 @@
         <ccTool>
           <standard>8</standard>
           <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>include/communication</pElem>
+            <pElem>include/control</pElem>
+            <pElem>include/ev3dev</pElem>
+            <pElem>include/master</pElem>
+            <pElem>include/robot</pElem>
+            <pElem>include/utils</pElem>
+            <pElem>include/action</pElem>
+          </incDir>
           <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11</commandLine>
         </ccTool>
       </compileType>
-      <item path="Action.cpp" ex="false" tool="1" flavor2="8">
+      <item path="include/action/Action.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Action.h" ex="false" tool="3" flavor2="0">
+      <item path="include/action/Behaviour.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Agent.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/action/Command.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Agent.h" ex="false" tool="3" flavor2="0">
+      <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Behaviour.cpp" ex="false" tool="1" flavor2="8">
+      <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Behaviour.h" ex="false" tool="3" flavor2="0">
+      <item path="include/communication/Communication.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="ButtonTest.cpp" ex="false" tool="1" flavor2="8">
+      <item path="include/communication/Message.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/control/LedControl.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CircularBuffer.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ev3dev/ev3dev.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ColorUtils.cpp" ex="false" tool="1" flavor2="8">
+      <item path="include/master/Agent.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ColorUtils.h" ex="false" tool="3" flavor2="0">
+      <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommUtils.cpp" ex="false" tool="1" flavor2="8">
+      <item path="include/robot/Robot.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommUtils.h" ex="false" tool="3" flavor2="0">
+      <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Command.cpp" ex="false" tool="1" flavor2="8">
+      <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Command.h" ex="false" tool="3" flavor2="0">
+      <item path="include/utils/ColorUtils.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommandMotor.cpp" ex="false" tool="1" flavor2="8">
+      <item path="include/utils/Queue.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="CommandMotor.h" ex="false" tool="3" flavor2="0">
+      <item path="include/utils/SignalHandler.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Communication.cpp" ex="false" tool="1" flavor2="8">
+      <item path="include/utils/Utils.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Communication.h" ex="false" tool="3" flavor2="0">
+      <item path="src/Program.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="DriveTest.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/action/Action.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="DriveTest.h" ex="false" tool="3" flavor2="0">
+      <item path="src/action/Behaviour.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Buttons.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Buttons.h" ex="false" tool="3" flavor2="0">
+      <item path="src/action/CommandMotor.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Config.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/communication/CommUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Config.h" ex="false" tool="3" flavor2="0">
+      <item path="src/communication/Communication.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="EV3Motor.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/communication/Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Motor.h" ex="false" tool="3" flavor2="0">
+      <item path="src/control/LedControl.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Status.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/ev3dev/ev3dev.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EV3Status.h" ex="false" tool="3" flavor2="0">
+      <item path="src/master/Agent.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Ev3Main.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="LedControl.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="LedControl.h" ex="false" tool="3" flavor2="0">
+      <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Master.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Master.h" ex="false" tool="3" flavor2="0">
+      <item path="src/utils/ColorUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Message.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/utils/Queue.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Message.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Program.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="Robot.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="Robot.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="RobotModelA.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="RobotModelA.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SignalHandler.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="SignalHandler.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Utils.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ev3dev.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="ev3dev.h" ex="false" tool="3" flavor2="0">
+      <item path="src/utils/SignalHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

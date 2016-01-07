@@ -1,0 +1,57 @@
+\documentclass[a4paper,12pt,notitlepage]{report}
+\usepackage[english,polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\DeclareQuoteAlias{croatian}{polish}
+\usepackage[T1]{fontenc}
+\usepackage[backend=biber,style=numeric-comp,sorting=nty,defernumbers=true]{biblatex}
+\usepackage[pdftex]{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+    hidelinks,
+}
+\usepackage[font=small,labelfont=bf,justification=centering]{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+ \lstset{
+  basicstyle=\footnotesize\ttfamily,
+  captionpos=b,
+  breakatwhitespace=true,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+ }
+\usepackage{changepage}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+
+\addtolength{\textwidth}{1cm}
+\addtolength{\hoffset}{-0.5cm}
+\addtolength{\textheight}{1cm}
+\addtolength{\voffset}{-0.5cm}
+%\usepackage{float}
+%\floatstyle{ruled}
+%\restylefloat{figure}
+
+\overfullrule=5mm
+
+\addbibresource{bibliography.bib}
+\frenchspacing
+\linespread{1.0}
+
+\title{Pikej}
+\author{Możliwości programowalne klocka Lego EV3.}
+\date{1 marca 1993 r.}
+
+\begin{document}
+
+\include{tytulowa}
+\include{abstract}
+
+\tableofcontents
+
+\include{wstep}
+\include{podsumowanie}
+\include{bibliography}
+
+\end{document}

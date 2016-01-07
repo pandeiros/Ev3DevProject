@@ -35,30 +35,24 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/Action.o \
-	${OBJECTDIR}/Agent.o \
-	${OBJECTDIR}/Behaviour.o \
-	${OBJECTDIR}/ButtonTest.o \
-	${OBJECTDIR}/CircularBuffer.o \
-	${OBJECTDIR}/ColorUtils.o \
-	${OBJECTDIR}/CommUtils.o \
-	${OBJECTDIR}/Command.o \
-	${OBJECTDIR}/CommandMotor.o \
-	${OBJECTDIR}/Communication.o \
-	${OBJECTDIR}/DriveTest.o \
-	${OBJECTDIR}/EV3Buttons.o \
-	${OBJECTDIR}/EV3Config.o \
-	${OBJECTDIR}/EV3Motor.o \
-	${OBJECTDIR}/EV3Status.o \
-	${OBJECTDIR}/Ev3Main.o \
-	${OBJECTDIR}/LedControl.o \
-	${OBJECTDIR}/Master.o \
-	${OBJECTDIR}/Message.o \
-	${OBJECTDIR}/Program.o \
-	${OBJECTDIR}/Robot.o \
-	${OBJECTDIR}/RobotModelA.o \
-	${OBJECTDIR}/SignalHandler.o \
-	${OBJECTDIR}/ev3dev.o
+	${OBJECTDIR}/src/Program.o \
+	${OBJECTDIR}/src/action/Action.o \
+	${OBJECTDIR}/src/action/Behaviour.o \
+	${OBJECTDIR}/src/action/Command.o \
+	${OBJECTDIR}/src/action/CommandMotor.o \
+	${OBJECTDIR}/src/communication/CommUtils.o \
+	${OBJECTDIR}/src/communication/Communication.o \
+	${OBJECTDIR}/src/communication/Message.o \
+	${OBJECTDIR}/src/control/LedControl.o \
+	${OBJECTDIR}/src/ev3dev/ev3dev.o \
+	${OBJECTDIR}/src/master/Agent.o \
+	${OBJECTDIR}/src/master/Master.o \
+	${OBJECTDIR}/src/robot/Robot.o \
+	${OBJECTDIR}/src/robot/RobotModelA.o \
+	${OBJECTDIR}/src/utils/CircularBuffer.o \
+	${OBJECTDIR}/src/utils/ColorUtils.o \
+	${OBJECTDIR}/src/utils/Queue.o \
+	${OBJECTDIR}/src/utils/SignalHandler.o
 
 
 # C Compiler Flags
@@ -85,125 +79,95 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ev3dev: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ev3dev ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/Action.o: Action.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/Program.o: src/Program.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Action.o Action.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Program.o src/Program.cpp
 
-${OBJECTDIR}/Agent.o: Agent.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/action/Action.o: src/action/Action.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Agent.o Agent.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Action.o src/action/Action.cpp
 
-${OBJECTDIR}/Behaviour.o: Behaviour.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/action/Behaviour.o: src/action/Behaviour.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Behaviour.o Behaviour.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Behaviour.o src/action/Behaviour.cpp
 
-${OBJECTDIR}/ButtonTest.o: ButtonTest.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/action/Command.o: src/action/Command.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ButtonTest.o ButtonTest.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Command.o src/action/Command.cpp
 
-${OBJECTDIR}/CircularBuffer.o: CircularBuffer.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/action/CommandMotor.o: src/action/CommandMotor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CircularBuffer.o CircularBuffer.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/CommandMotor.o src/action/CommandMotor.cpp
 
-${OBJECTDIR}/ColorUtils.o: ColorUtils.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/communication/CommUtils.o: src/communication/CommUtils.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/communication
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ColorUtils.o ColorUtils.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/communication/CommUtils.o src/communication/CommUtils.cpp
 
-${OBJECTDIR}/CommUtils.o: CommUtils.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/communication/Communication.o: src/communication/Communication.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/communication
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommUtils.o CommUtils.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/communication/Communication.o src/communication/Communication.cpp
 
-${OBJECTDIR}/Command.o: Command.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/communication/Message.o: src/communication/Message.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/communication
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Command.o Command.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/communication/Message.o src/communication/Message.cpp
 
-${OBJECTDIR}/CommandMotor.o: CommandMotor.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/control/LedControl.o: src/control/LedControl.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/control
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandMotor.o CommandMotor.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/control/LedControl.o src/control/LedControl.cpp
 
-${OBJECTDIR}/Communication.o: Communication.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/ev3dev/ev3dev.o: src/ev3dev/ev3dev.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/ev3dev
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Communication.o Communication.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ev3dev/ev3dev.o src/ev3dev/ev3dev.cpp
 
-${OBJECTDIR}/DriveTest.o: DriveTest.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/master/Agent.o: src/master/Agent.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/master
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DriveTest.o DriveTest.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/master/Agent.o src/master/Agent.cpp
 
-${OBJECTDIR}/EV3Buttons.o: EV3Buttons.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/master/Master.o: src/master/Master.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/master
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EV3Buttons.o EV3Buttons.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/master/Master.o src/master/Master.cpp
 
-${OBJECTDIR}/EV3Config.o: EV3Config.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/robot/Robot.o: src/robot/Robot.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/robot
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EV3Config.o EV3Config.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/robot/Robot.o src/robot/Robot.cpp
 
-${OBJECTDIR}/EV3Motor.o: EV3Motor.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/robot/RobotModelA.o: src/robot/RobotModelA.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/robot
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EV3Motor.o EV3Motor.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/robot/RobotModelA.o src/robot/RobotModelA.cpp
 
-${OBJECTDIR}/EV3Status.o: EV3Status.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/utils/CircularBuffer.o: src/utils/CircularBuffer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/utils
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EV3Status.o EV3Status.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utils/CircularBuffer.o src/utils/CircularBuffer.cpp
 
-${OBJECTDIR}/Ev3Main.o: Ev3Main.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/utils/ColorUtils.o: src/utils/ColorUtils.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/utils
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Ev3Main.o Ev3Main.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utils/ColorUtils.o src/utils/ColorUtils.cpp
 
-${OBJECTDIR}/LedControl.o: LedControl.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/utils/Queue.o: src/utils/Queue.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/utils
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LedControl.o LedControl.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utils/Queue.o src/utils/Queue.cpp
 
-${OBJECTDIR}/Master.o: Master.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/utils/SignalHandler.o: src/utils/SignalHandler.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/utils
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Master.o Master.cpp
-
-${OBJECTDIR}/Message.o: Message.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Message.o Message.cpp
-
-${OBJECTDIR}/Program.o: Program.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Program.o Program.cpp
-
-${OBJECTDIR}/Robot.o: Robot.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
-
-${OBJECTDIR}/RobotModelA.o: RobotModelA.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RobotModelA.o RobotModelA.cpp
-
-${OBJECTDIR}/SignalHandler.o: SignalHandler.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SignalHandler.o SignalHandler.cpp
-
-${OBJECTDIR}/ev3dev.o: ev3dev.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ev3dev.o ev3dev.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utils/SignalHandler.o src/utils/SignalHandler.cpp
 
 # Subprojects
 .build-subprojects:
