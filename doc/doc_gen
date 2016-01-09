@@ -1,0 +1,7 @@
+#! /bin/sh
+doxygen Doxyfile
+cd latex
+make
+cd ../
+cp latex/refman.pdf Ev3Dev.pdf
+rm -rf latex

@@ -10,3 +10,6 @@ latex/*.blg
 latex/*.log
 latex/main.out
 latex/main.run.xml
+doc/latex/
+doc/xml/
+doc/html/
