@@ -28,10 +28,7 @@ make all
 
 echo Generate latex.
 cd latex
-pdflatex main
-biber main
-pdflatex main
-pdflatex main
+./latex_gen
 cd ../
 
 echo Generate documentation.
