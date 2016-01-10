@@ -4,14 +4,14 @@ _v0.1 - Updated January 10, 2016_
 
 ## Table od Contents
 
-- [Files structure](#files_structure)
+- [Files structure](#files-structure)
 - [Installation](#installation)
     - [Prerequisites](#prerequisites)
     - [Build](#build)
     - [Deploy](#deploy)
 - [Documentation](#documentation)
-    - [HTML](#doc_html)
-    - [LaTeX](#doc_latex)
+    - [HTML](#html)
+    - [LaTeX](#latex)
 
 
 # Files structure
