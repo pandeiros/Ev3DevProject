@@ -87,8 +87,6 @@ build: .build-post
 # Add your pre 'build' code here...
 
 .build-post: .build-impl
-	${CP} dist/Debug/GNU-Linux-x86/ev3dev /home/panda/Dokumenty/Dev/ev3dev/sync;
-
 
 # clean
 clean: .clean-post

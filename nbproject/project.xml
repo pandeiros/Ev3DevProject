@@ -16,15 +16,19 @@
             </sourceRootList>
             <confList>
                 <confElem>
-                    <name>Debug</name>
+                    <name>D_ARM</name>
                     <type>1</type>
                 </confElem>
                 <confElem>
-                    <name>Release</name>
+                    <name>R_ARM</name>
                     <type>1</type>
                 </confElem>
                 <confElem>
-                    <name>Debug_Intel</name>
+                    <name>D_DESKTOP</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
+                    <name>R_DESKTOP</name>
                     <type>1</type>
                 </confElem>
             </confList>

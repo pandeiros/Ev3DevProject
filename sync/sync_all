@@ -1,0 +1,23 @@
+#! /bin/bash
+
+IP_ADDRESSES=(
+    "192.168.1.109"
+    "192.168.1.109"
+    )
+USER=panda
+REMOTE_DIR=sync
+PASSWORD=
+
+echo Devices ip addresses:
+
+for i in ${IP_ADDRESSES[@]}; do
+    echo - ${i}
+done
+
+if [ "$PASSWORD" == "" ]; then
+    read -s -p "Enter password: " PASSWORD
+fi
+
+for i in ${IP_ADDRESSES[@]}; do
+    sshpass -p $PASSWORD rsync -avh --delete --update ./ $USER@${i}:/home/$USER/$REMOTE_DIR ;
+done

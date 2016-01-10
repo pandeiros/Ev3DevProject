@@ -12,56 +12,56 @@
       <itemPath>include/action/CommandMotor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f5" displayName="Communication" projectFiles="true">
+      <itemPath>src/communication/CommUtils.cpp</itemPath>
+      <itemPath>include/communication/CommUtils.h</itemPath>
+      <itemPath>src/communication/Communication.cpp</itemPath>
+      <itemPath>include/communication/Communication.h</itemPath>
+      <itemPath>src/communication/Message.cpp</itemPath>
+      <itemPath>include/communication/Message.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f6" displayName="Control" projectFiles="true">
+      <itemPath>src/control/LedControl.cpp</itemPath>
+      <itemPath>include/control/LedControl.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f1" displayName="Ev3Dev" projectFiles="true">
+      <itemPath>src/ev3dev/ev3dev.cpp</itemPath>
+      <itemPath>include/ev3dev/ev3dev.h</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
     </logicalFolder>
     <logicalFolder name="f7" displayName="Master" projectFiles="true">
+      <itemPath>src/master/Agent.cpp</itemPath>
+      <itemPath>include/master/Agent.h</itemPath>
+      <itemPath>src/master/Master.cpp</itemPath>
+      <itemPath>include/master/Master.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
     </logicalFolder>
     <logicalFolder name="f2" displayName="Robot" projectFiles="true">
-    </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
-      <itemPath>src/master/Agent.cpp</itemPath>
-      <itemPath>include/master/Agent.h</itemPath>
-      <itemPath>src/utils/CircularBuffer.cpp</itemPath>
-      <itemPath>include/utils/CircularBuffer.h</itemPath>
-      <itemPath>src/utils/ColorUtils.cpp</itemPath>
-      <itemPath>include/utils/ColorUtils.h</itemPath>
-      <itemPath>src/communication/CommUtils.cpp</itemPath>
-      <itemPath>include/communication/CommUtils.h</itemPath>
-      <itemPath>src/communication/Communication.cpp</itemPath>
-      <itemPath>include/communication/Communication.h</itemPath>
-      <itemPath>src/control/LedControl.cpp</itemPath>
-      <itemPath>include/control/LedControl.h</itemPath>
-      <itemPath>src/master/Master.cpp</itemPath>
-      <itemPath>include/master/Master.h</itemPath>
-      <itemPath>src/communication/Message.cpp</itemPath>
-      <itemPath>include/communication/Message.h</itemPath>
-      <itemPath>src/Program.cpp</itemPath>
-      <itemPath>src/utils/Queue.cpp</itemPath>
-      <itemPath>include/utils/Queue.h</itemPath>
       <itemPath>src/robot/Robot.cpp</itemPath>
       <itemPath>include/robot/Robot.h</itemPath>
       <itemPath>src/robot/RobotModelA.cpp</itemPath>
       <itemPath>include/robot/RobotModelA.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>src/Program.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f4" displayName="Utils" projectFiles="true">
+      <itemPath>src/utils/CircularBuffer.cpp</itemPath>
+      <itemPath>include/utils/CircularBuffer.h</itemPath>
+      <itemPath>src/utils/ColorUtils.cpp</itemPath>
+      <itemPath>include/utils/ColorUtils.h</itemPath>
+      <itemPath>src/utils/Queue.cpp</itemPath>
+      <itemPath>include/utils/Queue.h</itemPath>
       <itemPath>src/utils/SignalHandler.cpp</itemPath>
       <itemPath>include/utils/SignalHandler.h</itemPath>
       <itemPath>include/utils/Utils.h</itemPath>
-      <itemPath>src/ev3dev/ev3dev.cpp</itemPath>
-      <itemPath>include/ev3dev/ev3dev.h</itemPath>
-    </logicalFolder>
-    <logicalFolder name="f4" displayName="Utils" projectFiles="true">
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -75,7 +75,7 @@
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="Debug" type="1">
+    <conf name="D_ARM" type="1">
       <toolsSet>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
@@ -176,7 +176,7 @@
       <item path="src/utils/SignalHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
-    <conf name="Release" type="1">
+    <conf name="R_ARM" type="1">
       <toolsSet>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
@@ -188,6 +188,7 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <standard>8</standard>
           <commandlineTool>arm-linux-gnueabi-g++</commandlineTool>
           <incDir>
             <pElem>include/communication</pElem>
@@ -198,7 +199,7 @@
             <pElem>include/utils</pElem>
             <pElem>include/action</pElem>
           </incDir>
-          <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread</commandLine>
+          <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -286,7 +287,7 @@
       <item path="src/utils/SignalHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
-    <conf name="Debug_Intel" type="1">
+    <conf name="D_DESKTOP" type="1">
       <toolsSet>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
@@ -385,6 +386,117 @@
       <item path="src/utils/Queue.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/SignalHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="R_DESKTOP" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>include/communication</pElem>
+            <pElem>include/control</pElem>
+            <pElem>include/ev3dev</pElem>
+            <pElem>include/master</pElem>
+            <pElem>include/robot</pElem>
+            <pElem>include/utils</pElem>
+            <pElem>include/action</pElem>
+          </incDir>
+          <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11</commandLine>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="include/action/Action.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/Behaviour.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/Command.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/communication/Communication.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/communication/Message.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/control/LedControl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/ev3dev/ev3dev.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/master/Agent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/Robot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/ColorUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/Queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/SignalHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Program.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/action/Action.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/action/Behaviour.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/action/CommandMotor.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/communication/CommUtils.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/communication/Communication.cpp"
+            ex="false"
+            tool="1"
+            flavor2="9">
+      </item>
+      <item path="src/communication/Message.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/control/LedControl.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/ev3dev/ev3dev.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/master/Agent.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/utils/ColorUtils.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/utils/Queue.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/utils/SignalHandler.cpp" ex="false" tool="1" flavor2="9">
       </item>
     </conf>
   </confs>

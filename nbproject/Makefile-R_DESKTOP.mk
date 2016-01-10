@@ -15,15 +15,15 @@ NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
 CC=gcc
-CCC=arm-linux-gnueabi-g++
-CXX=arm-linux-gnueabi-g++
+CCC=g++
+CXX=g++
 FC=gfortran
 AS=as
 
 # Macros
 CND_PLATFORM=GNU-Linux-x86
 CND_DLIB_EXT=so
-CND_CONF=Release
+CND_CONF=R_DESKTOP
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 
@@ -59,8 +59,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-D_GLIBCXX_USE_NANOSLEEP -pthread
-CXXFLAGS=-D_GLIBCXX_USE_NANOSLEEP -pthread
+CCFLAGS=-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11
+CXXFLAGS=-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -82,27 +82,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ev3dev: ${OBJECTFILES}
 ${OBJECTDIR}/src/Program.o: src/Program.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Program.o src/Program.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Program.o src/Program.cpp
 
 ${OBJECTDIR}/src/action/Action.o: src/action/Action.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Action.o src/action/Action.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Action.o src/action/Action.cpp
 
 ${OBJECTDIR}/src/action/Behaviour.o: src/action/Behaviour.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Behaviour.o src/action/Behaviour.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Behaviour.o src/action/Behaviour.cpp
 
 ${OBJECTDIR}/src/action/Command.o: src/action/Command.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Command.o src/action/Command.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Command.o src/action/Command.cpp
 
 ${OBJECTDIR}/src/action/CommandMotor.o: src/action/CommandMotor.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/CommandMotor.o src/action/CommandMotor.cpp
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/CommandMotor.o src/action/CommandMotor.cpp
 
 ${OBJECTDIR}/src/communication/CommUtils.o: src/communication/CommUtils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/communication

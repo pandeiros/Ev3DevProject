@@ -1,0 +1,40 @@
+#! /bin/sh
+
+echo Cleaning latex generated files.
+rm latex/*.aux
+rm latex/*.bbl
+rm latex/*.bcf
+rm latex/*.blg
+rm latex/*.log
+rm latex/*.out
+rm latex/*.run.xml
+rm latex/*.toc
+
+echo Cleaning doxygen generated files.
+rm -rf doc/html
+rm -rf doc/latex
+rm -rf doc/xml
+
+echo Cleaning builds.
+make CONF=D_ARM SUB=yes clean
+make CONF=R_ARM SUB=yes clean
+make CONF=D_DESKTOP SUB=yes clean
+make CONF=R_DESKTOP SUB=yes clean
+
+echo "=================="
+
+echo Making all.
+make all
+
+echo Generate latex.
+cd latex
+pdflatex main
+biber main
+pdflatex main
+pdflatex main
+cd ../
+
+echo Generate documentation.
+cd doc
+./doc_gen
+cd ../
