@@ -11,23 +11,9 @@
 
 using namespace ev3;
 
-const ev3dev::port_type Robot::PORT_ANY{"any"};
-
-//RobotStatus::RobotStatus() { }
-
-//int RobotStatus::getValue(ev3dev::port_type port, unsigned int index)
-//{
-//    return values.at(port).at(index).first;
-//}
-//
-//float RobotStatus::getValueF(ev3dev::port_type port, unsigned int index)
-//{
-//    return static_cast<float> (values.at(port).at(index).first) / values.at(port).at(index).second;
-//}
-
 Robot::Robot() { }
 
-Robot::Robot(RequiredDevices devices, AvailableActions actions)
+Robot::Robot(Devices::RequiredDevices devices, AvailableActions actions)
 : _requiredDevices(devices), _availableActions(actions) { }
 
 Robot::~Robot() { }
@@ -42,7 +28,8 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;
 
-    if (!this->checkDevices())
+    bool devicesChecked = Devices::getInstance()->checkDevices(_requiredDevices);
+    if (!devicesChecked)
     {
         // EXCEPTION
         std::cout << "Nop...\n";
@@ -135,10 +122,10 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     _ledControl.onExclusive(LedControl::GREEN_ALL);
     return;
 
-    if (_motors.size() > 0)
+    if (devicesChecked)
     {
-        auto motorLeft = _motors.at(ev3dev::OUTPUT_B);
-        auto motorRight = _motors.at(ev3dev::OUTPUT_C);
+        auto motorLeft = Devices::getInstance()->getMotor(ev3dev::OUTPUT_B);
+        auto motorRight = Devices::getInstance()->getMotor(ev3dev::OUTPUT_C);
 
         //auto us = _sensors.at(ev3dev::INPUT_1);
 
@@ -158,7 +145,7 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
         action->setEndCondition([&]()-> bool
         {
-            return std::abs(motorLeft.position()) > action->getDistance() * _pulsePerUnitRatio;
+            return std::abs(motorLeft.getMotor().position()) > action->getDistance() * _pulsePerUnitRatio;
         });
 
         ActionRotate * action2 = new ActionRotate(180);
@@ -175,7 +162,7 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
         action2->setEndCondition([&]()-> bool
         {
-            return std::abs(motorLeft.position()) > action2->getRotation() * _pulsePerUnitRatio;
+            return std::abs(motorLeft.getMotor().position()) > action2->getRotation() * _pulsePerUnitRatio;
         });
 
         Action * b = new Action({
@@ -209,134 +196,7 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
 void Robot::stop()
 {
-    for (auto & m : _motors)
-    {
-        m.second.stop();
-    }
+    Devices::getInstance()->stopAllDevices();
 
     _receiveQueue->push(Message(0, 0, 0, Message::ABORT));
 }
-
-//RobotStatus & Robot::getRobotStatus()
-//{
-//    return _status;
-//}
-
-bool Robot::checkDevices()
-{
-    _sensors.clear();
-    _motors.clear();
-
-    // Check input devices.
-    for (auto & input : INPUTS)
-    {
-        auto ultrasonic_sensor = ev3dev::ultrasonic_sensor(input);
-        if (ultrasonic_sensor.connected())
-        {
-            _sensors.insert({input, ultrasonic_sensor});
-            continue;
-        }
-
-        auto touch_sensor = ev3dev::touch_sensor(input);
-        if (touch_sensor.connected())
-        {
-            _sensors.insert({input, touch_sensor});
-            continue;
-        }
-
-        auto color_sensor = ev3dev::color_sensor(input);
-        if (color_sensor.connected())
-        {
-            _sensors.insert({input, color_sensor});
-            continue;
-        }
-
-        auto gyro_sensor = ev3dev::gyro_sensor(input);
-        if (gyro_sensor.connected())
-        {
-            _sensors.insert({input, gyro_sensor});
-            continue;
-        }
-
-        auto infrared_sensor = ev3dev::infrared_sensor(input);
-        if (infrared_sensor.connected())
-        {
-            _sensors.insert({input, infrared_sensor});
-            continue;
-        }
-
-        auto sound_sensor = ev3dev::sound_sensor(input);
-        if (sound_sensor.connected())
-        {
-            _sensors.insert({input, sound_sensor});
-            continue;
-        }
-
-        auto light_sensor = ev3dev::light_sensor(input);
-        if (light_sensor.connected())
-        {
-            _sensors.insert({input, light_sensor});
-            continue;
-        }
-    }
-
-    // Check output devices.
-    for (auto & output : OUTPUTS)
-    {
-        auto largeMotor = ev3dev::large_motor(output);
-        if (largeMotor.connected())
-        {
-            _motors.insert({output, largeMotor});
-            continue;
-        }
-
-        auto mediumMotor = ev3dev::medium_motor(output);
-        if (mediumMotor.connected())
-        {
-            _motors.insert({output, mediumMotor});
-            continue;
-        }
-    }
-
-    // Check required devices.
-    unsigned int ready = _requiredDevices.size();
-    for (auto & device : _requiredDevices)
-    {
-        for (auto & mapping : _motors)
-        {
-            if ((mapping.first == device.first || device.first == PORT_ANY) &&
-                mapping.second.type_name() == device.second)
-            {
-                updateCountPerRot(mapping.second.count_per_rot());
-
-                --ready;
-                continue;
-            }
-        }
-
-        for (auto & mapping : _sensors)
-        {
-            if ((mapping.first == device.first || device.first == PORT_ANY) &&
-                mapping.second.type_name() == device.second)
-            {
-                --ready;
-                continue;
-            }
-        }
-    }
-
-    return !ready;
-}
-
-//void Robot::updateStatus()
-//{
-//    for (auto & sensor : _sensors)
-//    {
-//        for (unsigned int i = 0; i < sensor.second.num_values(); ++i)
-//        {
-//            _status.values[sensor.first][i] = std::make_pair(sensor.second.value(i), sensor.second.decimals());
-//        }
-//    }
-//}
-
-

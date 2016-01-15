@@ -1,46 +1,63 @@
 #pragma once
 
 #include "Command.h"
+#include "Motor.h"
 
 namespace ev3
 {
-
+    /**
+     * \class CommandMotor
+     * Base class for all motor controlling commands.
+     */
     class CommandMotor : public Command
     {
     public:
-        CommandMotor(ev3dev::motor & m);
+        /**
+         * Constructor with ev3dev::motor parameter.
+         * @param m Motor to execute CommandMotor on.
+         */
+        CommandMotor(Motor & motorotor);
+        
+        /**
+         * Print CommandMotors's readable name.
+         * Adds "[MOTOR]" tag in front of the name.
+         */
         virtual void printDebug() override;
     protected:
         const std::string SPEED_REGULATION_ON = "on";
         const std::string SPEED_REGULATION_OFF = "off";
-        ev3dev::motor _m;
+        Motor _motor;
     };
+    
 
+    /**
+     * /class CommandMotorReset
+     */
     class CommandMotorReset : public CommandMotor
     {
     public:
-        CommandMotorReset(ev3dev::motor & m);
+        CommandMotorReset(Motor & motor);
         void execute() override;
     };
 
     class CommandMotorRunForever : public CommandMotor
     {
     public:
-        CommandMotorRunForever(ev3dev::motor & m);
+        CommandMotorRunForever(Motor & motor);
         void execute() override;
     };
 
     class CommandMotorStop : public CommandMotor
     {
     public:
-        CommandMotorStop(ev3dev::motor & m);
+        CommandMotorStop(Motor & motor);
         void execute() override;
     };
 
     class CommandMotorSetSpeedRegEnabled : public CommandMotor
     {
     public:
-        CommandMotorSetSpeedRegEnabled(ev3dev::motor & m, bool value);
+        CommandMotorSetSpeedRegEnabled(Motor & motor, bool value);
         void execute() override;
 
     private:
@@ -50,7 +67,7 @@ namespace ev3
     class CommandMotorSetSpeed : public CommandMotor
     {
     public:
-        CommandMotorSetSpeed(ev3dev::motor & m, int value);
+        CommandMotorSetSpeed(Motor & motor, int value);
         void execute() override;
 
     private:

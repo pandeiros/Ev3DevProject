@@ -2,7 +2,6 @@
 #include "Message.h"
 
 #include <queue>
-//#include <thread>
 #include <mutex>
 
 namespace ev3
@@ -48,16 +47,6 @@ namespace ev3
 
         return msg;
     }
-
-    //template<class T>
-    //Queue<T>::Queue() {
-    //    //    pthread_mutex_init(_mutex, NULL);
-    //}
-    //
-    //template<class T>
-    //Queue<T>::~Queue() {
-    //    //    pthread_mutex_destroy(_mutex);
-    //}
 
     template<class T>
     bool Queue<T>::empty()

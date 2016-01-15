@@ -2,6 +2,7 @@
 
 #include "Robot.h"
 #include "Master.h"
+#include "Devices.h"
 
 namespace ev3
 {
@@ -18,6 +19,8 @@ namespace ev3
                 SignalHandler::robot->stop();
             if (SignalHandler::master)
                 SignalHandler::master->stop();
+            
+            Devices::destroy();
 
             exit(signum);
         };

@@ -35,6 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/include/action/Devices.o \
+	${OBJECTDIR}/include/action/Event.o \
+	${OBJECTDIR}/include/action/SingletonQueue.o \
 	${OBJECTDIR}/src/Program.o \
 	${OBJECTDIR}/src/action/Action.o \
 	${OBJECTDIR}/src/action/Behaviour.o \
@@ -47,8 +50,10 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ev3dev/ev3dev.o \
 	${OBJECTDIR}/src/master/Agent.o \
 	${OBJECTDIR}/src/master/Master.o \
+	${OBJECTDIR}/src/robot/Motor.o \
 	${OBJECTDIR}/src/robot/Robot.o \
 	${OBJECTDIR}/src/robot/RobotModelA.o \
+	${OBJECTDIR}/src/robot/Sensor.o \
 	${OBJECTDIR}/src/utils/CircularBuffer.o \
 	${OBJECTDIR}/src/utils/ColorUtils.o \
 	${OBJECTDIR}/src/utils/Queue.o \
@@ -78,6 +83,21 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ev3dev: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ev3dev ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/include/action/Devices.o: include/action/Devices.cpp 
+	${MKDIR} -p ${OBJECTDIR}/include/action
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/include/action/Devices.o include/action/Devices.cpp
+
+${OBJECTDIR}/include/action/Event.o: include/action/Event.cpp 
+	${MKDIR} -p ${OBJECTDIR}/include/action
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/include/action/Event.o include/action/Event.cpp
+
+${OBJECTDIR}/include/action/SingletonQueue.o: include/action/SingletonQueue.cpp 
+	${MKDIR} -p ${OBJECTDIR}/include/action
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/include/action/SingletonQueue.o include/action/SingletonQueue.cpp
 
 ${OBJECTDIR}/src/Program.o: src/Program.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -139,6 +159,11 @@ ${OBJECTDIR}/src/master/Master.o: src/master/Master.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/master/Master.o src/master/Master.cpp
 
+${OBJECTDIR}/src/robot/Motor.o: src/robot/Motor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/robot
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/robot/Motor.o src/robot/Motor.cpp
+
 ${OBJECTDIR}/src/robot/Robot.o: src/robot/Robot.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/robot
 	${RM} "$@.d"
@@ -148,6 +173,11 @@ ${OBJECTDIR}/src/robot/RobotModelA.o: src/robot/RobotModelA.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/robot
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/robot/RobotModelA.o src/robot/RobotModelA.cpp
+
+${OBJECTDIR}/src/robot/Sensor.o: src/robot/Sensor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/robot
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/robot/Sensor.o src/robot/Sensor.cpp
 
 ${OBJECTDIR}/src/utils/CircularBuffer.o: src/utils/CircularBuffer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/utils

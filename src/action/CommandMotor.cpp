@@ -5,61 +5,61 @@
 
 using namespace ev3;
 
-CommandMotor::CommandMotor(ev3dev::motor & m) : _m(m) { }
+CommandMotor::CommandMotor(Motor & motor) : _motor(motor) { }
 
 void CommandMotor::printDebug()
 {
     std::cout << "[MOTOR] " << _debugInfo << "\n";
 }
 
-CommandMotorReset::CommandMotorReset(ev3dev::motor & m) : CommandMotor(m)
+CommandMotorReset::CommandMotorReset(Motor & motor) : CommandMotor(motor)
 {
     this->_debugInfo = "Reset";
 }
 
 void CommandMotorReset::execute()
 {
-    this->_m.reset();
+    this->_motor.getMotor().reset();
 }
 
-CommandMotorRunForever::CommandMotorRunForever(ev3dev::motor & m) : CommandMotor(m)
+CommandMotorRunForever::CommandMotorRunForever(Motor & motor) : CommandMotor(motor)
 {
     this->_debugInfo = "Run forever";
 }
 
 void CommandMotorRunForever::execute()
 {
-    this->_m.run_forever();
+    this->_motor.getMotor().run_forever();
 }
 
-CommandMotorStop::CommandMotorStop(ev3dev::motor & m) : CommandMotor(m)
+CommandMotorStop::CommandMotorStop(Motor & motor) : CommandMotor(motor)
 {
     this->_debugInfo = "Stop";
 }
 
 void CommandMotorStop::execute()
 {
-    this->_m.stop();
+    this->_motor.getMotor().stop();
 }
 
-CommandMotorSetSpeedRegEnabled::CommandMotorSetSpeedRegEnabled(ev3dev::motor & m, bool value) :
-CommandMotor(m), _value(value)
+CommandMotorSetSpeedRegEnabled::CommandMotorSetSpeedRegEnabled(Motor & motor, bool value) :
+CommandMotor(motor), _value(value)
 {
     this->_debugInfo = "Set speed regulation : " + (_value ? SPEED_REGULATION_ON : SPEED_REGULATION_OFF);
 }
 
 void CommandMotorSetSpeedRegEnabled::execute()
 {
-    this->_m.set_speed_regulation_enabled(_value ? SPEED_REGULATION_ON : SPEED_REGULATION_OFF);
+    this->_motor.getMotor().set_speed_regulation_enabled(_value ? SPEED_REGULATION_ON : SPEED_REGULATION_OFF);
 }
 
-CommandMotorSetSpeed::CommandMotorSetSpeed(ev3dev::motor & m, int value) :
-CommandMotor(m), _value(value)
+CommandMotorSetSpeed::CommandMotorSetSpeed(Motor & motor, int value) :
+CommandMotor(motor), _value(value)
 {
     this->_debugInfo = "Set speed : " + std::to_string(_value);
 }
 
 void CommandMotorSetSpeed::execute()
 {
-    this->_m.set_speed_sp(_value);
+    this->_motor.getMotor().set_speed_sp(_value);
 }

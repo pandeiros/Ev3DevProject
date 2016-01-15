@@ -9,7 +9,7 @@ RobotModelA::RobotModelA()
 : Robot({
     {ev3dev::OUTPUT_B, ev3dev::large_motor::motor_large},
     {ev3dev::OUTPUT_C, ev3dev::large_motor::motor_large},
-    {PORT_ANY, ev3dev::sensor::custom_ultrasonic}
+    {Devices::PORT_ANY, ev3dev::sensor::custom_ultrasonic}
 },
 {
 

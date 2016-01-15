@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="f3" displayName="Actions" projectFiles="true">
+    <logicalFolder name="f3" displayName="Action" projectFiles="true">
       <itemPath>src/action/Action.cpp</itemPath>
       <itemPath>include/action/Action.h</itemPath>
       <itemPath>src/action/Behaviour.cpp</itemPath>
@@ -30,6 +30,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>include/action/Devices.h</itemPath>
+      <itemPath>include/action/Event.h</itemPath>
+      <itemPath>include/action/SingletonQueue.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f7" displayName="Master" projectFiles="true">
       <itemPath>src/master/Agent.cpp</itemPath>
@@ -42,15 +45,22 @@
                    projectFiles="true">
     </logicalFolder>
     <logicalFolder name="f2" displayName="Robot" projectFiles="true">
+      <itemPath>src/robot/Motor.cpp</itemPath>
+      <itemPath>include/robot/Motor.h</itemPath>
       <itemPath>src/robot/Robot.cpp</itemPath>
       <itemPath>include/robot/Robot.h</itemPath>
       <itemPath>src/robot/RobotModelA.cpp</itemPath>
       <itemPath>include/robot/RobotModelA.h</itemPath>
+      <itemPath>src/robot/Sensor.cpp</itemPath>
+      <itemPath>include/robot/Sensor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>include/action/Devices.cpp</itemPath>
+      <itemPath>include/action/Event.cpp</itemPath>
       <itemPath>src/Program.cpp</itemPath>
+      <itemPath>include/action/SingletonQueue.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="Utils" projectFiles="true">
       <itemPath>src/utils/CircularBuffer.cpp</itemPath>
@@ -105,6 +115,18 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/Devices.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/Devices.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/Event.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/SingletonQueue.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/SingletonQueue.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
@@ -122,9 +144,13 @@
       </item>
       <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/robot/Motor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/robot/Robot.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/Sensor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -163,9 +189,13 @@
       </item>
       <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/robot/Motor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/robot/Sensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -216,6 +246,18 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/Devices.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/Devices.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/Event.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/SingletonQueue.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/SingletonQueue.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
@@ -233,9 +275,13 @@
       </item>
       <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/robot/Motor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/robot/Robot.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/Sensor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -274,9 +320,13 @@
       </item>
       <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/robot/Motor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/robot/Sensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -317,6 +367,18 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/Devices.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/Devices.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/Event.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/SingletonQueue.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/SingletonQueue.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
@@ -334,9 +396,13 @@
       </item>
       <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/robot/Motor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/robot/Robot.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/Sensor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -375,9 +441,13 @@
       </item>
       <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/robot/Motor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/robot/Sensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -428,6 +498,18 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/Devices.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/Devices.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/Event.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/action/SingletonQueue.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="include/action/SingletonQueue.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
@@ -445,9 +527,13 @@
       </item>
       <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/robot/Motor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/robot/Robot.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/Sensor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -486,9 +572,13 @@
       </item>
       <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/robot/Motor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="9">
       </item>
       <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/robot/Sensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="9">
       </item>

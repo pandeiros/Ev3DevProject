@@ -2,7 +2,7 @@
 #include "SignalHandler.h"
 #include "Communication.h"  
 #include "Utils.h"
-//#include "Message.h"
+#include "Devices.h"
 
 #include <signal.h>
 #include <errno.h>
@@ -72,6 +72,8 @@ int main(int argc, char * argv[])
         std::cout << ev3::ERR_WRONG_MODE;
         return -1;
     }
+    
+    ev3::Devices::destroy();
     
     return 0;
 }
