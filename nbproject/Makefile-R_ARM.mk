@@ -35,9 +35,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/include/action/Devices.o \
-	${OBJECTDIR}/include/action/Event.o \
-	${OBJECTDIR}/include/action/SingletonQueue.o \
 	${OBJECTDIR}/src/Program.o \
 	${OBJECTDIR}/src/action/Action.o \
 	${OBJECTDIR}/src/action/Behaviour.o \
@@ -45,17 +42,21 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/action/CommandMotor.o \
 	${OBJECTDIR}/src/communication/CommUtils.o \
 	${OBJECTDIR}/src/communication/Communication.o \
+	${OBJECTDIR}/src/communication/Event.o \
 	${OBJECTDIR}/src/communication/Message.o \
 	${OBJECTDIR}/src/control/LedControl.o \
 	${OBJECTDIR}/src/ev3dev/ev3dev.o \
 	${OBJECTDIR}/src/master/Agent.o \
 	${OBJECTDIR}/src/master/Master.o \
+	${OBJECTDIR}/src/robot/Devices.o \
 	${OBJECTDIR}/src/robot/Motor.o \
 	${OBJECTDIR}/src/robot/Robot.o \
 	${OBJECTDIR}/src/robot/RobotModelA.o \
 	${OBJECTDIR}/src/robot/Sensor.o \
 	${OBJECTDIR}/src/utils/CircularBuffer.o \
 	${OBJECTDIR}/src/utils/ColorUtils.o \
+	${OBJECTDIR}/src/utils/EventQueue.o \
+	${OBJECTDIR}/src/utils/Logger.o \
 	${OBJECTDIR}/src/utils/Queue.o \
 	${OBJECTDIR}/src/utils/SignalHandler.o
 
@@ -83,21 +84,6 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ev3dev: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ev3dev ${OBJECTFILES} ${LDLIBSOPTIONS}
-
-${OBJECTDIR}/include/action/Devices.o: include/action/Devices.cpp 
-	${MKDIR} -p ${OBJECTDIR}/include/action
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/include/action/Devices.o include/action/Devices.cpp
-
-${OBJECTDIR}/include/action/Event.o: include/action/Event.cpp 
-	${MKDIR} -p ${OBJECTDIR}/include/action
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/include/action/Event.o include/action/Event.cpp
-
-${OBJECTDIR}/include/action/SingletonQueue.o: include/action/SingletonQueue.cpp 
-	${MKDIR} -p ${OBJECTDIR}/include/action
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/include/action/SingletonQueue.o include/action/SingletonQueue.cpp
 
 ${OBJECTDIR}/src/Program.o: src/Program.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -134,6 +120,11 @@ ${OBJECTDIR}/src/communication/Communication.o: src/communication/Communication.
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/communication/Communication.o src/communication/Communication.cpp
 
+${OBJECTDIR}/src/communication/Event.o: src/communication/Event.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/communication
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/communication/Event.o src/communication/Event.cpp
+
 ${OBJECTDIR}/src/communication/Message.o: src/communication/Message.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/communication
 	${RM} "$@.d"
@@ -158,6 +149,11 @@ ${OBJECTDIR}/src/master/Master.o: src/master/Master.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/master
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/master/Master.o src/master/Master.cpp
+
+${OBJECTDIR}/src/robot/Devices.o: src/robot/Devices.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/robot
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/robot/Devices.o src/robot/Devices.cpp
 
 ${OBJECTDIR}/src/robot/Motor.o: src/robot/Motor.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/robot
@@ -188,6 +184,16 @@ ${OBJECTDIR}/src/utils/ColorUtils.o: src/utils/ColorUtils.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/utils
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utils/ColorUtils.o src/utils/ColorUtils.cpp
+
+${OBJECTDIR}/src/utils/EventQueue.o: src/utils/EventQueue.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utils/EventQueue.o src/utils/EventQueue.cpp
+
+${OBJECTDIR}/src/utils/Logger.o: src/utils/Logger.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/utils/Logger.o src/utils/Logger.cpp
 
 ${OBJECTDIR}/src/utils/Queue.o: src/utils/Queue.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/utils

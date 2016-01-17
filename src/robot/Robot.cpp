@@ -8,6 +8,8 @@
 
 #include "Behaviour.h"
 #include "Agent.h"
+#include "EventQueue.h"
+#include "Event.h"
 
 using namespace ev3;
 

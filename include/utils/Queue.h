@@ -6,14 +6,10 @@
 
 namespace ev3
 {
-
     template<class T>
     class Queue
     {
     public:
-        //        Queue();
-        //        virtual ~Queue();
-
         void push(T message);
         T pop();
         bool empty();

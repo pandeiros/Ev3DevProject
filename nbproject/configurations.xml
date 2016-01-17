@@ -16,6 +16,8 @@
       <itemPath>include/communication/CommUtils.h</itemPath>
       <itemPath>src/communication/Communication.cpp</itemPath>
       <itemPath>include/communication/Communication.h</itemPath>
+      <itemPath>src/communication/Event.cpp</itemPath>
+      <itemPath>include/communication/Event.h</itemPath>
       <itemPath>src/communication/Message.cpp</itemPath>
       <itemPath>include/communication/Message.h</itemPath>
     </logicalFolder>
@@ -30,9 +32,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>include/action/Devices.h</itemPath>
-      <itemPath>include/action/Event.h</itemPath>
-      <itemPath>include/action/SingletonQueue.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f7" displayName="Master" projectFiles="true">
       <itemPath>src/master/Agent.cpp</itemPath>
@@ -45,6 +44,8 @@
                    projectFiles="true">
     </logicalFolder>
     <logicalFolder name="f2" displayName="Robot" projectFiles="true">
+      <itemPath>src/robot/Devices.cpp</itemPath>
+      <itemPath>include/robot/Devices.h</itemPath>
       <itemPath>src/robot/Motor.cpp</itemPath>
       <itemPath>include/robot/Motor.h</itemPath>
       <itemPath>src/robot/Robot.cpp</itemPath>
@@ -57,16 +58,17 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>include/action/Devices.cpp</itemPath>
-      <itemPath>include/action/Event.cpp</itemPath>
       <itemPath>src/Program.cpp</itemPath>
-      <itemPath>include/action/SingletonQueue.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="Utils" projectFiles="true">
       <itemPath>src/utils/CircularBuffer.cpp</itemPath>
       <itemPath>include/utils/CircularBuffer.h</itemPath>
       <itemPath>src/utils/ColorUtils.cpp</itemPath>
       <itemPath>include/utils/ColorUtils.h</itemPath>
+      <itemPath>src/utils/EventQueue.cpp</itemPath>
+      <itemPath>include/utils/EventQueue.h</itemPath>
+      <itemPath>src/utils/Logger.cpp</itemPath>
+      <itemPath>include/utils/Logger.h</itemPath>
       <itemPath>src/utils/Queue.cpp</itemPath>
       <itemPath>include/utils/Queue.h</itemPath>
       <itemPath>src/utils/SignalHandler.cpp</itemPath>
@@ -115,24 +117,14 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/action/Devices.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/Devices.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/action/Event.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/Event.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/action/SingletonQueue.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/SingletonQueue.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="include/communication/Event.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Message.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -143,6 +135,8 @@
       <item path="include/master/Agent.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/Devices.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/robot/Motor.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -155,6 +149,10 @@
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/ColorUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/EventQueue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/Logger.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/Queue.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -179,6 +177,8 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/communication/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/communication/Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/control/LedControl.cpp" ex="false" tool="1" flavor2="0">
@@ -188,6 +188,8 @@
       <item path="src/master/Agent.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/robot/Devices.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/Motor.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -200,6 +202,10 @@
       <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/ColorUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/utils/EventQueue.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/utils/Logger.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/Queue.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -246,24 +252,14 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/action/Devices.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/Devices.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/action/Event.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/Event.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/action/SingletonQueue.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/SingletonQueue.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="include/communication/Event.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Message.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -274,6 +270,8 @@
       <item path="include/master/Agent.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/Devices.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/robot/Motor.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -286,6 +284,10 @@
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/ColorUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/EventQueue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/Logger.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/Queue.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -310,6 +312,8 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/communication/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/communication/Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/control/LedControl.cpp" ex="false" tool="1" flavor2="0">
@@ -319,6 +323,8 @@
       <item path="src/master/Agent.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/robot/Devices.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/Motor.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -331,6 +337,10 @@
       <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/ColorUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/utils/EventQueue.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/utils/Logger.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/Queue.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -367,24 +377,14 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/action/Devices.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/Devices.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/action/Event.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/Event.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/action/SingletonQueue.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/SingletonQueue.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="include/communication/Event.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Message.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -395,6 +395,8 @@
       <item path="include/master/Agent.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/Devices.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/robot/Motor.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -407,6 +409,10 @@
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/ColorUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/EventQueue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/Logger.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/Queue.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -431,6 +437,8 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/communication/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/communication/Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/control/LedControl.cpp" ex="false" tool="1" flavor2="0">
@@ -440,6 +448,8 @@
       <item path="src/master/Agent.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/robot/Devices.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/Motor.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -452,6 +462,10 @@
       <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/ColorUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/utils/EventQueue.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/utils/Logger.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/Queue.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -498,24 +512,14 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/action/Devices.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/Devices.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/action/Event.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/Event.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/action/SingletonQueue.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="include/action/SingletonQueue.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="include/communication/Event.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Message.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -526,6 +530,8 @@
       <item path="include/master/Agent.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/master/Master.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/robot/Devices.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/robot/Motor.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -538,6 +544,10 @@
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/ColorUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/EventQueue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utils/Logger.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/Queue.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -562,6 +572,8 @@
             tool="1"
             flavor2="9">
       </item>
+      <item path="src/communication/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/communication/Message.cpp" ex="false" tool="1" flavor2="9">
       </item>
       <item path="src/control/LedControl.cpp" ex="false" tool="1" flavor2="9">
@@ -571,6 +583,8 @@
       <item path="src/master/Agent.cpp" ex="false" tool="1" flavor2="9">
       </item>
       <item path="src/master/Master.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/robot/Devices.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/Motor.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -583,6 +597,10 @@
       <item path="src/utils/CircularBuffer.cpp" ex="false" tool="1" flavor2="9">
       </item>
       <item path="src/utils/ColorUtils.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/utils/EventQueue.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/utils/Logger.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/utils/Queue.cpp" ex="false" tool="1" flavor2="9">
       </item>
