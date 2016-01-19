@@ -1,0 +1,67 @@
+\chapter{Opis systemu}
+
+\ldots
+%TODO
+
+\section{Wymagania}
+
+\ldots
+% TODO
+
+\section{Cechy}
+
+\ldots
+% TODO
+
+\section{Użyta technologia}
+
+Istnieje wiele dostępnych środowisk dedykowanych LEGO Mindstorms EV3, z których każde ma trochę inne zastosowanie. Najbardziej dogodnym rozwiązaniem okazał się projekt ev3dev.
+
+\subsection{O ev3dev}
+Projekt ev3dev to dopasowana do potrzeb klocka LEGO dystrybucja Linuxa (Debian Jessie), która jest wgrywana na kartę SD i uruchamiana obok istniejącego systemu. Zawsze istnieje możliwość przywrócenia domyślnego stanu klocka przez wyjęcie karty z systemem. Platforma stworzona w ramach ev3dev zawiera wiele sterowników, nie tylko do akcesoriów zestawu EV3, ale także poprzednich dystrybucji LEGO Mindstorms oraz komponentów wytwarzanych przez osoby trzecie. Możliwe jest programowanie klocka w języku C/C++, ale ev3dev obsługuje też wiele innych języków. To wszystko daje dużą swobodę samego programowania, jak i sposobu tworzenia programu i komunikacji z urządzeniem. Kompilacja aplikacji może odbywać się bezpośrednio na urządzeniu lub na komputerze z wbudowanym kompilatorem na procesory typu ARM. Komunikacja z klockiem centralnym realizowalna jest na trzy sposoby: Za pomocą Wi-Fi, Bluetooth lub przy użyciu kabla USB.
+
+\subsection{Konfiguracja}
+Konfiguracja nowego systemu odbyła się w kilku krokach:
+
+\begin{enumerate}
+    \item Na kartę microSDHC wgrany został specjalne spreparowany obraz systemu, pobrany ze strony głównej projektu ev3dev.
+    \item Przy użyciu połączenia SSH przez kabel USB, system został skonfigurowany i pobrane zostały wszystkie wymagane pakiety.
+    \item Dalsza komunikacja odbywała się bezprzewodowo z użyciem urządzenia NETGEAR WNA1100, podłączonego do portu USB klocka centralnego.
+    \item Aplikacja była kompilowana na laptopie z systemem Ubuntu i synchronizowana zdalnie z robotem.
+\end{enumerate}
+
+\subsection{Biblioteka}
+W ramach projektu ev3dev dostępne są dwa pliki źródłowe napisane w języku C++. Dostarczają one wymagany interfejs do sterowania klockiem centralnym i podłączonymi do niego urządzeniami.\\
+
+\noindent Wersja użytej biblioteki: 0.9.2-pre, rev 3.
+
+\subsubsection{Wprowadzone zmiany}
+Biblioteka nie była kompatybilna ze wszystkimi urządzeniami dostarczonymi przez LEGO, dlatego wymagane było:
+\begin{itemize}
+    \item Dopisanie rozpoznawalnych nazw sterowników dla sensorów.
+    \item Zaimplementowanie własnej obsługi diod LED przedniego panelu, w szczególności funkcji migania.
+\end{itemize}
+
+\subsection{Możliwości}
+Użyte środowisko Linux orax język programowania C++ dostarczają praktycznie pełnię możliwości programistycznych, a w szczególności:
+\begin{itemize}
+    \item Użycie biblioteki stl i zgodność ze standardem C++11.
+    \item Wątki.
+    \item Polimorfizm.
+    \item Komunikację przez protokół UDP z wykorzystaniem gniazd.
+\end{itemize}
+
+\subsection{Narzędzia}
+Projekt aplikacji był rozwijany z wykorzystaniem narzędzie NetBeans. Mimo iż sama aplikacja może być skompilowana z poziomu konsoli i narzędzia Makefile, NetBeans dostarcza także wygodne narzędzia debugujące oraz przyspiesza pisanie kodu.
+
+\subsubsection{Konfiguracje aplikacji}
+Zostały zdefiniowane dwie domyślne konfiguracje:
+\begin{itemize}
+    \item D\_ARM: konfiguracja przeznaczona na urządzenia z procesorami typu ARM. Domyślnie przeznaczona do uruchamiania na robocie.
+    \item D\_DESKTOP: konfiguracja kompilowana z myślą o tradycyjnych komputerach osobistych. Domyślnie przeznaczona do uruchomienia w trybie nadzorcy systemu, komunikującego się zdalnie z robotami.
+\end{itemize}
+\noindent Obie konfiguracje posiadają dodatkowo wersję z przedrostkiem {\tt R\_}, które oznaczają wersję Release zamiast wersji Debug.\\
+
+Inne użyte narzędzia to przede wszystkim aplikacja Doxygen służąca generowaniu dokumentacji kodu programu, system kontroli wersji Git do zarządzania całym projektem oraz oprogramowanie LaTeX, za pomocą którego wygenerowany został ten dokument.
+
+\subsection{Konstrukcja robota}

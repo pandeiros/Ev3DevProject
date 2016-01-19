@@ -1,3 +1,46 @@
 \chapter{Wstęp}
 
-Tematyka pracy związana jest z badaniami prowadzonymi w Zakładzie ZOiAK Instytutu Informatyki w zakresie monitorowania anomalii oraz wydajności systemów komputerowych \cite{introd_1,introd_2,introd_3,introd_4}.
+Celem niniejszej pracy było zaprojektowanie i implementacja aplikacji kontrolującej zachowanie robotów mobilnych. Jest odpowiedzialna za nadzór nad zachowaniami robotów (agentów), sterowanie sensorami i efektorami oraz komunikację z wyższymi warstwami architektury, weryfikującymi poprawność całego systemu.
+
+...
+
+% TODO
+
+\section{Motywacja}
+
+Motywacją do podjęcia powyższego tematu było przetestowanie możliwości programowalnych oraz technicznych robota zbudowanego z klocków LEGO Mindstorms EV3. Aplikacja działająca na urządzeniu była napisana z użyciem biblioteki ev3dev \cite{ev3dev} w języku C++.
+
+Możliwość dostępu do sterującego klockiem centralnym systemu Linux zdejmuje ograniczenie używania prostych środowisk graficznych i pozwala osiągnąć dużo więcej małym kosztem. Należało zatem sprawdzić, co najnowsza wersja LEGO Mindstorms ma do zaoferowania, w szczególności:
+\begin{itemize}
+    \item Wydajność napisanych aplikacji z użyciem ww. bilbioteki.
+    \item Skuteczność komunikacji z wykorzystaniem bezprzewodowej sieci Wi-Fi.
+    \item \dots
+    % TODO
+\end{itemize}
+
+\section{Założenia}
+
+Zostały przyjęte następujące założenia:
+\begin{itemize}
+  \item Każdy agent jest zdolny do wykonywania pewnych konkretnych zachowań niezależnie od pozostałych agentów.
+  \item Zachowania te są reprezentowane za pomocą automatu skończonego.
+  \item Dany robot może, ale nie musi być zdolny do wykonania konkretnej czynności. Jest to zależne od podłączonych do niego sensorów i efektorów.
+  \item Każdy robot samodzielnie generuje sposób wykonania danej akcji, na podstawie dostępnych urządzeń.
+  \item Zachowania mogą być dynamicznie tworzone z użyciem specjalnej składni.
+  \item Agenci komunikują się zarówno z jednostką centralną (nadzorująca) jak i między sobą za pomocą sieci bezprzewodowej.
+  \item Urządzeniem nadzorującym może być inny robot, ale pożądana jest też możliwość kontroli z poziomu zwykłego komputera.
+  \item System powinien dostosować się do braków w łączności, umożliwiając komunikację przez pośrednictwo innych agentów.
+\end{itemize}
+
+\section{Ograniczenia}
+
+\ldots
+% TODO
+
+\section{Zawartość rozdziałów}
+
+\begin{description}
+  \item[Rozdział 1] \ldots
+\end{description}
+
+% TODO

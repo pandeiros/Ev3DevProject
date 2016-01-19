@@ -11,6 +11,7 @@ latex/*.blg
 latex/*.log
 latex/main.out
 latex/main.run.xml
+latex/main.pdf
 
 doc/latex/
 doc/xml/
