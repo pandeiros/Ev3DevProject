@@ -32,6 +32,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>include/robot/RobotState.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f7" displayName="Master" projectFiles="true">
       <itemPath>src/master/Agent.cpp</itemPath>
@@ -59,6 +60,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/Program.cpp</itemPath>
+      <itemPath>src/robot/RobotState.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="Utils" projectFiles="true">
       <itemPath>src/utils/CircularBuffer.cpp</itemPath>
@@ -144,6 +146,8 @@
       </item>
       <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/robot/RobotState.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/robot/Sensor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
@@ -196,6 +200,8 @@
       <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/robot/RobotState.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/Sensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -279,6 +285,8 @@
       </item>
       <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/robot/RobotState.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/robot/Sensor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
@@ -331,6 +339,8 @@
       <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/robot/RobotState.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/Sensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -404,6 +414,8 @@
       </item>
       <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/robot/RobotState.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/robot/Sensor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
@@ -456,6 +468,8 @@
       <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/robot/RobotState.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/Sensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -539,6 +553,8 @@
       </item>
       <item path="include/robot/RobotModelA.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/robot/RobotState.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/robot/Sensor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utils/CircularBuffer.h" ex="false" tool="3" flavor2="0">
@@ -591,6 +607,8 @@
       <item path="src/robot/Robot.cpp" ex="false" tool="1" flavor2="9">
       </item>
       <item path="src/robot/RobotModelA.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/robot/RobotState.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/robot/Sensor.cpp" ex="false" tool="1" flavor2="0">
       </item>

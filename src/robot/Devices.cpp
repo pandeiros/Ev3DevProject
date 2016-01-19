@@ -30,7 +30,7 @@ Sensor Devices::getSensor(ev3dev::port_type port)
     return _sensors.at(port);
 }
 
-bool Devices::checkDevices(RequiredDevices requiredDevices)
+bool Devices::checkDevices(RequiredDevices & requiredDevices)
 {
     _sensors.clear();
     _motors.clear();

@@ -22,7 +22,7 @@ namespace ev3
         static Devices * getInstance();
         static void destroy();
         
-        bool checkDevices(RequiredDevices devices);
+        bool checkDevices(RequiredDevices & devices);
         void update();
         void addListener();
         

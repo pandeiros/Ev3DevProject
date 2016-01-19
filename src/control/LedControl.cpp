@@ -46,9 +46,40 @@ void LedControl::off(unsigned int leds)
         LED::green_right.off();
 }
 
-void LedControl::flash(unsigned int msInterval, unsigned int repeat, unsigned int brightness)
+void LedControl::setColor(LedColors color)
+{
+    switch (color)
+    {
+        case RED:
+            this->onExclusive(RED_ALL, MAX_BRIGHTNESS);
+            break;
+        case AMBER:
+            this->on(RED_ALL, MAX_BRIGHTNESS);
+            this->on(GREEN_ALL, 150);
+            break;
+        case YELLOW:
+            this->on(RED_ALL, 100);
+            this->on(GREEN_ALL, MAX_BRIGHTNESS);
+            break;
+        case GREEN:
+            this->onExclusive(GREEN_ALL, MAX_BRIGHTNESS);
+            break;
+        default:
+            break;
+    }
+}
+
+void LedControl::flash(unsigned int leds, unsigned int msInterval, unsigned int repeat,
+                       unsigned int brightnessRed, unsigned int brightnessGreen)
 {
     typedef ev3dev::led LED;
+    this->off(ALL);
+
+    if (!_isFlashingEnded)
+    {
+        this->endFlashing();
+    }
+
     _isFlashingEnded = false;
 
     bool * stop = &_isFlashingEnded;
@@ -61,11 +92,14 @@ void LedControl::flash(unsigned int msInterval, unsigned int repeat, unsigned in
                 {
                     if (i % 2 == 0)
                     {
-                        LED::red_left.set_brightness(brightness);
+                        this->on(leds & RED_ALL, brightnessRed);
+                        this->on(leds & GREEN_ALL, brightnessGreen);
+                        //LED::red_left.set_brightness(brightness);
                     }
                     else
                     {
-                        LED::red_left.off();
+                        this->off(leds);
+                        //LED::red_left.off();
                     }
 
                     std::this_thread::sleep_for(std::chrono::milliseconds(msInterval / 2));
@@ -80,11 +114,14 @@ void LedControl::flash(unsigned int msInterval, unsigned int repeat, unsigned in
                 {
                     if (i % 2 == 0)
                     {
-                        LED::red_left.set_brightness(brightness);
+                        this->on(leds & RED_ALL, brightnessRed);
+                        this->on(leds & GREEN_ALL, brightnessGreen);
+                        //LED::red_left.set_brightness(brightness);
                     }
                     else
                     {
-                        LED::red_left.off();
+                        this->off(leds);
+                        //LED::red_left.off();
                     }
                     std::this_thread::sleep_for(std::chrono::milliseconds(msInterval / 2));
                     i = (i + 1) % 2;
@@ -92,6 +129,37 @@ void LedControl::flash(unsigned int msInterval, unsigned int repeat, unsigned in
             }
 
         }};
+}
+
+void LedControl::flashColor(LedColors color, unsigned int msInterval, unsigned int repeat)
+{
+    unsigned int leds = 0;
+    unsigned int redBrightness = MAX_BRIGHTNESS;
+    unsigned int greenBrightness = MAX_BRIGHTNESS;
+    
+    switch (color)
+    {
+        case RED:
+            leds = RED_ALL;
+            greenBrightness = 0;
+            break;
+        case AMBER:
+            leds = ALL;
+            greenBrightness = 150;
+            break;
+        case YELLOW:
+            leds = ALL;
+            redBrightness = 100;
+            break;
+        case GREEN:
+            leds = GREEN_ALL;
+            redBrightness = 0;
+            break;
+        default:
+            break;
+    }
+    
+    this->flash(leds, msInterval, repeat, redBrightness, greenBrightness);
 }
 
 void LedControl::endFlashing()

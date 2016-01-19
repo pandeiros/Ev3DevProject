@@ -6,6 +6,8 @@
 #include "Queue.h"
 #include "LedControl.h"
 #include "Devices.h"
+#include "RobotState.h"
+
 #include <vector>
 #include <thread>
 
@@ -40,6 +42,8 @@ namespace ev3
         Queue<Message> * _receiveQueue;
         
         LedControl _ledControl;
+        
+        RobotState * state = new RobotStateIdle(&_ledControl);
 
     private:
         //void updateStatus();

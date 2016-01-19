@@ -8,6 +8,7 @@ namespace ev3
     class LedControl
     {
     public:
+        const static unsigned int MAX_BRIGHTNESS = 255;
 
         enum LedType
         {
@@ -17,18 +18,28 @@ namespace ev3
             GREEN_R = 1 << 3,
             RED_ALL = RED_L | RED_R,
             GREEN_ALL = GREEN_L | GREEN_R,
-            ALL = RED_ALL | GREEN_ALL
+            ALL = RED_ALL | GREEN_ALL,
         };
-        
+
+        enum LedColors
+        {
+            RED,
+            AMBER,
+            YELLOW,
+            GREEN
+        };
+
         virtual ~LedControl();
 
-        void on(unsigned int leds = LedType::ALL, unsigned int brightness = 255);
-        void onExclusive(unsigned int leds = LedType::ALL, unsigned int brightness = 255);
+        void on(unsigned int leds = LedType::ALL, unsigned int brightness = MAX_BRIGHTNESS);
+        void onExclusive(unsigned int leds = LedType::ALL, unsigned int brightness = MAX_BRIGHTNESS);
         void off(unsigned int leds = LedType::ALL);
+        void setColor(LedColors color);
 
-        // Only one led can flash: red_left
         // Repeat: 0 for infinite flashing.
-        void flash(unsigned int msInterval, unsigned int repeat = 1, unsigned int brightness = 255);
+        void flash(unsigned int leds, unsigned int msInterval, unsigned int repeat = 1,
+                unsigned int brightnessRed = MAX_BRIGHTNESS, unsigned int brightnessGreen = MAX_BRIGHTNESS);
+        void flashColor(LedColors color, unsigned int msInterval, unsigned int repeat = 1);
 
         void endFlashing();
 

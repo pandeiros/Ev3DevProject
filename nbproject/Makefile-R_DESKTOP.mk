@@ -52,6 +52,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/robot/Motor.o \
 	${OBJECTDIR}/src/robot/Robot.o \
 	${OBJECTDIR}/src/robot/RobotModelA.o \
+	${OBJECTDIR}/src/robot/RobotState.o \
 	${OBJECTDIR}/src/robot/Sensor.o \
 	${OBJECTDIR}/src/utils/CircularBuffer.o \
 	${OBJECTDIR}/src/utils/ColorUtils.o \
@@ -169,6 +170,11 @@ ${OBJECTDIR}/src/robot/RobotModelA.o: src/robot/RobotModelA.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/robot
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/robot/RobotModelA.o src/robot/RobotModelA.cpp
+
+${OBJECTDIR}/src/robot/RobotState.o: src/robot/RobotState.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/robot
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/robot/RobotState.o src/robot/RobotState.cpp
 
 ${OBJECTDIR}/src/robot/Sensor.o: src/robot/Sensor.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/robot

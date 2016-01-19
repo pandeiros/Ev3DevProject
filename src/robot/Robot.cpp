@@ -29,6 +29,8 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 {
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;
+    
+    std::cout << _requiredDevices[0].first << " " << _requiredDevices[0].second << "\n";
 
     bool devicesChecked = Devices::getInstance()->checkDevices(_requiredDevices);
     if (!devicesChecked)
@@ -48,6 +50,9 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     Message msg = receiveQueue->pop();
     while (!stop)
     {
+        state = state->process(Message(std::rand(), MASTER_ID, _commId++, std::rand() % 2 == 0 ? Message::MASTER : Message::MASTER_OVER, { }));
+//        state = state->process(msg);
+        
         if (msg.getType() == Message::MASTER_OVER)
             break;
 
@@ -70,7 +75,7 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
         if (msg.empty())
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(200));
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
             if (!receiveQueue->empty())
                 msg = receiveQueue->pop();
@@ -87,7 +92,7 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
         //            std::cout << s << " ";
         //        std::cout << "\n";
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
         msg = receiveQueue->pop();
     }
