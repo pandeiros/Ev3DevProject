@@ -1,8 +1,5 @@
 #include "RobotModelA.h"
 
-//#include <iostream>
-//#include "ev3dev.h"
-
 using namespace ev3;
 
 RobotModelA::RobotModelA()

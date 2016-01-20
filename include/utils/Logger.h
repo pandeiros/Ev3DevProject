@@ -12,7 +12,7 @@ namespace ev3
          * 
          */
         enum LogLevel {
-            VERBOSE = 1,        // 
+            VERBOSE = 1,        
             DEBUG = 1 << 1,
             INFO = 1 << 2,
             WARNING = 1 << 3,

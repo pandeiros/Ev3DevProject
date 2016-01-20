@@ -32,7 +32,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>include/robot/RobotState.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f7" displayName="Master" projectFiles="true">
       <itemPath>src/master/Agent.cpp</itemPath>
@@ -53,6 +52,8 @@
       <itemPath>include/robot/Robot.h</itemPath>
       <itemPath>src/robot/RobotModelA.cpp</itemPath>
       <itemPath>include/robot/RobotModelA.h</itemPath>
+      <itemPath>src/robot/RobotState.cpp</itemPath>
+      <itemPath>include/robot/RobotState.h</itemPath>
       <itemPath>src/robot/Sensor.cpp</itemPath>
       <itemPath>include/robot/Sensor.h</itemPath>
     </logicalFolder>
@@ -60,7 +61,6 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/Program.cpp</itemPath>
-      <itemPath>src/robot/RobotState.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="Utils" projectFiles="true">
       <itemPath>src/utils/CircularBuffer.cpp</itemPath>

@@ -46,7 +46,7 @@ int main(int argc, char * argv[])
         delete sendQueue;
         delete receiveQueue;
     }
-    else if (mode == ev3::MODE_SLAVE || mode == "")
+    else if (mode == ev3::MODE_AGENT || mode == "")
     {
         ev3::Communication comm;
         ev3::RobotModelA * robot = new ev3::RobotModelA;

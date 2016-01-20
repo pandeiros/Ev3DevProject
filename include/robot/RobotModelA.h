@@ -12,7 +12,6 @@ namespace ev3
         virtual ~RobotModelA();
     private:
         float _wheelRadius = 5.75 / 2.f;
-
     };
 }
 

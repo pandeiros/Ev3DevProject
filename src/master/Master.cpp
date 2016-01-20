@@ -62,22 +62,10 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
         if (_agentId == MASTER_ID + 3)
             break;
 
-        //parseMessage(msg);
-
-//        std::cout << msg.getMessageId() << " : ";
-//        for (auto & s : msg.getParameters())
-//            std::cout << s << " ";
-//        std::cout << "\n";
-
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
         msg = receiveQueue->pop();
     }
-
-//    std::cout << msg.getMessageId() << " : ";
-//    for (auto & s : msg.getParameters())
-//        std::cout << s << " ";
-//    std::cout << "\n";
 
     return;
 }

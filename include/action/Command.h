@@ -8,6 +8,7 @@ namespace ev3
 {
 
     /**
+     * @class Command
      * Base class for all command controlling classes.
      * Each Command class encapsulates basic motor or sensor operation.
      */

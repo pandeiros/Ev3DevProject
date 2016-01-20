@@ -1,9 +1,15 @@
 #pragma once
 
+#include <chrono>
+
 namespace ev3
 {
+    typedef std::chrono::high_resolution_clock HighResClock;
+    typedef std::chrono::duration<double, std::milli> DurationMilli;
+//    std::chrono::high_resolution_clock
+    
     static const std::string MODE_MASTER = "master";
-    static const std::string MODE_SLAVE = "robot";
+    static const std::string MODE_AGENT = "robot";
     
     static const std::string ERR_WRONG_NO_OF_ARGS = "Invalid number of parameters.\n";
     static const std::string ERR_WRONG_MODE = "Invalid mode given.\n";

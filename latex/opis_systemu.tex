@@ -57,11 +57,26 @@ Projekt aplikacji był rozwijany z wykorzystaniem narzędzie NetBeans. Mimo iż 
 \subsubsection{Konfiguracje aplikacji}
 Zostały zdefiniowane dwie domyślne konfiguracje:
 \begin{itemize}
-    \item D\_ARM: konfiguracja przeznaczona na urządzenia z procesorami typu ARM. Domyślnie przeznaczona do uruchamiania na robocie.
+    \item D\_ARM: konfiguracja przeznaczona na urządzenia z procesorami typu ARM. Domyślnie przeznaczona do uruchamiania na robocie mobilnym.
+    \begin{description}
+        \item[Kompilator:] {\small arm-linux-gnueabi-g++}
+        \item[Flagi kompilacji:] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread\\ -static-libstdc++ -std=c++11 -DAGENT}
+    \end{description}
     \item D\_DESKTOP: konfiguracja kompilowana z myślą o tradycyjnych komputerach osobistych. Domyślnie przeznaczona do uruchomienia w trybie nadzorcy systemu, komunikującego się zdalnie z robotami.
+    \begin{description}
+        \item[Kompilator:] {\small g++}
+        \item[Flagi kompilacji:] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread\\ -static-libstdc++ -std=c++11}
+    \end{description}
 \end{itemize}
 \noindent Obie konfiguracje posiadają dodatkowo wersję z przedrostkiem {\tt R\_}, które oznaczają wersję Release zamiast wersji Debug.\\
 
 Inne użyte narzędzia to przede wszystkim aplikacja Doxygen służąca generowaniu dokumentacji kodu programu, system kontroli wersji Git do zarządzania całym projektem oraz oprogramowanie LaTeX, za pomocą którego wygenerowany został ten dokument.
 
 \subsection{Konstrukcja robota}
+W celu przetestowania zaimplementowanych funkcjonalności, wyposażono robota w następujące elementy:
+\begin{itemize}
+    \item Dwa duże motory do poruszania się po płaskiej powierzchni.
+    \item Ultradźwiękowy sensor odległości ustawiony przodem do kierunku poruszania się.
+    \item Przedni zderzak oraz sensor dotyku do wykrywania zderzeń.
+    \item Sensor koloru do wykrywania zmian w odcieniu powierzchni.
+\end{itemize}

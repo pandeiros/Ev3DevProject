@@ -35,6 +35,7 @@ namespace ev3
         void onExclusive(unsigned int leds = LedType::ALL, unsigned int brightness = MAX_BRIGHTNESS);
         void off(unsigned int leds = LedType::ALL);
         void setColor(LedColors color);
+        void reset();
 
         // Repeat: 0 for infinite flashing.
         void flash(unsigned int leds, unsigned int msInterval, unsigned int repeat = 1,

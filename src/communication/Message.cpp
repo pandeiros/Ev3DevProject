@@ -56,9 +56,7 @@ void Message::print() {
 
 
 Message Message::decodeMessage(const std::string msg)
-{
-//    std::cout << "DECODED: " << msg << "\n";
-    
+{    
     std::vector<std::string> parts;
     std::istringstream f(msg);
     std::string s;
@@ -91,8 +89,7 @@ std::string Message::encodeMessage(Message& message)
     msg += MESSAGE_DELIM;
     for (auto & s : message.getParameters())
         msg += s + MESSAGE_DELIM;
-    
-//    std::cout << "ENCODED: " << msg << "\n";
+   
 
     return msg;
 }

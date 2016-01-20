@@ -46,13 +46,6 @@ void Action::setEndCondition(EndCondition condition)
     this->_endCondition = condition;
 }
 
-//void Action::setEndCondition(std::function<int(void) > func, ConditionType type) {
-//    this->_endCondition = []() {
-//        if (type == Action::GREATER)
-//            return func > 
-//    }
-//}
-
 Action::ActionType Action::getType()
 {
     return _type;

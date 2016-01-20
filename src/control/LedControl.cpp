@@ -15,7 +15,7 @@ LedControl::~LedControl()
 void LedControl::on(unsigned int leds, unsigned int brightness)
 {
     typedef ev3dev::led LED;
-
+    
     if (leds & RED_L && LED::red_left.connected())
         LED::red_left.set_brightness(brightness);
     if (leds & RED_R && LED::red_right.connected())
@@ -69,6 +69,12 @@ void LedControl::setColor(LedColors color)
     }
 }
 
+void LedControl::reset()
+{
+    this->endFlashing();
+    this->off(ALL);
+}
+
 void LedControl::flash(unsigned int leds, unsigned int msInterval, unsigned int repeat,
                        unsigned int brightnessRed, unsigned int brightnessGreen)
 {
@@ -94,12 +100,10 @@ void LedControl::flash(unsigned int leds, unsigned int msInterval, unsigned int 
                     {
                         this->on(leds & RED_ALL, brightnessRed);
                         this->on(leds & GREEN_ALL, brightnessGreen);
-                        //LED::red_left.set_brightness(brightness);
                     }
                     else
                     {
                         this->off(leds);
-                        //LED::red_left.off();
                     }
 
                     std::this_thread::sleep_for(std::chrono::milliseconds(msInterval / 2));
@@ -116,12 +120,10 @@ void LedControl::flash(unsigned int leds, unsigned int msInterval, unsigned int 
                     {
                         this->on(leds & RED_ALL, brightnessRed);
                         this->on(leds & GREEN_ALL, brightnessGreen);
-                        //LED::red_left.set_brightness(brightness);
                     }
                     else
                     {
                         this->off(leds);
-                        //LED::red_left.off();
                     }
                     std::this_thread::sleep_for(std::chrono::milliseconds(msInterval / 2));
                     i = (i + 1) % 2;
@@ -136,7 +138,7 @@ void LedControl::flashColor(LedColors color, unsigned int msInterval, unsigned i
     unsigned int leds = 0;
     unsigned int redBrightness = MAX_BRIGHTNESS;
     unsigned int greenBrightness = MAX_BRIGHTNESS;
-    
+
     switch (color)
     {
         case RED:
@@ -158,7 +160,7 @@ void LedControl::flashColor(LedColors color, unsigned int msInterval, unsigned i
         default:
             break;
     }
-    
+
     this->flash(leds, msInterval, repeat, redBrightness, greenBrightness);
 }
 

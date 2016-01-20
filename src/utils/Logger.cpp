@@ -48,8 +48,6 @@ std::string Logger::getLabel(LogLevel level) {
     return label;
  }
 
-
-
 Logger::Logger() { }
 
 Logger::~Logger() { }

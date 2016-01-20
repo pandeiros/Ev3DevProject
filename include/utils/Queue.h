@@ -27,7 +27,6 @@ namespace ev3
         _messages.push(message);
 
         message.print();
-        //    pthread_mutex_unlock(_mutex);
     }
 
     template<class T>
@@ -39,7 +38,6 @@ namespace ev3
 
         T msg = _messages.front();
         _messages.pop();
-        //    pthread_mutex_unlock(_mutex);
 
         return msg;
     }

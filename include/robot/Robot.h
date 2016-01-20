@@ -13,9 +13,13 @@
 
 namespace ev3
 {
+    /**
+     * @class Robot
+     */
     class Robot
     {
     public:
+        /// Type for specifying all available actions for given Robot model.
         typedef std::vector<Action::ActionType> AvailableActions;
 
         Robot();
@@ -30,9 +34,8 @@ namespace ev3
     protected:
         unsigned int _id = 0;
         unsigned int _commId = 0;
-        
+
         float _pulsePerUnitRatio = 1.f;
-        bool checkDevices();
 
         Devices::RequiredDevices _requiredDevices;
         AvailableActions _availableActions;
@@ -40,13 +43,18 @@ namespace ev3
         Behaviour _currentBehaviour;
         Queue<Message> * _sendQueue;
         Queue<Message> * _receiveQueue;
-        
-        LedControl _ledControl;
-        
-        RobotState * state = new RobotStateIdle(&_ledControl);
 
+        LedControl _ledControl;
+
+        RobotState * _state = new RobotStateIdle(&_ledControl);
+
+        
     private:
-        //void updateStatus();
+        void processState();
+        void processMessage();
+        void sendInfo();
+        
+        Message _currentMessage;
     };
 }
 
