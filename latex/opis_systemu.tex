@@ -59,13 +59,13 @@ Zostały zdefiniowane dwie domyślne konfiguracje:
 \begin{itemize}
     \item D\_ARM: konfiguracja przeznaczona na urządzenia z procesorami typu ARM. Domyślnie przeznaczona do uruchamiania na robocie mobilnym.
     \begin{description}
-        \item[Kompilator:] {\small arm-linux-gnueabi-g++}
-        \item[Flagi kompilacji:] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread\\ -static-libstdc++ -std=c++11 -DAGENT}
+        \item[{\small Kompilator:}] {\small arm-linux-gnueabi-g++}
+        \item[{\small Flagi kompilacji:}] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread\\ -static-libstdc++ -std=c++11 -DAGENT}
     \end{description}
     \item D\_DESKTOP: konfiguracja kompilowana z myślą o tradycyjnych komputerach osobistych. Domyślnie przeznaczona do uruchomienia w trybie nadzorcy systemu, komunikującego się zdalnie z robotami.
     \begin{description}
-        \item[Kompilator:] {\small g++}
-        \item[Flagi kompilacji:] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread\\ -static-libstdc++ -std=c++11}
+        \item[{\small Kompilator:}] {\small g++}
+        \item[{\small Flagi kompilacji:}] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread\\ -static-libstdc++ -std=c++11}
     \end{description}
 \end{itemize}
 \noindent Obie konfiguracje posiadają dodatkowo wersję z przedrostkiem {\tt R\_}, które oznaczają wersję Release zamiast wersji Debug.\\

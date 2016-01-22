@@ -1,11 +1,22 @@
 \chapter{Budowa aplikacji}
 
 \section{Moduły i klasy}
-W celu uzyskania przejrzystości aplikacji, wydzielone zostały moduły\footnote{W kontekście tej pracy \textit{moduł} oznacza pewną grupę skojarzonych ze sobą klas.}, które opisują pewien fragment funkcjonalności programu. Moduły niższych warstw mogą być wykorzystywane przez moduły warstw wyższych lub być tylko zestawem dodatkowych narzędzi. Kolejne punkty opisują w czym dany moduł się specjalizuje i jakie klasy wchodzą w jego skład.
+\indent \indent W celu uzyskania przejrzystości aplikacji, wydzielone zostały moduły\footnote{W kontekście tej pracy \textit{moduł} oznacza pewną grupę skojarzonych ze sobą klas.}, które opisują pewien fragment funkcjonalności programu. Moduły niższych warstw mogą być wykorzystywane przez moduły warstw wyższych lub być tylko zestawem dodatkowych narzędzi. Kolejne punkty opisują w czym dany moduł się specjalizuje i jakie klasy wchodzą w jego skład.
 
 \subsection{Komendy}
+\indent \indent Klasy komend są tak naprawdę nakładką na istniejące mechanizmy biblioteki ev3dev, operujące bezpośrednio na sprzęcie. Oprócz właściwej komendy, będącej poleceniem dla efektora bądź sensora, dana klasa zawiera referencje do obiektu, na którym ma zostać wykonana oraz jej parametry, o ile takowe posiada. Nazewnictwo klas dokładnie odwzorowuje nazwy komend przekazywanej urządzeniom. W obrębie konkretnych komend, definiowane są także stałe opisujące charakter przekazywanych argumentów oraz ich limity.\\
+Komendy zostały podzielone na dwie podgrupy:
+\begin{description}
+    \item[Komendy motorów:] Klasa bazowa - {\tt CommandMotor}. Zawierają referencje do klasy {\tt Motor} oraz opcjonalnie przechowują także przekazywane parametry. \\Np przykład: {\tt CommandMotorStop}, {\tt CommandMotorRunForever}.
+
+    \item[Komendy sensorów:] Klasa bazowa - {\tt CommandSensor}. Zawierają referencje do klasy {\tt Sensor}. Definiują obsługiwane tryby danego sensora. Komendy te nie służą do pobierania wartości, lecz tylko do zmiany ich ustawień. Pobieranie wartości używane jest przy pomocy specjalnej klasy {\tt Devices}. \\Przykładowa komenda: {\tt CommandSensorSetMode}.
+\end{description}
+Klasą bazową dla wszystkich komend jest {\tt Command}.
 
 \subsection{Akcje}
+\indent \indent Akcje są kolejnym stopniem abstrakcji definiowania zachowań robota. Klasy akcji przechowują przede wszystkim sekwencje komend, które mają zostać wykonane. Ponadto, z powodu natychmiastowego charakteru wykonywania wszystkich zgromadzonych komend, akcja może mieć zdefiniowany warunek jej zakończenia. Przyjmuje ona postać funkcji anonimowej, w której następuje zwrócenie wartości prawda lub fałsz na podstawie dowolnie sprecyzowanych instrukcji. Pozwala to wyższej warstwie sterującej sprawdzić, czy kolejna akcja może zostać wykonana. Dodatkowo, akcje mogą deklarować dopuszczalne zdarzenia, które przerywają jej działanie lub zmieniają jej parametry.
+
+Wszystkie dostępne klasy są zdefiniowane w aplikacji i nie istnieje możliwość zwiększenia zbioru o nowe bądź dynamicznego generowania nowych, własnych klas. Ta decyzja implementacyjna jest podyktowana....
 
 \subsection{Zachowania}
 
