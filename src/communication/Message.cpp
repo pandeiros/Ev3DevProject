@@ -28,7 +28,7 @@ unsigned int Message::getReceiverId()
     return _receiver;
 }
 
-Message::StringVector Message::getParameters()
+StringVector Message::getParameters()
 {
     return _parameters;
 }

@@ -1,36 +1,49 @@
 #pragma once
 
 #include "Action.h"
+#include "Utils.h"
 
 #include <unistd.h>
 
 namespace ev3
 {
-
+    class Behaviour;
+    
+    typedef std::shared_ptr<Behaviour> SharedPtrBehaviour;
+        
     class Behaviour
     {
     public:
-        typedef std::vector<Action*> ActionsVector;
+        
+        enum BehaviourType {
+            CUSTOM,
+            DRIVE_ON_SQUARE
+        };
 
-        Behaviour();
-        Behaviour(ActionsVector actions);
-        virtual ~Behaviour();
+        Behaviour() = default;
+        Behaviour(BehaviourType type, StoredActions actions);
+        Behaviour(BehaviourType type);
 
-        virtual void execute()
-        {
-            for (auto * action : _actions)
-            {
-                std::cout << action->getActionPrototype() << "\n";
-                action->execute();
-                while (!action->isFinished())
-                {
-                };
-            }
-        }
-
+        virtual void execute();
+        
+        void setActions(StoredActions actions);
+        
+        static StringVector getParameters(StringVector proto);
+        
     protected:
-        ActionsVector _actions;
+        BehaviourType _type;
+        
+        StoredActions _actions;
     };
-
-
+    
+    
+    class BehaviourDriveOnSquare : public Behaviour
+    {
+    public:
+        BehaviourDriveOnSquare(StoredActions actions, unsigned int side, bool turningRight);
+        
+    private:
+        unsigned int _squareSide;
+        bool _isTurningRight;
+    };
 }

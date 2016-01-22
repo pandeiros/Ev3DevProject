@@ -32,6 +32,8 @@ namespace ev3
         void stop();
 
     protected:
+        virtual SharedPtrBehaviour generateBehaviour(Behaviour::BehaviourType type, StringVector parameters) = 0;
+        
         unsigned int _id = 0;
         unsigned int _commId = 0;
 
@@ -40,7 +42,7 @@ namespace ev3
         Devices::RequiredDevices _requiredDevices;
         AvailableActions _availableActions;
 
-        Behaviour _currentBehaviour;
+        SharedPtrBehaviour _currentBehaviour;
         Queue<Message> * _sendQueue;
         Queue<Message> * _receiveQueue;
 
@@ -52,6 +54,8 @@ namespace ev3
     private:
         void processState();
         void processMessage();
+        void processBehaviour();
+        
         void sendInfo();
         
         Message _currentMessage;

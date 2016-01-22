@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Utils.h"
+
 #include <vector>
 #include <string>
 
@@ -11,8 +13,6 @@ namespace ev3
     {
     public:
 
-        typedef std::vector<std::string> StringVector;
-
         enum MessageType
         {
             EMPTY,
@@ -22,7 +22,8 @@ namespace ev3
             PING,
             PONG,
             AGENT_OVER,
-            ABORT
+            ABORT,
+            BEHAVIOUR
         };
 
         Message();

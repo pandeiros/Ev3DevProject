@@ -56,7 +56,8 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
         processMessage();
 
-        //processBehaviour(msg);
+        if (_currentMessage.getType() == Message::BEHAVIOUR)
+            processBehaviour();
 
         //Devices::getInstance()->update();
 
@@ -64,77 +65,77 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
         if (!receiveQueue->empty() || _currentMessage.getType() != Message::EMPTY)
             _currentMessage = receiveQueue->pop();
-        
+
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
     }
 
     return;
 
-//    if (devicesChecked)
-//    {
-//        auto motorLeft = Devices::getInstance()->getMotor(ev3dev::OUTPUT_B);
-//        auto motorRight = Devices::getInstance()->getMotor(ev3dev::OUTPUT_C);
-//
-//        //auto us = _sensors.at(ev3dev::INPUT_1);
-//
-//        //std::cout << us.type_name() << "  " << us.num_values() << "  " << us.decimals() << "\n";
-//
-//        ActionDriveDistance * action = new ActionDriveDistance(500);
-//        action->setCommands({
-//            new CommandMotorReset(motorLeft),
-//            new CommandMotorSetSpeedRegEnabled(motorLeft, true),
-//            new CommandMotorSetSpeed(motorLeft, 400),
-//            new CommandMotorRunForever(motorLeft),
-//            new CommandMotorReset(motorRight),
-//            new CommandMotorSetSpeedRegEnabled(motorRight, true),
-//            new CommandMotorSetSpeed(motorRight, 400),
-//            new CommandMotorRunForever(motorRight)
-//        });
-//
-//        action->setEndCondition([&]()-> bool
-//        {
-//            return std::abs(motorLeft.getMotor().position()) > action->getDistance() * _pulsePerUnitRatio;
-//        });
-//
-//        ActionRotate * action2 = new ActionRotate(180);
-//        action2->setCommands({
-//            new CommandMotorReset(motorLeft),
-//            new CommandMotorSetSpeedRegEnabled(motorLeft, true),
-//            new CommandMotorSetSpeed(motorLeft, 200),
-//            new CommandMotorRunForever(motorLeft),
-//            new CommandMotorReset(motorRight),
-//            new CommandMotorSetSpeedRegEnabled(motorRight, true),
-//            new CommandMotorSetSpeed(motorRight, -200),
-//            new CommandMotorRunForever(motorRight)
-//        });
-//
-//        action2->setEndCondition([&]()-> bool
-//        {
-//            return std::abs(motorLeft.getMotor().position()) > action2->getRotation() * _pulsePerUnitRatio;
-//        });
-//
-//        Action * b = new Action({
-//            new CommandMotorStop(motorLeft),
-//            new CommandMotorStop(motorRight)
-//        });
-//
-//        ActionRepeat * rep = new ActionRepeat({action, action2}, 2);
-//
-//        _currentBehaviour = Behaviour({
-//            rep, b
-//        });
-//
-//        //        Behaviour beh ({
-//        //            rep, b
-//        //        });
-//        //        beh.execute();
-//
-//        _currentBehaviour.execute();
-//        delete action;
-//        delete action2;
-//        delete b;
-//        delete rep;
-//    }
+    //    if (devicesChecked)
+    //    {
+    //        auto motorLeft = Devices::getInstance()->getMotor(ev3dev::OUTPUT_B);
+    //        auto motorRight = Devices::getInstance()->getMotor(ev3dev::OUTPUT_C);
+    //
+    //        //auto us = _sensors.at(ev3dev::INPUT_1);
+    //
+    //        //std::cout << us.type_name() << "  " << us.num_values() << "  " << us.decimals() << "\n";
+    //
+    //        ActionDriveDistance * action = new ActionDriveDistance(500);
+    //        action->setCommands({
+    //            new CommandMotorReset(motorLeft),
+    //            new CommandMotorSetSpeedRegEnabled(motorLeft, true),
+    //            new CommandMotorSetSpeed(motorLeft, 400),
+    //            new ComAmandMotorRunForever(motorLeft),
+    //            new CommandMotorReset(motorRight),
+    //            new CommandMotorSetSpeedRegEnabled(motorRight, true),
+    //            new CommandMotorSetSpeed(motorRight, 400),
+    //            new CommandMotorRunForever(motorRight)
+    //        });
+    //
+    //        action->setEndCondition([&]()-> bool
+    //        {
+    //            return std::abs(motorLeft.getMotor().position()) > action->getDistance() * _pulsePerUnitRatio;
+    //        });
+    //
+    //        ActionRotate * action2 = new ActionRotate(180);
+    //        action2->setCommands({
+    //            new CommandMotorReset(motorLeft),
+    //            new CommandMotorSetSpeedRegEnabled(motorLeft, true),
+    //            new CommandMotorSetSpeed(motorLeft, 200),
+    //            new CommandMotorRunForever(motorLeft),
+    //            new CommandMotorReset(motorRight),
+    //            new CommandMotorSetSpeedRegEnabled(motorRight, true),
+    //            new CommandMotorSetSpeed(motorRight, -200),
+    //            new CommandMotorRunForever(motorRight)
+    //        });
+    //
+    //        action2->setEndCondition([&]()-> bool
+    //        {
+    //            return std::abs(motorLeft.getMotor().position()) > action2->getRotation() * _pulsePerUnitRatio;
+    //        });
+    //
+    //        Action * b = new Action({
+    //            new CommandMotorStop(motorLeft),
+    //            new CommandMotorStop(motorRight)
+    //        });
+    //
+    //        ActionRepeat * rep = new ActionRepeat({action, action2}, 2);
+    //
+    //        _currentBehaviour = Behaviour({
+    //            rep, b
+    //        });
+    //
+    //        //        Behaviour beh ({
+    //        //            rep, b
+    //        //        });
+    //        //        beh.execute();
+    //
+    //        _currentBehaviour.execute();
+    //        delete action;
+    //        delete action2;
+    //        delete b;
+    //        delete rep;
+    //    }
 }
 
 void Robot::processState()
@@ -164,10 +165,6 @@ void Robot::processState()
     }
 }
 
-void Robot::sendInfo() {
-
- }
-
 void Robot::processMessage()
 {
     unsigned int id = _currentMessage.getSenderId();
@@ -181,6 +178,42 @@ void Robot::processMessage()
         _id = _currentMessage.getReceiverId();
     }
 }
+
+void Robot::processBehaviour()
+{
+    StringVector parameters = Behaviour::getParameters(_currentMessage.getParameters());
+
+    if (parameters.size() == 0)
+    {
+        // TODO Generate Event instead.
+        std::cout << "Parameters incorrect\n";
+
+        return;
+    }
+
+    try
+    {
+        Behaviour::BehaviourType type =
+                static_cast<Behaviour::BehaviourType> (transcode<unsigned int>(parameters[0]));
+
+        // Predefined Behaviour
+        if (type != Behaviour::CUSTOM)
+        {
+            _currentBehaviour = generateBehaviour(type,
+                    StringVector(parameters.begin() + 1, parameters.end()));
+        }
+        else
+        {
+            
+        }
+    }
+    catch (...)
+    {
+        // TODO
+    }
+}
+
+void Robot::sendInfo() { }
 
 void Robot::stop()
 {

@@ -19,7 +19,7 @@ Action::~Action() { }
 
 void Action::execute()
 {
-    for (auto * c : _commands)
+    for (auto c : _commands)
     {
         c->execute();
         c->printDebug();
@@ -51,7 +51,7 @@ Action::ActionType Action::getType()
     return _type;
 }
 
-ActionRepeat::ActionRepeat(std::vector<Action*> actions, unsigned int n)
+ActionRepeat::ActionRepeat(StoredActions actions, unsigned int n)
 : Action(ActionType::REPEAT_FOREVER), _actions(actions), _n(n) { }
 
 void ActionRepeat::execute()
@@ -60,7 +60,7 @@ void ActionRepeat::execute()
     {
         while (!this->_repeatCondition())
         {
-            for (auto * action : _actions)
+            for (auto action : _actions)
             {
                 std::cout << action->getActionPrototype() << "\n";
                 action->execute();
@@ -74,7 +74,7 @@ void ActionRepeat::execute()
     {
         for (unsigned int i = 0; i < _n; ++i)
         {
-            for (auto * action : _actions)
+            for (auto action : _actions)
             {
                 std::cout << action->getActionPrototype() << "\n";
                 action->execute();
@@ -94,6 +94,11 @@ void ActionRepeat::setRepeatCondition(EndCondition condition)
 ActionDriveDistance::ActionDriveDistance(int distance)
 : Action(ActionType::DRIVE_DISTANCE), _distance(distance) { }
 
+ActionDriveDistance::ActionDriveDistance(CommandsVector commands, int distance)
+: Action(commands, ActionType::DRIVE_DISTANCE), _distance(distance){
+ }
+
+
 int ActionDriveDistance::getDistance()
 {
     return _distance;
@@ -111,6 +116,9 @@ std::string ActionDriveDistance::getActionPrototype()
 
 ActionRotate::ActionRotate(int rotation)
 : Action(ActionType::ROTATE), _rotation(rotation) { }
+
+ActionRotate::ActionRotate(CommandsVector commands, int rotation) 
+: Action(commands, ActionType::ROTATE), _rotation(rotation) { }
 
 int ActionRotate::getRotation()
 {

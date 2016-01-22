@@ -2,6 +2,8 @@
 
 #include "Robot.h"
 
+//#include <memory>
+
 namespace ev3
 {
 
@@ -9,8 +11,13 @@ namespace ev3
     {
     public:
         RobotModelA();
-        virtual ~RobotModelA();
+
     private:
+        SharedPtrBehaviour generateBehaviour(Behaviour::BehaviourType type, StringVector & parameters);
+        SharedPtrAction generateAction(SharedPtrAction action, Action::ActionType type);
+        //        void generateEndConditions(SharedPtrAction action, Action::ActionType type);
+        //        SharedPtrAction generateAction(SharedPtrAction action, Action::ActionType type, StringVector parameters);
+
         float _wheelRadius = 5.75 / 2.f;
     };
 }

@@ -2,8 +2,19 @@
 
 #include "CommandMotor.h"
 
+#include <memory>
+
 namespace ev3
 {
+    class Action;
+    
+    typedef std::shared_ptr<Action> SharedPtrAction;
+    typedef std::vector<SharedPtrAction> StoredActions;
+    
+    typedef std::shared_ptr<Command> SharedPtrCommand;
+    
+    /// Type for containing associated Command pointers.
+    typedef std::vector<SharedPtrCommand> CommandsVector;
 
     /**
      * @class Action
@@ -13,7 +24,7 @@ namespace ev3
      * until specific Event occurs or its \link Action::_endCondition endCondition\endlink function returns true.
      * 
      * Action objects are instantiated accordingly to Robot model that
-     * uses them.
+     * uses them. Actions are predefined and cannot be dynamically created.
      */
     class Action
     {
@@ -26,20 +37,17 @@ namespace ev3
          */
         enum ActionType
         {
-            NOP,            /**< No operation. */ 
-            REPEAT_FOREVER, /**< Repeats execution of other \link Action Actions\endlink. */ 
-            DRIVE_DISTANCE, /**< Power Motor to reach certain distance. */ 
-            ROTATE,         /**< Rotate Robot for given angle. */ 
-            STOP            /**< Stop all active motors. */
+            NOP, /**< No operation. */
+            REPEAT_FOREVER, /**< Repeats execution of other \link Action Actions\endlink. */
+            DRIVE_DISTANCE, /**< Power Motor to reach certain distance. */
+            ROTATE, /**< Rotate Robot for given angle. */
+            STOP /**< Stop all active motors. */
         };
 
         /// String for empty Action prototype.
         static const std::string EMPTY_PROTO;
 
-        /// Type for containing associated Command pointer.
-        typedef std::vector<Command*> CommandsVector;
-        
-        /// Type for lambda functions to store end of action condition.
+        /// Type for lambda functions to store end of Action condition.
         typedef std::function<bool(void) > EndCondition;
 
         /**
@@ -48,20 +56,20 @@ namespace ev3
          * @param type Type of Action used.
          */
         Action(CommandsVector commands, ActionType type);
-        
+
         /**
          * Constructor with CommandsVector parameter.
          * Action \link Action::_type type\endlink is set to Action::NOP .
          * @param commands \link Command Commands\endlink stored within this Action.
          */
         Action(CommandsVector commands);
-        
+
         /**
          * Constructor with ActionType parameter.
          * @param type Type of Action used.
          */
         Action(ActionType type);
-        
+
         /**
          * Default destructor.
          */
@@ -71,13 +79,13 @@ namespace ev3
          * Executes stored \link Command Commands\endlink in a sequence.
          */
         virtual void execute();
-        
+
         /**
          * Check if Action condition is fullfilled.
          * @return Value returned from Action::_endCondition.
          */
         virtual bool isFinished();
-        
+
         /**
          * Generate std::string prototype for Action.
          * @return Encoded Action data into std::string.
@@ -89,7 +97,7 @@ namespace ev3
          * @param commands CommandsVector with pointers to commands.
          */
         void setCommands(CommandsVector commands);
-        
+
         /**
          * Set end condition for Action.
          * @param condition Lambda function returning bool value.
@@ -105,7 +113,7 @@ namespace ev3
     protected:
         /// Action type.
         ActionType _type;
-        
+
         /// Vector of \link Command Commands\endlink.
         CommandsVector _commands;
 
@@ -119,13 +127,13 @@ namespace ev3
     class ActionRepeat : public Action
     {
     public:
-        ActionRepeat(std::vector<Action*> actions, unsigned n);
+        ActionRepeat(StoredActions actions, unsigned int n);
         virtual void execute();
 
         void setRepeatCondition(EndCondition condition);
 
     private:
-        std::vector<Action*> _actions;
+        StoredActions _actions;
         unsigned int _n;
 
         EndCondition _repeatCondition = []()
@@ -138,6 +146,7 @@ namespace ev3
     {
     public:
         ActionDriveDistance(int distance);
+        ActionDriveDistance(CommandsVector commands, int distance);
 
         int getDistance();
 
@@ -151,6 +160,7 @@ namespace ev3
     {
     public:
         ActionRotate(int rotation);
+        ActionRotate(CommandsVector commands, int rotation);
 
         int getRotation();
 
