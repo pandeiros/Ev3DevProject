@@ -1,7 +1,8 @@
 \chapter{Budowa aplikacji}
 
 \section{Moduły i klasy}
-\indent \indent W celu uzyskania przejrzystości aplikacji, wydzielone zostały moduły\footnote{W kontekście tej pracy \textit{moduł} oznacza pewną grupę skojarzonych ze sobą klas.}, które opisują pewien fragment funkcjonalności programu. Moduły niższych warstw mogą być wykorzystywane przez moduły warstw wyższych lub być tylko zestawem dodatkowych narzędzi. Kolejne punkty opisują w czym dany moduł się specjalizuje i jakie klasy wchodzą w jego skład.
+\indent \indent W celu uzyskania przejrzystości aplikacji, wydzielone zostały moduły\footnote{W kontekście tej pracy \textit{moduł} oznacza pewną grupę skojarzonych ze sobą klas.}, które opisują pewien fragment funkcjonalności programu. Moduły niższych warstw mogą być wykorzystywane przez moduły warstw wyższych lub być tylko zestawem dodatkowych narzędzi. Kolejne punkty opisują w czym dany moduł się specjalizuje i jakie klasy wchodzą w jego skład. Szczegółowe dane na temat klas oraz ich metod i pól znajdują się w dokumentacji kodu.
+% TODO Jakoś podlinkować czy wspomnieć o tej docu, może gdzieś na końcu.
 
 \subsection{Komendy}
 \indent \indent Klasy komend są tak naprawdę nakładką na istniejące mechanizmy biblioteki ev3dev, operujące bezpośrednio na sprzęcie. Oprócz właściwej komendy, będącej poleceniem dla efektora bądź sensora, dana klasa zawiera referencje do obiektu, na którym ma zostać wykonana oraz jej parametry, o ile takowe posiada. Nazewnictwo klas dokładnie odwzorowuje nazwy komend przekazywanej urządzeniom. W obrębie konkretnych komend, definiowane są także stałe opisujące charakter przekazywanych argumentów oraz ich limity.\\
@@ -16,13 +17,49 @@ Klasą bazową dla wszystkich komend jest {\tt Command}.
 \subsection{Akcje}
 \indent \indent Akcje są kolejnym stopniem abstrakcji definiowania zachowań robota. Klasy akcji przechowują przede wszystkim sekwencje komend, które mają zostać wykonane. Ponadto, z powodu natychmiastowego charakteru wykonywania wszystkich zgromadzonych komend, akcja może mieć zdefiniowany warunek jej zakończenia. Przyjmuje ona postać funkcji anonimowej, w której następuje zwrócenie wartości prawda lub fałsz na podstawie dowolnie sprecyzowanych instrukcji. Pozwala to wyższej warstwie sterującej sprawdzić, czy kolejna akcja może zostać wykonana. Dodatkowo, akcje mogą deklarować dopuszczalne zdarzenia, które przerywają jej działanie lub zmieniają jej parametry.
 
-Wszystkie dostępne klasy są zdefiniowane w aplikacji i nie istnieje możliwość zwiększenia zbioru o nowe bądź dynamicznego generowania nowych, własnych klas. Ta decyzja implementacyjna jest podyktowana....
+Wszystkie dostępne klasy akcji są zdefiniowane w aplikacji i nie istnieje możliwość zwiększenia zbioru o nowe bądź dynamicznego generowania nowych, własnych klas. Ta decyzja implementacyjna jest podyktowana specyfiką konkretnych modeli robotów, różniących się budową oraz podłączonymi akcesoriami, a co za tym idzie, odmiennym sposobem implementacji tych samych czynności.
+
+Klasy opisujące konkretne akcje, np. {\tt ActionDriveDistance}, dziedziczą po klasie {\tt Action}. Wspólnymi elementami każdej z nich są: typ, warunek końcowy, sekwencja komend oraz metody wykonawcze. Różnią się natomiast dodatkowymi parametrami, takimi jak prędkość czy kąt obrotu. Ponadto, istnieje możliwość wygodnego zapętlenia jednej lub wielu akcji dowolną liczbę razy za pomocą specjalnej klasy - {\tt ActionRepeat}. Konstruktor tej klasy przyjmuje liczbę powtórzeń oraz listę akcji, które zostaną wykonane w podanej kolejności.
 
 \subsection{Zachowania}
 
+\indent \indent Definiowanie zachowań jest dużo trudniejsze niż akcji czy komend, gdyż bazują one na schemacie automatu skończonego. Oprócz konkretnych akcji, na jakich dane zachowanie ma się opierać, należy zdefiniować przejścia pomiędzy stanami (akcjami) w toku poprawnego wykonania oraz specjalne warunki zmiany stanu w reakcji na zaistniałe zdarzenia (np. napotkana przeszkoda lub utrata połączenia).
+
+Podobnie jak w przypadku akcji i komend, każde zachowanie zdefiniowane jest w osobnej klasie (np. {\tt BehaviourExplore}), które dziedziczy po wspólnej klasie {\tt Behaviour}. Każde z nich zawiera typ, strukturę stanów automatu złożonych z akcji i przejść oraz funkcje wykonawcze. Ponadto zachowania pochodne zawierają własne parametry, np. maksymalny dystans do przejechania.
+
+% TODO Diagram przykładowego zachowania.
+
+\subsection{Urządzenia}
+
+Biblioteka ev3dev dostarcza wygodnego interfejsu do zarządzania urządzeniami przez wygenerowanie drzew klas dla sensorów i efektorów. W ramach tej aplikacji, na każdy typ urządzenia została nałożona specjalna klasa pośrednicząca, w środku której dopiero znajduje się referencja do właściwego obiektu. Są to klasy {\tt Motor} oraz {\tt Sensor}, które po odpowiedniej identyfikacji zostają zmapowane do par port-urządzenie.
+
+Całością nadzoruje klasa {\tt Devices} napisana zgodnie ze wzorcem projektowym Singleton. Ograniczone są w ten sposób nadmierne kopie obiektów i potencjalnie niejednoznaczne odwołania. Ponadto klasy urządzeń są potrzebne w wielu różnych miejscach aplikacji, a wzorzec ten umożliwia taki dostęp za pomocą statycznego wydobycia instancji.
+
+Moduł urządzeń jest także odpowiedzialny za detekcję zdarzeń. Wyższe warstwy mogą zgłaszać zdarzenia, na które klasa {\tt Devices} ma nasłuchiwać. Jeśli dane zdarzenie wystąpi, wysyłane jest do odpowiedniej kolejki dla wyższych warstw do przetworzenia. Zgłaszane mogą być również zdarzenie niezależne, np. niski poziom baterii lub odłączenie urządzenia.
+
 \subsection{Robot}
 
+Jest to najbardziej rozbudowana klasa, ponieważ agreguje w sobie działanie wielu modułów. Zarządza zarówno urządzeniami podłączonymi do klocka centralnego, steruje zachowaniem robota oraz przetwarza przesłane komunikaty oraz zdarzenia. Główna metoda klasy {\tt run} jest uruchamiana w głównym wątku aplikacji i w pętli przetwarza wszystkie dane. Jest bezpośrednio zsynchronizowana z wątkiem komunikacyjnym za pomocą dwóch kolejek wiadomości - nadawczej i odbiorczej. Wyróżnienie dwóch niezależnych ścieżek wykonania umożliwia lepsze zarządzanie zasobami sprzętowymi oraz pozwala robotowi na samodzielne działanie, niezależnie od przesyłanych pakietów.
+
+Robot może być fizycznie zbudowany na wiele różnych sposobów. Dlatego wymagane jest, żeby zdefiniowane były konkretne klasy implementujące szczegóły danego modelu. W związku z powyższym, klasa bazowa {\tt Robot} jest klasą abstrakcyjną, a każdemu wariantowi konstrukcji odpowiada osobna klasa podrzędna. W celu ujednolicenia interfejsu, każdy model deklaruje listę obsługiwanych akcji oraz wymaganych do tego podłączonych urządzeń. W ten sposób można łatwo sprawdzić, czy dane zachowanie jest obsługiwane i jakich pomiarów robot może dostarczyć. Klasy konkretnych modeli, bazując na zdefiniowanych funkcjach wirtualnych, definiują swoje wersje w sposób adekwatny do domniemanego efektu końcowego wymaganych akcji.
+
+Każdy instancja robota posiada również maszynę stanów oraz zdefiniowane warunki przejść pomiędzy nimi. Każdy stan przetwarza tylko konkretne komunikaty i zdarzenia. Rezultatem ich przetworzenia może być wysłanie specjalnej wiadomości zwrotnej lub zmiana stanu na inny. To ostanie wiąże się jeszcze ze zmianą koloru oraz częstotliwości migania diod LED umieszczonych na przednim panelu klocka centralnego.
+
+% TODO Diagram stanów + kolory
+
 \subsection{Komunikacja}
+
+Komunikacja pomiędzy różnymi partiami całego systemu odbywa się na dwóch poziomach:
+
+\subsubsection{Zdarzenia}
+
+Poszczególne moduły robota, takie jak akcje czy klasa urządzeń, mogą generować zdarzenia. Kolejka zdarzeń, będąca Singletonem,...
+> wiele punktow wejscia
+> 1 punkt wyjscia
+> klasa Event
+> takze wyjatki
+
+\subsubsection{Komunikacja UDP}
 
 \subsection{Nadzorca}
 
