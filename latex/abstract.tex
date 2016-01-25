@@ -1,12 +1,41 @@
-
+% Streszczenie w języku Polskim
+% The \setlength commands I found in the abstract package are:
+%
+% \absleftindent
+% \absrightindent
+% \absparindent
+% \absparseptext
+\setlength{\absleftindent}{0cm}
+\setlength{\absrightindent}{0cm}
+\renewcommand{\abstractnamefont}{\normalfont\Large\bfseries}
 \begin{abstract}
-{\Large Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque nisl vitae tellus tempor aliquam. Nullam consequat laoreet pretium. Vivamus vehicula, lectus eu elementum congue, magna dolor pellentesque quam, quis suscipit urna sem sit amet eros. Vivamus tincidunt, leo id egestas condimentum, diam ligula consequat libero, non malesuada orci enim non dolor. Duis nec dolor sit amet ipsum feugiat malesuada ut quis nibh. Quisque ac feugiat enim, rhoncus aliquam justo. Nulla facilisis convallis mauris id mattis. Nam vestibulum, quam non vehicula scelerisque, arcu arcu porta nulla, eget suscipit nisi mauris vel nibh. Donec condimentum, tellus bibendum semper pulvinar, dui lacus dignissim libero, sit amet aliquam justo lacus et magna.}
+    \large
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque nisl vitae tellus tempor aliquam. Nullam consequat laoreet pretium. Vivamus vehicula, lectus eu elementum congue, magna dolor pellentesque quam, quis suscipit urna sem sit amet eros. Vivamus tincidunt, leo id egestas condimentum, diam ligula consequat libero, non malesuada orci enim non dolor. Duis nec dolor sit amet ipsum feugiat malesuada ut quis nibh. Quisque ac feugiat enim, rhoncus aliquam justo. Nulla facilisis convallis mauris id mattis. Nam vestibulum, quam non vehicula scelerisque, arcu arcu porta nulla, eget suscipit nisi mauris vel nibh. Donec condimentum, tellus bibendum semper pulvinar, dui lacus dignissim libero, sit amet aliquam justo lacus et magna.
+    \\
+
+    \noindent
+    Słowa kluczowe: LEGO Mindstorms EV3, agent mobilny, zachowanie.
 \end{abstract}
 
-\vspace{1cm}
+~\\[0.1cm]
+% Linia pozioma
+\noindent \rule{\linewidth}{0.2mm}
 
+% Streszczenie w języku angielskim
 \begin{otherlanguage}{english}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+
 \begin{abstract}
-{\Large Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque nisl vitae tellus tempor aliquam. Nullam consequat laoreet pretium. Vivamus vehicula, lectus eu elementum congue, magna dolor pellentesque quam, quis suscipit urna sem sit amet eros. Vivamus tincidunt, leo id egestas condimentum, diam ligula consequat libero, non malesuada orci enim non dolor. Duis nec dolor sit amet ipsum feugiat malesuada ut quis nibh. Quisque ac feugiat enim, rhoncus aliquam justo. Nulla facilisis convallis mauris id mattis. Nam vestibulum, quam non vehicula scelerisque, arcu arcu porta nulla, eget suscipit nisi mauris vel nibh. Donec condimentum, tellus bibendum semper pulvinar, dui lacus dignissim libero, sit amet aliquam justo lacus et magna.}
+    ~\\[0.05cm]
+    \begin{center}
+        {\Large Implementation of multiplayer, turn-based strategic game, available through web browsers}
+    \end{center}
+    ~\\[0.1cm]
+    \large
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque nisl vitae tellus tempor aliquam. Nullam consequat laoreet pretium. Vivamus vehicula, lectus eu elementum congue, magna dolor pellentesque quam, quis suscipit urna sem sit amet eros. Vivamus tincidunt, leo id egestas condimentum, diam ligula consequat libero, non malesuada orci enim non dolor. Duis nec dolor sit amet ipsum feugiat malesuada ut quis nibh. Quisque ac feugiat enim, rhoncus aliquam justo. Nulla facilisis convallis mauris id mattis. Nam vestibulum, quam non vehicula scelerisque, arcu arcu porta nulla, eget suscipit nisi mauris vel nibh. Donec condimentum, tellus bibendum semper pulvinar, dui lacus dignissim libero, sit amet aliquam justo lacus et magna.\\
+
+    \noindent
+    Keywords: LEGO Mindstorms EV3, mobile agent, behaviour
 \end{abstract}
 \end{otherlanguage}
