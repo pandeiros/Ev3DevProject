@@ -1,4 +1,5 @@
 \chapter{Budowa aplikacji}
+\label{ch:budowa_aplikacji}
 
 \section{Moduły i klasy}
 \indent \indent W celu uzyskania przejrzystości aplikacji, wydzielone zostały moduły\footnote{W kontekście tej pracy \textit{moduł} oznacza pewną grupę skojarzonych ze sobą klas.}, które opisują pewien fragment funkcjonalności programu. Moduły niższych warstw mogą być wykorzystywane przez moduły warstw wyższych lub być tylko zestawem dodatkowych narzędzi. Kolejne punkty opisują w czym dany moduł się specjalizuje i jakie klasy wchodzą w jego skład. Szczegółowe dane na temat klas oraz ich metod i pól znajdują się w dokumentacji kodu.
@@ -25,21 +26,23 @@ Klasy opisujące konkretne akcje, np. {\tt ActionDriveDistance}, dziedziczą po 
 
 \indent \indent Definiowanie zachowań jest dużo trudniejsze niż akcji czy komend, gdyż bazują one na schemacie automatu skończonego. Oprócz konkretnych akcji, na jakich dane zachowanie ma się opierać, należy zdefiniować przejścia pomiędzy stanami (akcjami) w toku poprawnego wykonania oraz specjalne warunki zmiany stanu w reakcji na zaistniałe zdarzenia (np. napotkana przeszkoda lub utrata połączenia).
 
-Podobnie jak w przypadku akcji i komend, każde zachowanie zdefiniowane jest w osobnej klasie (np. {\tt BehaviourExplore}), które dziedziczy po wspólnej klasie {\tt Behaviour}. Każde z nich zawiera typ, strukturę stanów automatu złożonych z akcji i przejść oraz funkcje wykonawcze. Ponadto zachowania pochodne zawierają własne parametry, np. maksymalny dystans do przejechania.
+Podobnie jak w przypadku akcji i komend, każde zachowanie zdefiniowane jest w osobnej klasie (np. {\tt BehaviourExplore}), które dziedziczy po wspólnej klasie {\tt Behaviour}. Każde z nich zawiera typ, strukturę stanów automatu złożonych z akcji i przejść oraz funkcje wykonawcze. Ponadto zachowania pochodne zawierają własne parametry, np. maksymalny dystans do przejechania. Więcej szczegółów w rozdziale~\ref{ch:zachowania}. \hyperref[ch:zachowania]{Zachowania}.
 
 % TODO Diagram przykładowego zachowania.
 
 \subsection{Urządzenia}
 
-Biblioteka ev3dev dostarcza wygodnego interfejsu do zarządzania urządzeniami przez wygenerowanie drzew klas dla sensorów i efektorów. W ramach tej aplikacji, na każdy typ urządzenia została nałożona specjalna klasa pośrednicząca, w środku której dopiero znajduje się referencja do właściwego obiektu. Są to klasy {\tt Motor} oraz {\tt Sensor}, które po odpowiedniej identyfikacji zostają zmapowane do par port-urządzenie.
+\indent \indent Biblioteka ev3dev dostarcza wygodnego interfejsu do zarządzania urządzeniami przez wygenerowanie drzew klas dla sensorów i efektorów. W ramach tej aplikacji, na każdy typ urządzenia została nałożona specjalna klasa pośrednicząca, w środku której dopiero znajduje się referencja do właściwego obiektu. Są to klasy {\tt Motor} oraz {\tt Sensor}, które po odpowiedniej identyfikacji zostają zmapowane do par port-urządzenie.
 
 Całością nadzoruje klasa {\tt Devices} napisana zgodnie ze wzorcem projektowym Singleton. Ograniczone są w ten sposób nadmierne kopie obiektów i potencjalnie niejednoznaczne odwołania. Ponadto klasy urządzeń są potrzebne w wielu różnych miejscach aplikacji, a wzorzec ten umożliwia taki dostęp za pomocą statycznego wydobycia instancji.
 
 Moduł urządzeń jest także odpowiedzialny za detekcję zdarzeń. Wyższe warstwy mogą zgłaszać zdarzenia, na które klasa {\tt Devices} ma nasłuchiwać. Jeśli dane zdarzenie wystąpi, wysyłane jest do odpowiedniej kolejki dla wyższych warstw do przetworzenia. Zgłaszane mogą być również zdarzenie niezależne, np. niski poziom baterii lub odłączenie urządzenia.
 
+% TODO Link do dodatku z sensorami.
+
 \subsection{Robot}
 
-Jest to najbardziej rozbudowana klasa, ponieważ agreguje w sobie działanie wielu modułów. Zarządza zarówno urządzeniami podłączonymi do klocka centralnego, steruje zachowaniem robota oraz przetwarza przesłane komunikaty oraz zdarzenia. Główna metoda klasy {\tt run} jest uruchamiana w głównym wątku aplikacji i w pętli przetwarza wszystkie dane. Jest bezpośrednio zsynchronizowana z wątkiem komunikacyjnym za pomocą dwóch kolejek wiadomości - nadawczej i odbiorczej. Wyróżnienie dwóch niezależnych ścieżek wykonania umożliwia lepsze zarządzanie zasobami sprzętowymi oraz pozwala robotowi na samodzielne działanie, niezależnie od przesyłanych pakietów.
+\indent \indent Jest to najbardziej rozbudowana klasa, ponieważ agreguje w sobie działanie wielu modułów. Zarządza zarówno urządzeniami podłączonymi do klocka centralnego, steruje zachowaniem robota oraz przetwarza przesłane komunikaty oraz zdarzenia. Główna metoda klasy {\tt run} jest uruchamiana w głównym wątku aplikacji i w pętli przetwarza wszystkie dane. Jest bezpośrednio zsynchronizowana z wątkiem komunikacyjnym za pomocą dwóch kolejek wiadomości - nadawczej i odbiorczej. Wyróżnienie dwóch niezależnych ścieżek wykonania umożliwia lepsze zarządzanie zasobami sprzętowymi oraz pozwala robotowi na samodzielne działanie, niezależnie od przesyłanych pakietów.
 
 Robot może być fizycznie zbudowany na wiele różnych sposobów. Dlatego wymagane jest, żeby zdefiniowane były konkretne klasy implementujące szczegóły danego modelu. W związku z powyższym, klasa bazowa {\tt Robot} jest klasą abstrakcyjną, a każdemu wariantowi konstrukcji odpowiada osobna klasa podrzędna. W celu ujednolicenia interfejsu, każdy model deklaruje listę obsługiwanych akcji oraz wymaganych do tego podłączonych urządzeń. W ten sposób można łatwo sprawdzić, czy dane zachowanie jest obsługiwane i jakich pomiarów robot może dostarczyć. Klasy konkretnych modeli, bazując na zdefiniowanych funkcjach wirtualnych, definiują swoje wersje w sposób adekwatny do domniemanego efektu końcowego wymaganych akcji.
 
@@ -49,17 +52,17 @@ Każdy instancja robota posiada również maszynę stanów oraz zdefiniowane war
 
 \subsection{Komunikacja}
 
-Komunikacja pomiędzy różnymi partiami całego systemu odbywa się na dwóch poziomach:
+\indent \indent Komunikacja pomiędzy różnymi partiami całego systemu odbywa się na dwóch poziomach:
 
 \subsubsection{Zdarzenia}
 
-Poszczególne moduły robota, takie jak akcje czy klasa urządzeń, mogą generować zdarzenia. Kolejka zdarzeń, będąca Singletonem,...
-> wiele punktow wejscia
-> 1 punkt wyjscia
-> klasa Event
-> takze wyjatki
+Poszczególne moduły robota, takie jak akcje czy klasa urządzeń, mogą generować zdarzenia. Kolejka zdarzeń, będąca Singletonem, posiada wiele punktów wejścia, ale tylko jedno wyjście - klasę {\tt Robot}. Wszystkie klasy zdarzeń dziedziczą po klasie {\tt Event}. Zgłaszane do kolejki obiekty mogą dotyczyć zarówno zmian wartości sensorów, niespodziewanych zmian w przebiegu zachowania lub wyjątków rzuconych przez aplikację.
 
-\subsubsection{Komunikacja UDP}
+% TODO Diagram przykładowych zdarzeń
+
+\subsubsection{Protokół UDP}
+
+Komunikacja pomiędzy robotami odbywa się przy użyciu sieci bezprzewodowej oraz protokołu UDP. Każdy wysłany pakiet to zakodowany do postaci znakowej obiekt klasy {\tt Message}. Każdy z nich zawiera pięć elementów: identyfikator wiadomości, nadawcy i odbiorcy, typ oraz listę opcjonalnych parametrów. Separatorem parametrów jest dwukropek. Podstawą identyfikacji wiadomości jest jej identyfikator oraz typ. Pierwszy komponent zapewnia synchronizację pakietów oraz eliminację duplikatów, a drugi steruje zmianami stanów agenta oraz jego zachowań. Więcej szczegółów w rozdziale~\ref{ch:komunikacja}. \hyperref[ch:komunikacja]{Komunikacja}.
 
 \subsection{Nadzorca}
 
