@@ -2,8 +2,7 @@
 \label{ch:budowa_aplikacji}
 
 \section{Moduły i klasy}
-\indent \indent W celu uzyskania przejrzystości aplikacji, wydzielone zostały moduły\footnote{W kontekście tej pracy \textit{moduł} oznacza pewną grupę skojarzonych ze sobą klas.}, które opisują pewien fragment funkcjonalności programu. Moduły niższych warstw mogą być wykorzystywane przez moduły warstw wyższych lub być tylko zestawem dodatkowych narzędzi. Kolejne punkty opisują w czym dany moduł się specjalizuje i jakie klasy wchodzą w jego skład. Szczegółowe dane na temat klas oraz ich metod i pól znajdują się w dokumentacji kodu.
-% TODO Jakoś podlinkować czy wspomnieć o tej docu, może gdzieś na końcu.
+\indent \indent W celu uzyskania przejrzystości aplikacji, wydzielone zostały moduły\footnote{W kontekście tej pracy \textit{moduł} oznacza pewną grupę skojarzonych ze sobą klas.}, które opisują pewien fragment funkcjonalności programu. Moduły niższych warstw mogą być wykorzystywane przez moduły warstw wyższych lub być tylko zestawem dodatkowych narzędzi. Kolejne punkty opisują w czym dany moduł się specjalizuje i jakie klasy wchodzą w jego skład. Szczegółowe dane na temat klas oraz ich metod i pól znajdują się w dokumentacji kodu w katalogu {\tt doc}.
 
 \subsection{Komendy}
 \indent \indent Klasy komend są tak naprawdę nakładką na istniejące mechanizmy biblioteki ev3dev, operujące bezpośrednio na sprzęcie. Oprócz właściwej komendy, będącej poleceniem dla efektora bądź sensora, dana klasa zawiera referencje do obiektu, na którym ma zostać wykonana oraz jej parametry, o ile takowe posiada. Nazewnictwo klas dokładnie odwzorowuje nazwy komend przekazywanej urządzeniom. W obrębie konkretnych komend, definiowane są także stałe opisujące charakter przekazywanych argumentów oraz ich limity.\\
@@ -46,7 +45,7 @@ Moduł urządzeń jest także odpowiedzialny za detekcję zdarzeń. Wyższe wars
 
 Robot może być fizycznie zbudowany na wiele różnych sposobów. Dlatego wymagane jest, żeby zdefiniowane były konkretne klasy implementujące szczegóły danego modelu. W związku z powyższym, klasa bazowa {\tt Robot} jest klasą abstrakcyjną, a każdemu wariantowi konstrukcji odpowiada osobna klasa podrzędna. W celu ujednolicenia interfejsu, każdy model deklaruje listę obsługiwanych akcji oraz wymaganych do tego podłączonych urządzeń. W ten sposób można łatwo sprawdzić, czy dane zachowanie jest obsługiwane i jakich pomiarów robot może dostarczyć. Klasy konkretnych modeli, bazując na zdefiniowanych funkcjach wirtualnych, definiują swoje wersje w sposób adekwatny do domniemanego efektu końcowego wymaganych akcji.
 
-Każdy instancja robota posiada również maszynę stanów oraz zdefiniowane warunki przejść pomiędzy nimi. Każdy stan przetwarza tylko konkretne komunikaty i zdarzenia. Rezultatem ich przetworzenia może być wysłanie specjalnej wiadomości zwrotnej lub zmiana stanu na inny. To ostanie wiąże się jeszcze ze zmianą koloru oraz częstotliwości migania diod LED umieszczonych na przednim panelu klocka centralnego.
+Każdy instancja robota posiada również maszynę stanów oraz zdefiniowane warunki przejść pomiędzy nimi. Każdy stan przetwarza tylko konkretne komunikaty i zdarzenia. Rezultatem ich przetworzenia może być wysłanie specjalnej wiadomości zwrotnej lub zmiana stanu na inny. To ostanie wiąże się jeszcze ze zmianą koloru oraz częstotliwości migania diod LED umieszczonych na przednim panelu klocka centralnego. Możliwe stany zostały przestawione na schemacie ... .
 
 % TODO Diagram stanów + kolory
 
@@ -56,14 +55,46 @@ Każdy instancja robota posiada również maszynę stanów oraz zdefiniowane war
 
 \subsubsection{Zdarzenia}
 
-Poszczególne moduły robota, takie jak akcje czy klasa urządzeń, mogą generować zdarzenia. Kolejka zdarzeń, będąca Singletonem, posiada wiele punktów wejścia, ale tylko jedno wyjście - klasę {\tt Robot}. Wszystkie klasy zdarzeń dziedziczą po klasie {\tt Event}. Zgłaszane do kolejki obiekty mogą dotyczyć zarówno zmian wartości sensorów, niespodziewanych zmian w przebiegu zachowania lub wyjątków rzuconych przez aplikację.
+Poszczególne moduły robota, takie jak akcje czy klasa urządzeń, mogą generować zdarzenia. Kolejka zdarzeń, posiada wiele punktów wejścia, ale tylko jedno wyjście - klasę {\tt Robot}. Wszystkie klasy zdarzeń dziedziczą po klasie {\tt Event}. Zgłaszane do kolejki obiekty mogą dotyczyć zarówno zmian wartości sensorów, niespodziewanych zmian w przebiegu zachowania lub wyjątków rzuconych przez aplikację.
 
 % TODO Diagram przykładowych zdarzeń
 
 \subsubsection{Protokół UDP}
 
-Komunikacja pomiędzy robotami odbywa się przy użyciu sieci bezprzewodowej oraz protokołu UDP. Każdy wysłany pakiet to zakodowany do postaci znakowej obiekt klasy {\tt Message}. Każdy z nich zawiera pięć elementów: identyfikator wiadomości, nadawcy i odbiorcy, typ oraz listę opcjonalnych parametrów. Separatorem parametrów jest dwukropek. Podstawą identyfikacji wiadomości jest jej identyfikator oraz typ. Pierwszy komponent zapewnia synchronizację pakietów oraz eliminację duplikatów, a drugi steruje zmianami stanów agenta oraz jego zachowań. Więcej szczegółów w rozdziale~\ref{ch:komunikacja}. \hyperref[ch:komunikacja]{Komunikacja}.
+Komunikacja pomiędzy robotami odbywa się przy użyciu sieci bezprzewodowej oraz protokołu UDP. Każdy wysłany pakiet to zakodowany do postaci znakowej obiekt klasy {\tt Message}. Każdy z nich zawiera pięć elementów: identyfikator wiadomości, nadawcy i odbiorcy, typ oraz listę opcjonalnych parametrów. Separatorem parametrów jest dwukropek. Podstawą ustalenia szczegółów wiadomości jest jej identyfikator oraz typ. Pierwszy komponent zapewnia synchronizację pakietów oraz eliminację duplikatów, a drugi steruje zmianami stanów agenta oraz jego zachowań. Więcej szczegółów w rozdziale~\ref{ch:komunikacja}. \hyperref[ch:komunikacja]{Komunikacja}.
 
 \subsection{Nadzorca}
 
+Do poprawnej i kontrolowanej pracy całego systemu potrzebny jest jego nadzorca. Ten wyspecjalizowany moduł zarządza pozostałymi agentami, będąc punktem wspólnym komunikacji wszystkich jednostek. Pozwala mu to na rozdzielanie zachowań dla poszczególnych robotów, synchronizację komunikacji oraz zbieranie danych. Nadzorcą może być zarówno robot LEGO jak i dowolny komputer osobisy, co w tym drugim przypadku umożliwia wykorzystanie większej mocy obliczeniowej.
+
+Za kontrolę systemu odpowiada klasa {\tt Master}. Podobnie jak klasa {\tt Robot}, zawiera ona dwie kolejki do wymiany wiadomości z pracującym równolegle wątkiem komunikacji. Oprócz tego, przechowuje ona informacje o wszystkich agentach w specjalnej klasie {\tt Agent}, która odpowiada konkretnemu fizycznemu robotowi, ale jest pozbawiona wszystkich komponentów sterujących zachowaniami. Jej głównymi atrybutami są identyfikator urządzenia oraz identyfikator wiadomości. Pierwszy z nich przydzielany jest agentowi, gdy ten po raz pierwszy nawiążę połączenie z nadzorcą. Drugi z kolei wykorzystywany jest do synchronizacji przesyłanych pakietów w celu dobierania par zapytanie-odpowiedź oraz pomaga usunąć nadmiarowe duplikaty.
+
+Największym problemem przed jakim mogą stanąć nawet wszystkie roboty jednocześnie, to utrata połączenia z nadzorcą. Szczegóły takiego zdarzenia opisane są w rozdziale~\ref{ch:komunikacja}. \hyperref[ch:komunikacja]{Komunikacja}.
+
 \subsection{Moduły dodatkowe}
+
+Główne klasy aplikacji są wspierane przez dodatkowe, mniej znaczące moduły. Do takich należą:
+
+\subsubsection{Kontrola diod LED}
+
+Klasa {\tt LedControl} powstała z konieczności, ponieważ dostarczony interfejs poprawnie obsługiwał tylko jedną z czterech dostępnych diod. Dostarczono zatem metod, które pozwalają sterować jasnością konkretnych diod, wybierać kolor oraz zlecać miganie z odpowiednim interwałem. Klasa ta jest głównie wykorzystywana do wizualnej identyfikacji stanu, w jakim obecnie znajduje się robot.
+
+\subsubsection{Logowanie}
+
+Zarówno w procesie tworzenia aplikacji, jak i w późniejszym jej użytkowaniu, informacje o przebiegu wykonania są niezbędne. Klasa {\tt Logger} pozwala zdefiniować poziom obsługiwanych komunikatów, od bardzo rozwlekłego (verbose) do zawężonego tylko do błędów (error). Ponadto, można wyznaczyć domyślny strumień wyjściowych danych, taki jak standardowe wyjście bądź zapis do pliku. W przypadku zapisywania wiadomości na dysk, dane są gromadzone w paczce i zrzucane na nośnik co pewien interwał, w celu ograniczenia ilości operacji dyskowych.
+
+\subsubsection{Obsługa sygnałów}
+
+Aplikacja musi obsługiwać dostarczane do niej sygnały i poprawnie na nie reagować. Przy starcie programu, tworzony jest obiekt klasy {\tt SignalHandler}, który odwołując się obiektów sterujących, wysyła żądanie zatrzymania po otrzymaniu konkretnych sygnałów.
+
+\subsubsection{Kolejki i bufory}
+
+Zarówno komunikacja wewnętrzna jak i zewnętrzna, korzysta z specjalnych klas do przesyłania oraz przechowywania danych. W przypadku wiadomości, wątek główny i komunikacyjny korzystają z synchronizowanych obiektów klasy szablonowej {\tt Queue}, która implementuje dobrze znaną kolejkę wraz z obslugą współbieżności. Klasa {\tt EventQueue}, stworzona w oparciu o wzorzez Singleton, implementuje kolejkę obiektów typu {\tt Event}. Ostatnią kolekcją danych jest klasa szablonowa {\tt CircularBuffer}, implementująca bufor cykliczny z nałożonym limitem obiektów w nim przechowywanych. Wykorzystywana głównie w wątku komunikacyjnych do eliminacji nadmiarowych pakietów.
+
+Przepływ danych został przedstawiony na Rysunku ... .
+
+%TODO
+
+\subsubsection{Inne}
+
+Do innych, mniej znaczących elementów należy plik {\tt Utils}, zawierający statyczne definicje powszechnie wykorzystywanych metod, stałych i uproszczonych nazw typów danych, a także klasa {\tt ColorUtils} wspomagająca kolorowanie wiadomości logowanych na ekran.

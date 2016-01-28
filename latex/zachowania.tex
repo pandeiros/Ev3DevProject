@@ -1,2 +1,36 @@
 \chapter{Zachowania}
 \label{ch:zachowania}
+
+Zachowania definiują najwyższy stopień abstrakcji sterowania agentem. Oprócz właściwych akcji, które wykonują, mogą mieć zdefiniowane również zdarzenia, które wymuszają niestandardowy przebieg wykonania. Ponadto, zlecają również śledzenie konkretnych wartości na podłączonych urządzeniach.
+
+\section{Budowa zachowań złożonych}
+
+Każde zachowanie składa się z kilku elementów:
+\begin{itemize}
+    \item Listę akcji, z których każda stanowi de facto osobny stan.
+    \item Listę możliwych przejść między stanami wraz z warunkami.
+    \item Zdarzenia, na które zachowanie będzie reagowało w określony sposób.
+\end{itemize}
+
+\subsection{Tworzenie zachowań}
+
+Stworzenie zachowania może odbyć się na dwa sposoby. Pierwszym z nich jest skorzystanie z zachowania już zdefiniowanego w bibliotece. W tym przypadku zbierane są ustalone wcześniej, odpowiednio ukonkretnione akcje razem z warunkami przejść. Drugim wariantem jest stworzenie własnego zachowania. Jeśli taki typ zostanie wykryty, do agenta należy dostarczyć dodatkowe dane opisujące użyte akcje, przejścia i zdarzenia.
+
+% TODO XML ?
+
+\subsection{Sterowanie wykonywanymi akcjami}
+
+\subsection{Przejścia pomiędzy stanami}
+
+
+\section{Wykonywanie zachowania}
+
+% TODO Delete those subsections if not enough text
+\subsection{Wykonywanie akcji}
+\subsection{Reakcja na zdarzenia}
+\subsection{Zbieranie danych}
+
+
+\section{Przykładowe zachowania}
+
+\subsection{Zwiedzanie otoczenia}

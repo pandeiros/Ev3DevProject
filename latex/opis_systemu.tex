@@ -1,18 +1,22 @@
 \chapter{Opis systemu}
 \label{ch:opis_systemu}
 
-\ldots
-%TODO
+Przy projektowaniu systemu, należało uwzględnić cechy charakterystyczne wielu różnych dziedzin. Aplikacja łączy w sobie działanie niskopoziomowych, sprzętowych operacji na sensorach i efektorach, zaprogramowaną logikę wyższego poziomu w języku C++ oraz komunikację sieciową w protokole UDP. Architektura ARM oraz docelowa platforma systemowa dodatkowo wpływają na podejmowane decyzje projektowe oraz implementacyjne. Szczegółowy opis użytych technologii znajduje się poniżej.
 
 \section{Wymagania}
-
-\ldots
-% TODO
-
-\section{Cechy}
-
-\ldots
-% TODO
+\begin{itemize}
+    \item Użyte oprogramowanie działa na klocku centralnym LEGO Mindstorms EV3.
+    \item Wybrana do projektu biblioteka umożliwia pracę na urządzeniach podłączanych do klocka centralnego przy użyciu języka wyższego poziomu.
+    \item Aplikacja umożliwia konstrukcję zachowań złożonych w postaci automatu skończonego.
+    \item Zachowania robota są parametryzowane.
+    \item Robot powinien reagować na generowane zdarzenia w jak najkrótszym czasie.
+    \item Robot poprawnie reaguje na odłączenie, bądź zaburzenie pracy któregokolwiek z podłączonych urządzeń.
+    \item Oprogramowanie monitoruje poziom baterii i reaguje na zmiany jego poziomu.
+    \item Oprogramowanie umożliwia komunikację z innymi robotami za pomocą sieci bezprzewodowej.
+    \item Komunikacja jest szybka i odporna na błędy oraz gubienie pakietów.
+    \item Kod aplikacji jest czytelny oraz utrzymuje niezmienną konwencję nazewnictwa.
+    \item Kod aplikacji, w szczególności pliki nagłówkowe, jest dobrze udokumentowany.
+\end{itemize}
 
 \section{Użyta technologia}
 

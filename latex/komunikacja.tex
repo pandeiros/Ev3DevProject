@@ -1,2 +1,26 @@
 \chapter{Komunikacja}
 \label{ch:komunikacja}
+
+\section{Komunikacja przez sieć}
+
+\section{Komunikacja wewnątrz jednostki}
+
+\section{Zdarzenia}
+
+\section{Utrata połączenia z nadzorcą}
+
+Zdarzenie to może zajść w dwóch wariantach:
+
+\subsection{Jeden agent traci połączenie z nadzorcą}
+
+Robot przechodzi do stanu PANIC i przez adres rozgłoszeniowy informuje pozostałych agentów o utraconym połączeniu. Jeden z nich może odpowiedzieć pozytywnie, wysyłając potwierdzenie posiadania komunikacji z nadzorcą. Wtedy następuje synchronizacja dwóch agentów i ustalenie przekierowania wiadomości przez robota pośredniego (Rysunek ...). Jeżeli po pewnym czasie, nikt nie odpowie pozytywnie oraz nie zacznie się głosowanie opisane w punkcie poniżej, robot kończy swoje działanie.
+
+% TODO Rysunek
+
+\subsection{Wszyscy agenci tracą połączenie z nadzorcą}
+
+Wszystkie roboty utraciły połączenie i żaden nie otrzymał odpowiedzi na zapytanie o przekierowanie. W takim przypadku odbywa się głosowanie. Każdy agent wysyła na adres rozgłoszeniowy swój osobisty wynik\footnote{Wynik agenta zależy m. in. od ilości przesłanych danych, poprawności wykonanych akcji czy czasu aktywności.}. Po pewnym czasie, kiedy wszystkie roboty znają już swoje wyniki, ten z najniższym rezultatem mianuje siebie nadzorcą. W przypadku tych samych wyników, o wyborze decyduje czynnik losowy. Wybierany zostaje najsłabszy rezultat, ponieważ warto pozwolić dobremu agentowi na kontynuację działań.
+
+Problem jaki może napotkać grupa robotów, to jednoczesny wybór dwóch nadzorców. Ograniczenie użycia jednej wspólnej sieci nie eliminuje problemu gubienia pakietów, a przez to potencjalnej sytuacji, w której mamy wiele niezależnych głosowań, bądź głosowania są niepełne. W tym celu, oprócz wysłania przez danego agenta swoich danych, wysyła on dodatkowo liczbę oznaczającą ilość otrzymanych rekordów. W ten sposób agent A może dowiedzieć się od agenta B, że nie dostał informacji od innego agenta, np. C, kiedy połączenie między A i C jest niemożliwe. Ponadto, własny wynik jest ponownie rozsyłany za każdym zwiększeniem ilości informacji o pozostałych agentach. Jednostki nie posiadające kompletu informacji nie biorą udziału w finalnym głosowaniu, ponieważ mogą podjąć złą decyzję, a ponadto utrudniona komunikacja jest dla nich dodatkowo niekorzystna. Cały schemat działania opisuje Rysunek ... .
+
+% TODO rysunek
