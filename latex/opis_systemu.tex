@@ -20,10 +20,29 @@ Przy projektowaniu systemu, należało uwzględnić cechy charakterystyczne wiel
 
 \section{Użyta technologia}
 
-Istnieje wiele dostępnych środowisk dedykowanych LEGO Mindstorms EV3, z których każde ma trochę inne zastosowanie. Najbardziej dogodnym rozwiązaniem okazał się projekt ev3dev.
+\subsection{Dostępne środowiska}
 
-\subsection{O ev3dev}
-Projekt ev3dev to dopasowana do potrzeb klocka LEGO dystrybucja Linuxa (Debian Jessie), która jest wgrywana na kartę SD i uruchamiana obok istniejącego systemu. Zawsze istnieje możliwość przywrócenia domyślnego stanu klocka przez wyjęcie karty z systemem. Platforma stworzona w ramach ev3dev zawiera wiele sterowników, nie tylko do akcesoriów zestawu EV3, ale także poprzednich dystrybucji LEGO Mindstorms oraz komponentów wytwarzanych przez osoby trzecie. Możliwe jest programowanie klocka w języku C/C++, ale ev3dev obsługuje też wiele innych języków. To wszystko daje dużą swobodę samego programowania, jak i sposobu tworzenia programu i komunikacji z urządzeniem. Kompilacja aplikacji może odbywać się bezpośrednio na urządzeniu lub na komputerze z wbudowanym kompilatorem na procesory typu ARM. Komunikacja z klockiem centralnym realizowalna jest na trzy sposoby: Za pomocą Wi-Fi, Bluetooth lub przy użyciu kabla USB.
+Istnieje wiele dostępnych środowisk na licencji otwartego oprogramowania dedykowanych LEGO Mindstorms EV3, z których każde ma trochę inne zastosowanie. Poniżej opisane są najbardziej popularne z nich.
+
+\subsubsection{leJOS}
+
+Projekt leJOS \cite{lejos} jest oprogramowaniem zastępującym domyślnie zainstalowany system na klocku centralnym. Bazuje on na maszynie wirtualnej języka Java i jest kompatybilny z platformami Linux, Windows oraz Mac OS X. Programowanie aplikacji oraz transfer plików wykonywalnych do robota odbywa się za pomocą wtyczki do środowiska Eclipse lub za pomocą linii poleceń.
+
+Środowisko udostępnia wiele możliwości języka Java, w szczególności obsługę synchronizacji i wyjątków, wątki oraz większość klas z pakietów java.lang, java.util oraz java.io. Dostarcza ono także ujednolicony interfejs do obsługi sensorów. Na wyświetlaczu klocka centralnego udostępniony jest nowy interfejs graficzny z wieloma dodatkowymi funkcjonalnościami. Ponadto, leJOS posiada wiele zdefiniowanych modułów obsługujących połączenia z wieloma robotami, algorytmy lokalizacyjne czy dostęp do konsoli klocka LEGO. Co ważniejsze, są one uruchamiane na zwykłym komputerze, a nadzór odbywa się zdalnie.
+
+Mimo oferowanego bogactwa możliwości, środowisko leJOS nie byłoby dobrym wyborem. Zastąpienie oryginalnego oprogramowania klocka, dodatkowe wykorzystanie zasobów urządzenia przez maszynę wirtualną czy brak niskopoziomowego wsparcia to główne powody dla których ta biblioteka została odrzucona.
+
+\subsubsection{MonoBrick}
+
+Innym multiplatformowym środowiskiem, które współpracuje z zestawem Mindstorms EV3 jest biblioteka .NET o nazwie MonoBrick \cite{monobrick}. Wspiera ona języki takie jak C\#, F\# czy IronPython. Instalacja oprogramowania nie zastępuje domyślnego systemu na klocku, ale uruchamiana jest oddzielnie z poziomu karty SD. Oferowane możliwości są prawie tak duże, jak w przypadku leJOS, aczkolwiek projektowi brakowało solidnej dokumentacji, a także wiele odnośników na stronie prowadziło do nieistniejących witryn.
+
+Powoływanie się na niepewną bibliotekę, która nie umożliwia natywnej kompilacji kodu, byłoby dużym błędem. Projekt prężnie się rozwija, ale w trakcie wyboru docelowego oprogramowania nie był wystarczająco stabilny i funkcjonalny.
+
+\subsubsection{ev3dev}
+
+Najbardziej dogodnym rozwiązaniem okazał się projekt ev3dev. Jest to dopasowana do potrzeb klocka LEGO dystrybucja Linuxa (Debian Jessie), która jest wgrywana na kartę SD i uruchamiana obok istniejącego systemu. Zawsze istnieje możliwość przywrócenia domyślnego stanu klocka przez wyjęcie karty z systemem. Platforma stworzona w ramach ev3dev zawiera wiele sterowników, nie tylko do akcesoriów zestawu EV3, ale także poprzednich dystrybucji LEGO Mindstorms oraz komponentów wytwarzanych przez osoby trzecie. Możliwe jest programowanie klocka w języku C/C++, ale ev3dev obsługuje też wiele innych języków, takich jak Python czy Lua. To wszystko daje dużą swobodę samego programowania, jak i sposobu tworzenia programu i komunikacji z urządzeniem. Kompilacja aplikacji może odbywać się bezpośrednio na urządzeniu lub na komputerze z wbudowanym kompilatorem na procesory typu ARM. Komunikacja z klockiem centralnym realizowalna jest na trzy sposoby: za pomocą Wi-Fi, Bluetooth lub przy użyciu kabla USB.
+
+Zalety, takie jak praca w natywnym, obiektowym języku na natywnej platformie, niskopoziomowość, pełna kontrola nad sprzętem oraz brak narzutów maszyn wirtualnych zadecydowały o przyjęciu ev3dev jako biblioteki wykorzystanej w tym projekcie.
 
 \subsection{Konfiguracja}
 Konfiguracja nowego systemu odbyła się w kilku krokach:

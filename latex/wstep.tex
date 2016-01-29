@@ -3,12 +3,12 @@
 
 Celem niniejszej pracy było zaprojektowanie i implementacja aplikacji kontrolującej zachowanie robotów mobilnych. Jest ona odpowiedzialna za nadzór nad zachowaniami robotów (agentów), sterowanie sensorami i efektorami oraz komunikację z wyższymi warstwami architektury, weryfikującymi poprawność całego systemu. Zachowania robota są opisane za pomocą automatów skończonych. Warstwa komunikacyjna dostarcza interfejs przesyłania specjalnych komunikatów za pomocą protokołu UDP.\\
 
-Aplikacja jest zaprojektowana do uruchamiania na systemach Unixowych, w szczególności na klocku centralnym LEGO, ale także na komputerze osobistym w roli nadzorcy. Warstwa połączeniowa jest punktem wspólnym architektury ARM z inną, używając do komunikacji interfejsu gniazd sieciowych.
+Aplikacja jest zaprojektowana do uruchamiania na systemach Unixowych, w szczególności na klocku centralnym LEGO, a także na komputerze osobistym w roli nadzorcy. Warstwa połączeniowa jest punktem wspólnym architektury ARM z inną, używając do komunikacji interfejsu gniazd sieciowych.
 \clearpage
 
 \section{Motywacja}
 
-Motywacją do podjęcia powyższego tematu było przetestowanie możliwości programowalnych oraz technicznych robota zbudowanego z klocków LEGO Mindstorms EV3. Aplikacja działająca na urządzeniu była napisana z użyciem biblioteki\\
+Motywacją do podjęcia powyższego tematu było przetestowanie możliwości programowania oraz technicznych robota zbudowanego z klocków LEGO Mindstorms EV3. Aplikacja działająca na klocku była napisana z użyciem biblioteki\\
 ev3dev \cite{ev3dev} w języku C++.
 
 Możliwość dostępu do sterującego klockiem centralnym systemu Linux zdejmuje ograniczenie używania prostych środowisk graficznych i pozwala osiągnąć dużo więcej małym kosztem. Należało zatem sprawdzić, co najnowsza wersja \\LEGO Mindstorms ma do zaoferowania, w szczególności:

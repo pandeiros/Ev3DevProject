@@ -12,6 +12,7 @@ latex/*.log
 latex/main.out
 latex/main.run.xml
 latex/main.pdf
+latex/*.lof
 
 doc/latex/
 doc/xml/

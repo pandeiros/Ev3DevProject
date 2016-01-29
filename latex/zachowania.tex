@@ -7,10 +7,12 @@ Zachowania definiują najwyższy stopień abstrakcji sterowania agentem. Oprócz
 
 Każde zachowanie składa się z kilku elementów:
 \begin{itemize}
-    \item Listę akcji, z których każda stanowi de facto osobny stan.
-    \item Listę możliwych przejść między stanami wraz z warunkami.
-    \item Zdarzenia, na które zachowanie będzie reagowało w określony sposób.
+    \item Listy stanów, z których każdy zawiera konkretną akcję.
+    \item Listy możliwych przejść dla danego stanu.
+    \item Reakcji, które wystąpią po zajściu danego zdarzenia (np. cofnięcie się po uderzeniu w przeszkodę).
 \end{itemize}
+
+Lista stanów, opisanych klasą {\tt RobotState}, zawiera zarówno stany podstawowe, opisujące zamierzone działanie wykonywanych akcji, ale także stany tymczasowe - reakcje.
 
 \subsection{Tworzenie zachowań}
 
@@ -20,17 +22,24 @@ Stworzenie zachowania może odbyć się na dwa sposoby. Pierwszym z nich jest sk
 
 \subsection{Sterowanie wykonywanymi akcjami}
 
-\subsection{Przejścia pomiędzy stanami}
+Klasa {\tt Behaviour} przechowuje informację o bieżącym stanie. W każdej iteracji pętli głównej robota, następuje sprawdzenie, czy nie otrzymano instrukcji zakończenia z warsty wyższej lub czy nie wystąpiło zdarzenie krytyczne. Następnie przetwarzany jest bieżący stan. Jeżeli akcja została wykonana, sprawdzany jest jej warunek zakończenia. W przypadku pomyślnego zakończenia akcji, następuje przejście do domyślnego stanu następnego. Jeśli natomiast w trakcie wykonywania akcji zostanie przechwycone zdarzenie, jest ono porównywane z listą obsługiwanych zdarzeń danego stanu. Typowy scenariusz zakłada wybranie stanu tymczasowego, który prawidłowo zareaguje na zaistniałe zdarzenie, a następnie przekaże kontrolę dalej, zapewniając normalny dalszy przebieg (rysunek ...). Jeśli zdarzenie nie jest obsługiwane, ewentualna zmiana stanu jest ignorowana (zdarzenia krytyczne obsługiwane są przez warstwę wyższą).
 
+% TODO Rysunek
 
-\section{Wykonywanie zachowania}
+W przypadku zaistnienia konieczności zmiany stanu, ustawiana jest specjalna flaga. Odczytuje ją klasa zachowania, pobierając następny stan i ustawiając go jako bieżący. Możliwe jest natomiast pominięcie definicji następnego stanu w przypadku akcji o nieokreślonych granicach wykonywania. Za poprawny przebieg wykonania odpowiadają wtedy zdefiniowane przejścia zachodzące po wystąpieniu zdarzenia lub zinterpretowaniu wiadomości z sieci.
 
-% TODO Delete those subsections if not enough text
-\subsection{Wykonywanie akcji}
-\subsection{Reakcja na zdarzenia}
+% \subsection{Przejścia pomiędzy stanami}
+
+% \section{Wykonywanie zachowania}
+
 \subsection{Zbieranie danych}
 
+Aktywne zachowanie robota może wymuszać zbieranie danych z podłączonych sensorów. Należy wtedy zdefiniować specjalną listę zawierającą typy sensorów, których pomiar ma być przekazywany dalej. W każdym kroku przetwarzania zachowania generowane są raporty typu SENSOR\_VALUE, które umieszczone w kolejce wiadomości robota mogą być przekazane innemu urządzeniu. Jest to rozszerzenie funkcjonalności zachowań o dodatkowy cel, bowiem znalezienie interesującego fragmentu otoczenia może poskutkować podmianą logiki robota na inną z zamiarem eksploatacji danego miejsca (rysunek ...). Przykładowym scenariuszem może być np. szukanie powierzchni o konkretnym kolorze, a następie poruszanie się tylko w jej obrębie.
+
+% TODO Rysunek, robot jeździ i znajduje kolorową powierchnię, a następnie zmienia cel na eksploatację.
 
 \section{Przykładowe zachowania}
 
 \subsection{Zwiedzanie otoczenia}
+
+Zadanie zwiedzania otoczenia może być zdefiniowane na wiele sposobów: poruszanie się z pilnowaniem lewej lub prawej krawędzi, poruszanie się po prostej aż do napotkania przeszkody i obieranie ustalonego bądź losowego kąta obrotu, czy oddalanie się z miejsca startowego po torze w kształcie spirali. Niezależnie od zdefiniowanego rodzaju eksploracji, ważniejszy jest też jej cel. Jednakże wyznaczaniem celów i ich interpretacją zajmuje się warsta wyższa, a z poziomu zachowania można tylko wydobyć informację, czy dany cel został osiągnięty i czy nadal jest osiągalny.
