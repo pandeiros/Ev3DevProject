@@ -57,9 +57,10 @@ void Communication::send()
         if (msg.empty())
             continue;
         
+        std::string messageStr = Message::encodeMessage(msg);
         for (unsigned int i = 0; i < SEND_RETRIES; ++i)
         {
-            if (_commUtils.sendMessage(_socket, _port, msg, _isMaster))
+            if (_commUtils.sendMessage(_socket, _port, msg, messageStr, _isMaster))
                 break;
         }
     }

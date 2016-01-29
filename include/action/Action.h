@@ -7,12 +7,12 @@
 namespace ev3
 {
     class Action;
-    
+
     typedef std::shared_ptr<Action> SharedPtrAction;
     typedef std::vector<SharedPtrAction> StoredActions;
-    
+
     typedef std::shared_ptr<Command> SharedPtrCommand;
-    
+
     /// Type for containing associated Command pointers.
     typedef std::vector<SharedPtrCommand> CommandsVector;
 
@@ -22,7 +22,7 @@ namespace ev3
      * Each Action contains of a sequence of many \link Command Commands\endlink and
      * all of them are executed immediately, one after another. Action is valid,
      * until specific Event occurs or its \link Action::_endCondition endCondition\endlink function returns true.
-     * 
+     *
      * Action objects are instantiated accordingly to Robot model that
      * uses them. Actions are predefined and cannot be dynamically created.
      */
@@ -38,7 +38,7 @@ namespace ev3
         enum ActionType
         {
             NOP, /**< No operation. */
-            REPEAT_FOREVER, /**< Repeats execution of other \link Action Actions\endlink. */
+            REPEAT, /**< Repeats execution of other \link Action Actions\endlink. */
             DRIVE_DISTANCE, /**< Power Motor to reach certain distance. */
             ROTATE, /**< Rotate Robot for given angle. */
             STOP /**< Stop all active motors. */
@@ -85,6 +85,8 @@ namespace ev3
          * @return Value returned from Action::_endCondition.
          */
         virtual bool isFinished();
+        
+        virtual bool isExecuted();
 
         /**
          * Generate std::string prototype for Action.
@@ -122,6 +124,10 @@ namespace ev3
         {
             return true;
         };
+        
+        bool _isExecuted = false;
+
+        //TODO supported events
     };
 
     class ActionRepeat : public Action
@@ -130,16 +136,18 @@ namespace ev3
         ActionRepeat(StoredActions actions, unsigned int n);
         virtual void execute();
 
-        void setRepeatCondition(EndCondition condition);
+        //void setRepeatCondition(EndCondition condition);
 
     private:
         StoredActions _actions;
         unsigned int _n;
+        unsigned int _currentIteration = 0;
+        unsigned int _currentAction = 0;
 
-        EndCondition _repeatCondition = []()
-        {
-            return true;
-        };
+//        EndCondition _repeatCondition = []()
+//        {
+//            return true;
+//        };
     };
 
     class ActionDriveDistance : public Action

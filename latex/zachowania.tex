@@ -12,21 +12,23 @@ Każde zachowanie składa się z kilku elementów:
     \item Reakcji, które wystąpią po zajściu danego zdarzenia (np. cofnięcie się po uderzeniu w przeszkodę).
 \end{itemize}
 
-Lista stanów, opisanych klasą {\tt RobotState}, zawiera zarówno stany podstawowe, opisujące zamierzone działanie wykonywanych akcji, ale także stany tymczasowe - reakcje.
+Lista stanów, opisanych klasą {\tt RobotState}, zawiera zarówno stany podstawowe, opisujące zamierzone działanie wykonywanych akcji, ale także stany pośrednie - reakcje.
 
 \subsection{Tworzenie zachowań}
 
 Stworzenie zachowania może odbyć się na dwa sposoby. Pierwszym z nich jest skorzystanie z zachowania już zdefiniowanego w bibliotece. W tym przypadku zbierane są ustalone wcześniej, odpowiednio ukonkretnione akcje razem z warunkami przejść. Drugim wariantem jest stworzenie własnego zachowania. Jeśli taki typ zostanie wykryty, do agenta należy dostarczyć dodatkowe dane opisujące użyte akcje, przejścia i zdarzenia.
 
+\ldots
+
 % TODO XML ?
 
 \subsection{Sterowanie wykonywanymi akcjami}
 
-Klasa {\tt Behaviour} przechowuje informację o bieżącym stanie. W każdej iteracji pętli głównej robota, następuje sprawdzenie, czy nie otrzymano instrukcji zakończenia z warsty wyższej lub czy nie wystąpiło zdarzenie krytyczne. Następnie przetwarzany jest bieżący stan. Jeżeli akcja została wykonana, sprawdzany jest jej warunek zakończenia. W przypadku pomyślnego zakończenia akcji, następuje przejście do domyślnego stanu następnego. Jeśli natomiast w trakcie wykonywania akcji zostanie przechwycone zdarzenie, jest ono porównywane z listą obsługiwanych zdarzeń danego stanu. Typowy scenariusz zakłada wybranie stanu tymczasowego, który prawidłowo zareaguje na zaistniałe zdarzenie, a następnie przekaże kontrolę dalej, zapewniając normalny dalszy przebieg (rysunek ...). Jeśli zdarzenie nie jest obsługiwane, ewentualna zmiana stanu jest ignorowana (zdarzenia krytyczne obsługiwane są przez warstwę wyższą).
+Klasa {\tt Behaviour} przechowuje informację o bieżącym stanie. W każdej iteracji pętli głównej robota, następuje sprawdzenie, czy nie otrzymano instrukcji zakończenia z warsty wyższej lub czy nie wystąpiło zdarzenie krytyczne. Następnie przetwarzany jest bieżący stan. Jeżeli akcja została wykonana, sprawdzany jest jej warunek zakończenia. W przypadku pomyślnego zakończenia akcji, następuje przejście do domyślnego stanu następnego. Jeśli natomiast w trakcie wykonywania akcji zostanie przechwycone zdarzenie, jest ono porównywane z listą obsługiwanych zdarzeń danego stanu. Typowy scenariusz zakłada wybranie stanu pośredniego, który prawidłowo zareaguje na zaistniałe zdarzenie, a następnie przekaże kontrolę dalej, zapewniając normalny dalszy przebieg (rysunek ...). Jeśli zdarzenie nie jest obsługiwane, ewentualna zmiana stanu jest ignorowana (zdarzenia krytyczne obsługiwane są przez warstwę wyższą).
 
 % TODO Rysunek
 
-W przypadku zaistnienia konieczności zmiany stanu, ustawiana jest specjalna flaga. Odczytuje ją klasa zachowania, pobierając następny stan i ustawiając go jako bieżący. Możliwe jest natomiast pominięcie definicji następnego stanu w przypadku akcji o nieokreślonych granicach wykonywania. Za poprawny przebieg wykonania odpowiadają wtedy zdefiniowane przejścia zachodzące po wystąpieniu zdarzenia lub zinterpretowaniu wiadomości z sieci.
+W przypadku zaistnienia konieczności zmiany stanu, ustawiana jest specjalna flaga. Odczytuje ją klasa zachowania, pobierając następny stan i ustawiając go jako bieżący. Możliwe jest natomiast pominięcie definicji następnego stanu w przypadku akcji o nieokreślonych granicach wykonywania. Za poprawny przebieg wykonania odpowiadają wtedy zdefiniowane przejścia zachodzące po wystąpieniu zdarzenia lub zinterpretowane komunikaty z sieci.
 
 % \subsection{Przejścia pomiędzy stanami}
 
@@ -34,12 +36,12 @@ W przypadku zaistnienia konieczności zmiany stanu, ustawiana jest specjalna fla
 
 \subsection{Zbieranie danych}
 
-Aktywne zachowanie robota może wymuszać zbieranie danych z podłączonych sensorów. Należy wtedy zdefiniować specjalną listę zawierającą typy sensorów, których pomiar ma być przekazywany dalej. W każdym kroku przetwarzania zachowania generowane są raporty typu SENSOR\_VALUE, które umieszczone w kolejce wiadomości robota mogą być przekazane innemu urządzeniu. Jest to rozszerzenie funkcjonalności zachowań o dodatkowy cel, bowiem znalezienie interesującego fragmentu otoczenia może poskutkować podmianą logiki robota na inną z zamiarem eksploatacji danego miejsca (rysunek ...). Przykładowym scenariuszem może być np. szukanie powierzchni o konkretnym kolorze, a następie poruszanie się tylko w jej obrębie.
+Bieżące zachowanie robota może wymuszać zbieranie danych z podłączonych sensorów. Należy wtedy zdefiniować specjalną listę zawierającą typy sensorów, których pomiar ma być przekazywany dalej. W każdym kroku przetwarzania zachowania generowane są raporty typu SENSOR\_VALUE, które umieszczone w kolejce wiadomości robota mogą być przekazane innemu urządzeniu, domyślnie nadzorcy. Jest to rozszerzenie funkcjonalności zachowań o dodatkowy cel, bowiem np. znalezienie interesującego fragmentu otoczenia może skutkować zamianą logiki robota na inną z zamiarem eksploatacji danego miejsca (rysunek ...). Przykładowym scenariuszem może być np. szukanie powierzchni o konkretnym kolorze, a następie poruszanie się tylko w jej obrębie.
 
 % TODO Rysunek, robot jeździ i znajduje kolorową powierchnię, a następnie zmienia cel na eksploatację.
 
 \section{Przykładowe zachowania}
 
-\subsection{Zwiedzanie otoczenia}
+Definicje zachowań mogą przyjmować różne formy. Przykładowo, zadanie zwiedzanie otoczenia może być zdefiniowane jako poruszanie się z pilnowaniem lewej lub prawej krawędzi lub poruszanie się po prostej aż do napotkania przeszkody i obieranie ustalonego bądź losowego kąta obrotu. Niezależnie od zdefiniowanego rodzaju zachowania, ważny pozostaje jej cel. Jednakże jego wyznaczaniem i interpretacją zajmuje się warsta wyższa, a z poziomu zachowania można wydobyć tylko informację, czy dany cel został osiągnięty i czy nadal jest osiągalny. Poniżej przedstawione są przykładowe zachowania.
 
-Zadanie zwiedzania otoczenia może być zdefiniowane na wiele sposobów: poruszanie się z pilnowaniem lewej lub prawej krawędzi, poruszanie się po prostej aż do napotkania przeszkody i obieranie ustalonego bądź losowego kąta obrotu, czy oddalanie się z miejsca startowego po torze w kształcie spirali. Niezależnie od zdefiniowanego rodzaju eksploracji, ważniejszy jest też jej cel. Jednakże wyznaczaniem celów i ich interpretacją zajmuje się warsta wyższa, a z poziomu zachowania można tylko wydobyć informację, czy dany cel został osiągnięty i czy nadal jest osiągalny.
+\subsection{Zwiedzanie otoczenia}

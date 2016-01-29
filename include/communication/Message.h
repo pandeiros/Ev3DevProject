@@ -8,7 +8,7 @@
 namespace ev3
 {
     static const char MESSAGE_DELIM = ':';
-    
+
     class Message
     {
     public:
@@ -16,6 +16,8 @@ namespace ev3
         enum MessageType
         {
             EMPTY,
+            ACK,
+            NOT,
             AGENT,
             MASTER,
             MASTER_OVER,
@@ -23,7 +25,11 @@ namespace ev3
             PONG,
             AGENT_OVER,
             ABORT,
-            BEHAVIOUR
+            BEHAVIOUR,
+            START,
+            RESUME,
+            PAUSE,
+            SENSOR_VALUE
         };
 
         Message();
@@ -34,12 +40,20 @@ namespace ev3
         unsigned int getMessageId();
         MessageType getType();
         StringVector getParameters();
-        
+
+        void setSenderId(unsigned int id);
+        void setReceiverId(unsigned int id);
+        void setMessageId(unsigned int id);
+        void setType(MessageType type);
+        void setParameters(StringVector parameters);
+
         bool empty();
         void print();
-        
+
         static std::string encodeMessage(Message & message);
         static Message decodeMessage(const std::string msg);
+
+        void reset();
 
     private:
         unsigned int _id;

@@ -22,14 +22,25 @@ RobotState* RobotState::process(Message msg) { }
 
 Message::MessageType RobotState::getPendingMessage()
 {
-    Message::MessageType type = _pendingMessage;
-    _pendingMessage = Message::EMPTY;
-    return type;
+    return _pendingMessage;
 }
 
 void RobotState::updateTimer()
 {
+    _pendingMessage = Message::EMPTY;
     _masterTimeout = HighResClock::now();
+}
+
+bool RobotState::isPendingEnabled()
+{
+    if (_pendingTimeout != -1 && DurationMilli(HighResClock::now() - _messageDelay).count() >= _pendingTimeout)
+    {
+        _messageDelay = HighResClock::now();
+        _pendingTimeout = -1;
+        return true;
+    }
+    else
+        return false;
 }
 
 RobotState* RobotState::switchState(Message::MessageType type)
@@ -46,6 +57,10 @@ RobotState* RobotState::changeState(States state)
             return new RobotStateIdle(_led);
         case ACTIVE:
             return new RobotStateActive(_led);
+        case WORKING:
+            return new RobotStateWorking(_led);
+        case PAUSED:
+            return new RobotStatePaused(_led);
         case PANIC:
             return new RobotStatePanic(_led);
         default:
@@ -63,10 +78,28 @@ RobotStateIdle::RobotStateIdle(LedControl * led)
 
 RobotStateActive::RobotStateActive(LedControl * led)
 : RobotState({
-    {Message::MASTER_OVER, IDLE}
+    {Message::MASTER_OVER, IDLE},
+    {Message::START, WORKING}
 }, led)
 {
     led->flashColor(LedControl::YELLOW, 200, 0);
+}
+
+RobotStateWorking::RobotStateWorking(LedControl * led)
+: RobotState({
+    {Message::PAUSE, PAUSED}
+}, led)
+{
+    led->endFlashing();
+    led->setColor(LedControl::GREEN);
+}
+
+RobotStatePaused::RobotStatePaused(LedControl * led)
+: RobotState({
+    {Message::RESUME, WORKING}
+}, led)
+{
+    led->setColor(LedControl::AMBER);
 }
 
 RobotStatePanic::RobotStatePanic(LedControl* led)
@@ -79,7 +112,7 @@ RobotStatePanic::RobotStatePanic(LedControl* led)
 
 RobotState* RobotStateIdle::process(Message msg)
 {
-    std::cout << DurationMilli(HighResClock::now() - _masterTimeout).count() << "\n";
+    //    std::cout << DurationMilli(HighResClock::now() - _masterTimeout).count() << "\n";
     if (DurationMilli(HighResClock::now() - _masterTimeout).count() >= MASTER_TIMEOUT)
     {
         // Cannot connect to the master, enter Panic state.
@@ -87,7 +120,16 @@ RobotState* RobotStateIdle::process(Message msg)
     }
     else if (msg.getType() != Message::MASTER)
     {
-        _pendingMessage = Message::AGENT;
+        if (_pendingTimeout == -1)
+        {
+            _pendingMessage = Message::AGENT;
+            _pendingTimeout = 2.f * 1000;
+            _messageDelay = HighResClock::now();
+        }
+    }
+    else if (msg.getType() == Message::MASTER)
+    {
+        _pendingMessage = Message::ACK;
     }
 
     CHANGE_STATE;
@@ -99,10 +141,43 @@ RobotState* RobotStateActive::process(Message msg)
     {
         //_pendingMessage = Message::AGENT_OVER;
     }
-    else if (msg.getType() != Message::MASTER)
+    else if (msg.getType() == Message::START)
     {
         //_pendingMessage = Message::AGENT;
     }
+
+    CHANGE_STATE;
+}
+
+RobotState* RobotStateWorking::process(Message msg)
+{
+    //std::cout << DurationMilli(HighResClock::now() - _masterTimeout).count() << "\n";
+    if (DurationMilli(HighResClock::now() - _masterTimeout).count() >= MASTER_TIMEOUT)
+    {
+        // Cannot connect to the master, enter PAUSED state.
+        FORCE_STATE(PAUSED);
+    }
+    // TODO Sending data
+    //    else if ()
+    //    {
+    //        _pendingMessage = Message::AGENT;
+    //    }
+
+    CHANGE_STATE;
+}
+
+RobotState* RobotStatePaused::process(Message msg)
+{
+    //std::cout << DurationMilli(HighResClock::now() - _masterTimeout).count() << "\n";
+    if (DurationMilli(HighResClock::now() - _masterTimeout).count() >= MASTER_TIMEOUT)
+    {
+        // Cannot connect to the master, enter PANIC state.
+        FORCE_STATE(PANIC);
+    }
+    //    else if (msg.getType() != Message::MASTER)
+    //    {
+    //        _pendingMessage = Message::AGENT;
+    //    }
 
     CHANGE_STATE;
 }
@@ -113,10 +188,6 @@ RobotState* RobotStatePanic::process(Message msg)
     {
         // TODO Generate event instead.
         _pendingMessage = Message::AGENT_OVER;
-    }
-    else if (msg.getType() != Message::MASTER)
-    {
-        //_pendingMessage = Message::AGENT;
     }
 
     CHANGE_STATE;

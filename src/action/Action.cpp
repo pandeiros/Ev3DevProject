@@ -31,6 +31,11 @@ bool Action::isFinished()
     return _endCondition();
 }
 
+bool Action::isExecuted()
+{
+    return _isExecuted;
+}
+
 std::string Action::getActionPrototype()
 {
     return EMPTY_PROTO;
@@ -52,52 +57,57 @@ Action::ActionType Action::getType()
 }
 
 ActionRepeat::ActionRepeat(StoredActions actions, unsigned int n)
-: Action(ActionType::REPEAT_FOREVER), _actions(actions), _n(n) { }
+: Action(ActionType::REPEAT), _actions(actions), _n(n) { }
 
 void ActionRepeat::execute()
 {
     if (_n == 0)
     {
-        while (!this->_repeatCondition())
+        if (_actions[_currentAction]->isFinished())
         {
-            for (auto action : _actions)
-            {
-                std::cout << action->getActionPrototype() << "\n";
-                action->execute();
-                while (!action->isFinished())
-                {
-                };
-            }
+            _currentAction = (_currentAction + 1) % _actions.size();
+
+            std::cout << _actions[_currentAction]->getActionPrototype() << "\n";
+            _actions[_currentAction]->execute();
         }
     }
     else
     {
-        for (unsigned int i = 0; i < _n; ++i)
+        if (_currentIteration < _n)
         {
-            for (auto action : _actions)
+            if (_isExecuted && _currentAction == _actions.size() - 1 &&
+                _actions[_currentAction]->isFinished())
             {
-                std::cout << action->getActionPrototype() << "\n";
-                action->execute();
-                while (!action->isFinished())
-                {
-                };
+                ++_currentIteration;
+            }
+
+            if (_actions[_currentAction]->isFinished())
+            {
+                _currentAction = (_currentAction + 1) % _actions.size();
+
+                std::cout << _actions[_currentAction]->getActionPrototype() << "\n";
+                _actions[_currentAction]->execute();
             }
         }
     }
+
+    if (!_isExecuted)
+    {
+        _actions[_currentAction]->execute();
+        _isExecuted = true;
+    }
 }
 
-void ActionRepeat::setRepeatCondition(EndCondition condition)
-{
-    this->_repeatCondition = condition;
-}
+//void ActionRepeat::setRepeatCondition(EndCondition condition)
+//{
+//    this->_repeatCondition = condition;
+//}
 
 ActionDriveDistance::ActionDriveDistance(int distance)
 : Action(ActionType::DRIVE_DISTANCE), _distance(distance) { }
 
 ActionDriveDistance::ActionDriveDistance(CommandsVector commands, int distance)
-: Action(commands, ActionType::DRIVE_DISTANCE), _distance(distance){
- }
-
+: Action(commands, ActionType::DRIVE_DISTANCE), _distance(distance) { }
 
 int ActionDriveDistance::getDistance()
 {
@@ -117,7 +127,7 @@ std::string ActionDriveDistance::getActionPrototype()
 ActionRotate::ActionRotate(int rotation)
 : Action(ActionType::ROTATE), _rotation(rotation) { }
 
-ActionRotate::ActionRotate(CommandsVector commands, int rotation) 
+ActionRotate::ActionRotate(CommandsVector commands, int rotation)
 : Action(commands, ActionType::ROTATE), _rotation(rotation) { }
 
 int ActionRotate::getRotation()

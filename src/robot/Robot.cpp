@@ -52,14 +52,13 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
             _currentMessage.getType() == Message::MASTER_OVER)
             break;
 
+        //Devices::getInstance()->update();
+
         processState();
 
         processMessage();
 
-        if (_currentMessage.getType() == Message::BEHAVIOUR)
-            processBehaviour();
-
-        //Devices::getInstance()->update();
+        processBehaviour();
 
         //respond();
 
@@ -144,24 +143,28 @@ void Robot::processState()
         _state->updateTimer();
 
     _state = _state->process(_currentMessage);
+    
+    Message::MessageType pending = _state->getPendingMessage();
+    bool allowed = _state->isPendingEnabled();
 
     // End of work.
-    if (_state->getPendingMessage() == Message::AGENT_OVER)
+    if (pending == Message::AGENT_OVER)
     {
         _receiveQueue->push(Message(0, 0, 0, Message::AGENT_OVER,{}));
         return;
     }
 
-    if (_state->getPendingMessage() != Message::EMPTY)
+    if (pending != Message::EMPTY && allowed)
     {
         Message message(_id == 0 ? std::rand() : _id,
                 MASTER_ID,
                 _commId++,
-                _state->getPendingMessage(),
+                pending,
                 {
                 });
-
+        
         _sendQueue->push(message);
+        std::cout << "Sending AGENT packet.\n";
     }
 }
 
@@ -181,37 +184,62 @@ void Robot::processMessage()
 
 void Robot::processBehaviour()
 {
-    StringVector parameters = Behaviour::getParameters(_currentMessage.getParameters());
-
-    if (parameters.size() == 0)
+    // Replace behaviour with a new one.
+    if (_currentMessage.getType() == Message::BEHAVIOUR)
     {
-        // TODO Generate Event instead.
-        std::cout << "Parameters incorrect\n";
+        StringVector parameters = Behaviour::getParameters(_currentMessage.getParameters());
 
-        return;
-    }
-
-    try
-    {
-        Behaviour::BehaviourType type =
-                static_cast<Behaviour::BehaviourType> (transcode<unsigned int>(parameters[0]));
-
-        // Predefined Behaviour
-        if (type != Behaviour::CUSTOM)
+        if (parameters.size() == 0)
         {
-            _currentBehaviour = generateBehaviour(type,
-                    StringVector(parameters.begin() + 1, parameters.end()));
+            // TODO Generate Event instead.
+            std::cout << "Parameters incorrect\n";
+
+            return;
         }
-        else
+
+        try
         {
-            
+            Behaviour::BehaviourType type =
+                    static_cast<Behaviour::BehaviourType> (transcode<unsigned int>(parameters[0]));
+
+            // Predefined Behaviour
+            if (type != Behaviour::CUSTOM)
+            {
+                _currentBehaviour = generateBehaviour(type,
+                        StringVector(parameters.begin() + 1, parameters.end()));
+                if (_currentBehaviour.get() == nullptr)
+                {
+                    send(Message(_id, MASTER_ID, 0, Message::NOT,{}));
+                }
+            }
+            else
+            {
+
+                // Custom behaviour creation.
+            }
+        }
+        catch (...)
+        {
+            // TODO
         }
     }
-    catch (...)
+        // Continue with current behaviour.
+    else
     {
-        // TODO
+        if (_currentBehaviour)
+            _currentBehaviour->process();
     }
+
 }
+
+void Robot::send(Message message)
+{
+    message.setMessageId(_commId++);
+    _sendQueue->push(message);
+}
+
+SharedPtrBehaviour Robot::generateBehaviour(Behaviour::BehaviourType type, StringVector parameters) {
+ }
 
 void Robot::sendInfo() { }
 

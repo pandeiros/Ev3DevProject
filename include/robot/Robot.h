@@ -30,10 +30,11 @@ namespace ev3
         virtual void run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue);
 
         void stop();
+        void send(Message message);
 
     protected:
-        virtual SharedPtrBehaviour generateBehaviour(Behaviour::BehaviourType type, StringVector parameters) = 0;
-        
+        virtual SharedPtrBehaviour generateBehaviour(Behaviour::BehaviourType type, StringVector parameters);
+
         unsigned int _id = 0;
         unsigned int _commId = 0;
 
@@ -50,15 +51,13 @@ namespace ev3
 
         RobotState * _state = new RobotStateIdle(&_ledControl);
 
-        
     private:
         void processState();
         void processMessage();
         void processBehaviour();
-        
+
         void sendInfo();
-        
+
         Message _currentMessage;
     };
 }
-

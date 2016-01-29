@@ -41,49 +41,49 @@ bool Devices::checkDevices(RequiredDevices & requiredDevices)
         auto ultrasonic_sensor = ev3dev::ultrasonic_sensor(input);
         if (ultrasonic_sensor.connected())
         {
-            _sensors.insert({input, Sensor(ultrasonic_sensor)});
+            _sensors.insert({input, Sensor(ultrasonic_sensor, Sensor::ULTRASONIC)});
             continue;
         }
 
         auto touch_sensor = ev3dev::touch_sensor(input);
         if (touch_sensor.connected())
         {
-            _sensors.insert({input, Sensor(touch_sensor)});
+            _sensors.insert({input, Sensor(touch_sensor, Sensor::TOUCH)});
             continue;
         }
 
         auto color_sensor = ev3dev::color_sensor(input);
         if (color_sensor.connected())
         {
-            _sensors.insert({input, Sensor(color_sensor)});
+            _sensors.insert({input, Sensor(color_sensor, Sensor::COLOR)});
             continue;
         }
 
         auto gyro_sensor = ev3dev::gyro_sensor(input);
         if (gyro_sensor.connected())
         {
-            _sensors.insert({input, Sensor(gyro_sensor)});
+            _sensors.insert({input, Sensor(gyro_sensor, Sensor::GYRO)});
             continue;
         }
 
         auto infrared_sensor = ev3dev::infrared_sensor(input);
         if (infrared_sensor.connected())
         {
-            _sensors.insert({input, Sensor(infrared_sensor)});
+            _sensors.insert({input, Sensor(infrared_sensor, Sensor::INFRARED)});
             continue;
         }
 
         auto sound_sensor = ev3dev::sound_sensor(input);
         if (sound_sensor.connected())
         {
-            _sensors.insert({input, Sensor(sound_sensor)});
+            _sensors.insert({input, Sensor(sound_sensor, Sensor::SOUND)});
             continue;
         }
 
         auto light_sensor = ev3dev::light_sensor(input);
         if (light_sensor.connected())
         {
-            _sensors.insert({input, Sensor(light_sensor)});
+            _sensors.insert({input, Sensor(light_sensor, Sensor::LIGHT)});
             continue;
         }
     }
@@ -156,5 +156,3 @@ void Devices::stopAllDevices()
 Devices::Devices() { }
 
 Devices::~Devices() { }
-
-

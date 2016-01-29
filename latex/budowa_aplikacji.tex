@@ -55,9 +55,7 @@ Każdy instancja robota posiada również maszynę stanów oraz zdefiniowane war
 
 \subsubsection{Zdarzenia}
 
-Poszczególne moduły robota, takie jak akcje czy klasa urządzeń, mogą generować zdarzenia. Kolejka zdarzeń, posiada wiele punktów wejścia, ale tylko jedno wyjście - klasę {\tt Robot}. Wszystkie klasy zdarzeń dziedziczą po klasie {\tt Event}. Zgłaszane do kolejki obiekty mogą dotyczyć zarówno zmian wartości sensorów, niespodziewanych zmian w przebiegu zachowania lub wyjątków rzuconych przez aplikację. Rozróżniane są zdarzenia zwykłe oraz krytyczne, które przerywają wykonywanie części bądź wszystkich działań. Do takich zdarzeń należą np. odłączenie urządzenia czy niski poziom baterii robota. Przepływ zdarzeń opisany jest na rysunku ... .
-
-% TODO Diagram przykładowych zdarzeń
+Poszczególne moduły robota, takie jak akcje czy klasa urządzeń, mogą generować zdarzenia. Kolejka zdarzeń, posiada wiele punktów wejścia, ale tylko jedno wyjście - klasę {\tt Robot}. Wszystkie klasy zdarzeń dziedziczą po klasie {\tt Event}. Zgłaszane do kolejki obiekty mogą dotyczyć zarówno zmian wartości sensorów, niespodziewanych zmian w przebiegu zachowania lub wyjątków rzuconych przez aplikację. Więcej szczegółów w rozdziale~\ref{ch:komunikacja}. \hyperref[ch:komunikacja]{Komunikacja}. 
 
 \subsubsection{Protokół UDP}
 

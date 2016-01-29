@@ -2,33 +2,62 @@
 
 using namespace ev3;
 
-Behaviour::Behaviour(BehaviourType type, StoredActions actions)
-: _type(type), _actions(actions) { };
+Behaviour::Behaviour(BehaviourType type, BehaviourStates states)
+: _type(type), _states(states) { };
 
 Behaviour::Behaviour(BehaviourType type)
 : _type(type) { };
 
-void Behaviour::execute()
+void Behaviour::process()
 {
-    for (auto action : _actions)
+    unsigned int result = _currentState.process();
+
+    try
     {
-        std::cout << action->getActionPrototype() << "\n";
-        action->execute();
-        while (!action->isFinished())
+        if (result >= 0)
         {
-        };
+            _currentState = _states[result];
+        }
+    }
+    catch (...)
+    {
+        // TODO Generate exception event
     }
 }
 
-void Behaviour::setActions(StoredActions actions)
+void Behaviour::setStates(BehaviourStates states)
 {
-    _actions = actions;
+    _states = states;
 }
 
 StringVector Behaviour::getParameters(StringVector proto) { }
 
-BehaviourDriveOnSquare::BehaviourDriveOnSquare(StoredActions actions, unsigned int side, bool turningRight)
-: Behaviour(DRIVE_ON_SQUARE, actions), _squareSide(side), _isTurningRight(turningRight) { }
+BehaviourDriveOnSquare::BehaviourDriveOnSquare(BehaviourStates states, unsigned int side, bool turningRight)
+: Behaviour(DRIVE_ON_SQUARE, states), _squareSide(side), _isTurningRight(turningRight) { }
+
+BehaviourState::BehaviourState(SharedPtrAction action, unsigned int nextState)
+: _action(action), _nextStateId(nextState) { }
+
+//
+//bool BehaviourState::isExecuted() {
+//    return _isExecuted;
+// }
+
+unsigned int BehaviourState::process()
+{
+    if (_action->isFinished())
+    {
+        return _nextStateId;
+    }
+    else if (_action->getType() == Action::REPEAT || !_isExecuted)
+    {
+        _action->execute();
+        _isExecuted = true;
+    }
+
+    return -1;
+}
+
 
 
 

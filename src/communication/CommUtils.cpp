@@ -43,7 +43,7 @@ int CommUtils::preparePassiveSocket(unsigned int portNumber)
     return sockfd;
 }
 
-int CommUtils::sendMessage(unsigned int socket, unsigned int port, Message message, bool isMaster, unsigned int repeat)
+int CommUtils::sendMessage(unsigned int socket, unsigned int port, Message & message, std::string & proto, bool isMaster, unsigned int repeat)
 {
     int result = -1;
 
@@ -62,7 +62,7 @@ int CommUtils::sendMessage(unsigned int socket, unsigned int port, Message messa
 
         for (unsigned int i = 0; i < repeat; ++i)
         {
-            int tempResult = sendMessageTo(socket, receiver.ipAddress, receiver.port, message);
+            int tempResult = sendMessageTo(socket, receiver.ipAddress, receiver.port, proto);
             if (result < 0)
                 result = tempResult;
         }
@@ -74,9 +74,9 @@ int CommUtils::sendMessage(unsigned int socket, unsigned int port, Message messa
         {
             int tempResult;
             if (_remotes.find(MASTER_ID) != _remotes.end())
-                tempResult = sendMessageTo(socket, _remotes[MASTER_ID].ipAddress, _remotes[MASTER_ID].port, message);
+                tempResult = sendMessageTo(socket, _remotes[MASTER_ID].ipAddress, _remotes[MASTER_ID].port, proto);
             else
-                tempResult = sendBroadcastMessage(socket, port, message);
+                tempResult = sendBroadcastMessage(socket, port, proto);
 
             if (result < 0)
                 result = tempResult;
@@ -86,9 +86,9 @@ int CommUtils::sendMessage(unsigned int socket, unsigned int port, Message messa
     return result;
 }
 
-int CommUtils::sendBroadcastMessage(unsigned int socket, unsigned int port, Message message)
+int CommUtils::sendBroadcastMessage(unsigned int socket, unsigned int port, std::string message)
 {
-    Buffer buffer = getBufferFromString(Message::encodeMessage(message));
+    Buffer buffer = getBufferFromString(message);
 
     struct ifaddrs* interfaces;
     if (getifaddrs(&interfaces) == -1)
@@ -139,9 +139,9 @@ int CommUtils::sendBroadcastMessage(unsigned int socket, unsigned int port, Mess
     return max_return_code;
 }
 
-int CommUtils::sendMessageTo(unsigned int socket, std::string ipAddress, unsigned int destinationPort, Message message)
+int CommUtils::sendMessageTo(unsigned int socket, std::string ipAddress, unsigned int destinationPort, std::string message)
 {
-    Buffer buffer = getBufferFromString(Message::encodeMessage(message));
+    Buffer buffer = getBufferFromString(message);
 
     struct sockaddr_in addr;
     if (makeSockAddr(ipAddress, destinationPort, &addr) < 0)

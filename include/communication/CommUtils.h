@@ -29,7 +29,7 @@ namespace ev3
 
         int preparePassiveSocket(unsigned int portNumber);
 
-        int sendMessage(unsigned int socket, unsigned int port, Message message, bool isMaster, unsigned int repeat = SENT_MESSAGE_COPIES);
+        int sendMessage(unsigned int socket, unsigned int port, Message & message, std::string & proto, bool isMaster, unsigned int repeat = SENT_MESSAGE_COPIES);
 
         int receiveMessage(unsigned int socket, Message & msg, NetworkNode & sender);
         int receiveMessageDelay(unsigned int socket, Message & msg, NetworkNode & sender, unsigned int msDelay = DEFAULT_RECEIVE_DELAY);
@@ -42,8 +42,8 @@ namespace ev3
             size_t size;
         };
 
-        int sendBroadcastMessage(unsigned int socket, unsigned int port, Message message);
-        int sendMessageTo(unsigned int socket, std::string ipAddress, unsigned int destinationPort, Message message);
+        int sendBroadcastMessage(unsigned int socket, unsigned int port, std::string message);
+        int sendMessageTo(unsigned int socket, std::string ipAddress, unsigned int destinationPort, std::string message);
 
         int makeSockAddr(std::string ipAddress, int portNumber, struct sockaddr_in * sockaddr);
         Buffer getBufferFromString(const std::string msg);

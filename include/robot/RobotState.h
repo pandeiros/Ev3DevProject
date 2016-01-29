@@ -32,6 +32,8 @@ namespace ev3
 
         Message::MessageType getPendingMessage();
         void updateTimer();
+        
+        bool isPendingEnabled();
 
     protected:
         RobotState* switchState(Message::MessageType type);
@@ -41,8 +43,10 @@ namespace ev3
         ChangeMap _changes;
         LedControl * _led;
         Message::MessageType _pendingMessage = Message::EMPTY;
+        float _pendingTimeout = -1.f;
 
         HighResClock::time_point _masterTimeout = HighResClock::now();
+        HighResClock::time_point _messageDelay = HighResClock::now();
     };
 
     class RobotStateIdle : public RobotState
@@ -56,6 +60,20 @@ namespace ev3
     {
     public:
         RobotStateActive(LedControl * led);
+        RobotState * process(Message msg);
+    };
+    
+    class RobotStateWorking : public RobotState
+    {
+    public:
+        RobotStateWorking(LedControl * led);
+        RobotState * process(Message msg);
+    };
+    
+    class RobotStatePaused : public RobotState
+    {
+    public:
+        RobotStatePaused(LedControl * led);
         RobotState * process(Message msg);
     };
 

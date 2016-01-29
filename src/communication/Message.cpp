@@ -38,12 +38,33 @@ Message::MessageType Message::getType()
     return _type;
 }
 
+void Message::setMessageId(unsigned int id) {
+    _id = id;
+}
+
+void Message::setParameters(StringVector parameters) {
+    _parameters = parameters;
+}   
+
+void Message::setReceiverId(unsigned int id) {
+    _receiver = id;
+}
+
+void Message::setSenderId(unsigned int id) {
+    _sender = id;
+}
+
+void Message::setType(MessageType type) {
+    _type = type;
+ }
+
 bool Message::empty()
 {
     return _type == EMPTY;
 }
 
-void Message::print() {
+void Message::print()
+{
     std::cout << "Sender: " << std::setw(5) << _sender << " | ";
     std::cout << "Receiver: " << std::setw(5) << _receiver << " | ";
     std::cout << "Msg. Id: " << std::setw(5) << _id << " | ";
@@ -54,9 +75,19 @@ void Message::print() {
     std::cout << "\n";
 }
 
+void Message::reset()
+{
+    _id = 0;
+    _receiver = 0;
+    _sender = 0;
+    _type = EMPTY;
+    _parameters.clear();
+}
 
 Message Message::decodeMessage(const std::string msg)
-{    
+{
+    std::cout << "RECEIVE: " << msg << "\n";
+    
     std::vector<std::string> parts;
     std::istringstream f(msg);
     std::string s;
@@ -89,8 +120,8 @@ std::string Message::encodeMessage(Message& message)
     msg += MESSAGE_DELIM;
     for (auto & s : message.getParameters())
         msg += s + MESSAGE_DELIM;
-   
-
+    
+    std::cout << "SENDING: " << msg << "\n";
     return msg;
 }
 

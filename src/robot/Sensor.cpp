@@ -2,8 +2,8 @@
 
 using namespace ev3;
 
-Sensor::Sensor(ev3dev::sensor sensor)
-: _sensor(sensor) { }
+Sensor::Sensor(ev3dev::sensor sensor, SensorType type)
+: _sensor(sensor), _type(type) { }
 
 ev3dev::sensor Sensor::getSensor()
 {

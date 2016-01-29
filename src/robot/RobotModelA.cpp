@@ -10,8 +10,8 @@ RobotModelA::RobotModelA()
 },
 {
 
-        Action::DRIVE_DISTANCE,
-        Action::STOP
+    Action::DRIVE_DISTANCE,
+            Action::STOP
 })
 {
     //    this->_pulsePerUnitRatio = 1.f * COUNT_PER_ROT / (M_PI * 2 * this->_wheelRadius * UNITS_PER_CENTIMETER);
@@ -20,11 +20,16 @@ RobotModelA::RobotModelA()
 
 SharedPtrBehaviour RobotModelA::generateBehaviour(Behaviour::BehaviourType type, StringVector & parameters)
 {
+    // TODO czemu behaviour uzalezniony od robota?
+
     StoredActions actions;
     SharedPtrBehaviour ptr;
 
+    BehaviourStates states;
+
     try
     {
+
         switch (type)
         {
             case Behaviour::DRIVE_ON_SQUARE:
@@ -35,18 +40,20 @@ SharedPtrBehaviour RobotModelA::generateBehaviour(Behaviour::BehaviourType type,
                 std::cout << type << " " << side << " " << isTurningRight << "\n";
 
                 // Behaviour construction.
-                actions.push_back(
-                                  std::make_shared<ActionRepeat>(StoredActions({
-                                                                               generateAction(std::make_shared<ActionDriveDistance>(side), Action::DRIVE_DISTANCE),
-                                                                               generateAction(std::make_shared<ActionRotate>(isTurningRight ? 90 : -90), Action::ROTATE)
+                states.push_back(
+                        BehaviourState(
+                        std::make_shared<ActionRepeat>(StoredActions({
+                                                       generateAction(std::make_shared<ActionDriveDistance>(side), Action::DRIVE_DISTANCE),
+                                                       generateAction(std::make_shared<ActionRotate>(isTurningRight ? 90 : -90), Action::ROTATE)
 
-                }), 2));
+                }), 2), 0)
+                );
 
-                ptr = std::make_shared<BehaviourDriveOnSquare>(actions, side, isTurningRight);
+                ptr = std::make_shared<BehaviourDriveOnSquare>(states, side, isTurningRight);
                 break;
             }
             default:
-                break;
+                return std::shared_ptr<Behaviour>(nullptr);
         }
     }
     catch (...)
@@ -66,14 +73,14 @@ SharedPtrAction RobotModelA::generateAction(SharedPtrAction action, Action::Acti
     {
         case Action::DRIVE_DISTANCE:
             action->setCommands({
-                                std::make_shared<CommandMotorReset>(motorLeft),
-                                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorLeft, true),
-                                std::make_shared<CommandMotorSetSpeed>(motorLeft, 400),
-                                std::make_shared<CommandMotorRunForever>(motorLeft),
-                                std::make_shared<CommandMotorReset>(motorRight),
-                                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorRight, true),
-                                std::make_shared<CommandMotorSetSpeed>(motorRight, 400),
-                                std::make_shared<CommandMotorRunForever>(motorRight),
+                std::make_shared<CommandMotorReset>(motorLeft),
+                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorLeft, true),
+                std::make_shared<CommandMotorSetSpeed>(motorLeft, 400),
+                std::make_shared<CommandMotorRunForever>(motorLeft),
+                std::make_shared<CommandMotorReset>(motorRight),
+                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorRight, true),
+                std::make_shared<CommandMotorSetSpeed>(motorRight, 400),
+                std::make_shared<CommandMotorRunForever>(motorRight),
             });
             action->setEndCondition([&]()-> bool
             {
@@ -83,14 +90,14 @@ SharedPtrAction RobotModelA::generateAction(SharedPtrAction action, Action::Acti
             break;
         case Action::ROTATE:
             action->setCommands({
-                                std::make_shared<CommandMotorReset>(motorLeft),
-                                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorLeft, true),
-                                std::make_shared<CommandMotorSetSpeed>(motorLeft, 200),
-                                std::make_shared<CommandMotorRunForever>(motorLeft),
-                                std::make_shared<CommandMotorReset>(motorRight),
-                                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorRight, true),
-                                std::make_shared<CommandMotorSetSpeed>(motorRight, 200),
-                                std::make_shared<CommandMotorRunForever>(motorRight)
+                std::make_shared<CommandMotorReset>(motorLeft),
+                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorLeft, true),
+                std::make_shared<CommandMotorSetSpeed>(motorLeft, 200),
+                std::make_shared<CommandMotorRunForever>(motorLeft),
+                std::make_shared<CommandMotorReset>(motorRight),
+                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorRight, true),
+                std::make_shared<CommandMotorSetSpeed>(motorRight, 200),
+                std::make_shared<CommandMotorRunForever>(motorRight)
             });
             action->setEndCondition([&]()-> bool
             {
