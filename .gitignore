@@ -9,9 +9,11 @@ latex/*.bbl
 latex/*.bcf
 latex/*.blg
 latex/*.log
-latex/main.out
-latex/main.run.xml
-latex/main.pdf
+#latex/main.out
+#latex/main.run.xml
+#latex/main.pdf
+latex/main.*
+!latex/main.tex
 latex/*.lof
 
 doc/latex/

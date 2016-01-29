@@ -13,7 +13,7 @@ namespace ev3
     typedef std::vector<std::string> StringVector;
 
     static const std::string MODE_MASTER = "master";
-    static const std::string MODE_AGENT = "robot";
+    static const std::string MODE_AGENT = "agent";
 
     static const std::string ERR_WRONG_NO_OF_ARGS = "Invalid number of parameters.\n";
     static const std::string ERR_WRONG_MODE = "Invalid mode given.\n";
@@ -38,7 +38,7 @@ namespace ev3
         ss.str(parameter);
 
         ss >> value;
-        
+
         return value;
     }
 }

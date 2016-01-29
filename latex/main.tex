@@ -3,7 +3,11 @@
 \usepackage{abstract}
 \usepackage[english,polish]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[toc,page]{appendix}
+\usepackage[titletoc,page]{appendix}
+
+\usepackage[acronym, toc]{glossaries}
+\makeglossaries
+\input{glossary.tex}
 
 \usepackage[T1]{fontenc}
 \usepackage[backend=biber,style=numeric-comp,sorting=nty,defernumbers=true]{biblatex}
@@ -62,6 +66,9 @@
 
 \include{bibliography}
 
+% \glsaddall
+\printglossary[title=Słownik pojęć,toctitle=Słownik pojęć]
+
 \cleardoublepage
 \phantomsection
 \addcontentsline{toc}{chapter}{\listfigurename}
@@ -69,7 +76,7 @@
 
 \appendix
 \chapter{Załączniki}
-    \include{zalacznik1}
+    % \include{zalacznik1}
     \include{zalacznik2}
     \include{zalacznik3}
 
