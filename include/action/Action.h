@@ -9,7 +9,7 @@ namespace ev3
     class Action;
 
     typedef std::shared_ptr<Action> SharedPtrAction;
-    typedef std::vector<SharedPtrAction> StoredActions;
+    typedef std::vector<Action*> StoredActions;
 
     typedef std::shared_ptr<Command> SharedPtrCommand;
 

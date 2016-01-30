@@ -3,6 +3,9 @@
 #include "Robot.h"
 #include "Master.h"
 #include "Devices.h"
+#include "Logger.h"
+
+#include <iostream>
 
 namespace ev3
 {
@@ -14,7 +17,8 @@ namespace ev3
         static void
         HandleSignal(int signum)
         {
-            std::cout << "SIGNAL CAUGHT " << signum << "\n";
+            Logger::getInstance()->log("Signal caught: " + std::to_string(signum), 
+                    ev3::Logger::WARNING);
             if (SignalHandler::robot)
                 SignalHandler::robot->stop();
             if (SignalHandler::master)

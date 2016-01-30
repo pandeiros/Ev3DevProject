@@ -38,41 +38,48 @@ Message::MessageType Message::getType()
     return _type;
 }
 
-void Message::setMessageId(unsigned int id) {
+void Message::setMessageId(unsigned int id)
+{
     _id = id;
 }
 
-void Message::setParameters(StringVector parameters) {
+void Message::setParameters(StringVector parameters)
+{
     _parameters = parameters;
-}   
+}
 
-void Message::setReceiverId(unsigned int id) {
+void Message::setReceiverId(unsigned int id)
+{
     _receiver = id;
 }
 
-void Message::setSenderId(unsigned int id) {
+void Message::setSenderId(unsigned int id)
+{
     _sender = id;
 }
 
-void Message::setType(MessageType type) {
+void Message::setType(MessageType type)
+{
     _type = type;
- }
+}
 
 bool Message::empty()
 {
     return _type == EMPTY;
 }
 
-void Message::print()
+std::string Message::getString()
 {
-    std::cout << "Sender: " << std::setw(5) << _sender << " | ";
-    std::cout << "Receiver: " << std::setw(5) << _receiver << " | ";
-    std::cout << "Msg. Id: " << std::setw(5) << _id << " | ";
-    std::cout << "Type: " << std::setw(5) << _type << " | ";
-    std::cout << "Parameters: ";
+    std::stringstream ss;
+    ss << "Sender: " << std::setw(7) << _sender << " | ";
+    ss << "Receiver: " << std::setw(5) << _receiver << " | ";
+    ss << "Msg. Id: " << std::setw(5) << _id << " | ";
+    ss << "Type: " << std::setw(10) << getStringType() << " | ";
+    ss << "Parameters: ";
     for (auto & s : _parameters)
-        std::cout << s << " | ";
-    std::cout << "\n";
+        ss << s << " | ";
+
+    return ss.str();
 }
 
 void Message::reset()
@@ -86,8 +93,6 @@ void Message::reset()
 
 Message Message::decodeMessage(const std::string msg)
 {
-    std::cout << "RECEIVE: " << msg << "\n";
-    
     std::vector<std::string> parts;
     std::istringstream f(msg);
     std::string s;
@@ -98,7 +103,7 @@ Message Message::decodeMessage(const std::string msg)
 
     std::vector<std::string> params;
     if (parts.size() >= 5)
-        params = std::vector<std::string>(parts.begin() + 3, parts.end());
+        params = std::vector<std::string>(parts.begin() + 4, parts.end());
 
     if (parts.size() >= 4)
         return Message(std::stoi(parts[0]), std::stoi(parts[1]), std::stoi(parts[2]),
@@ -120,9 +125,48 @@ std::string Message::encodeMessage(Message& message)
     msg += MESSAGE_DELIM;
     for (auto & s : message.getParameters())
         msg += s + MESSAGE_DELIM;
-    
-    std::cout << "SENDING: " << msg << "\n";
+
     return msg;
 }
+
+std::string Message::getStringType()
+{
+    switch (_type)
+    {
+        case ABORT:
+            return "ABORT";
+        case ACK:
+            return "ACK";
+        case AGENT:
+            return "AGENT";
+        case AGENT_OVER:
+            return "AGENT_OVER";
+        case BEHAVIOUR:
+            return "BEHAVIOUR";
+        case EMPTY:
+            return "EMPTY";
+        case MASTER:
+            return "MASTER";
+        case MASTER_OVER:
+            return "MASTER_OVER";
+        case NOT:
+            return "NOT";
+        case PAUSE:
+            return "PAUSE";
+        case PING:
+            return "PING";
+        case PONG:
+            return "PONG";
+        case RESUME:
+            return "RESUME";
+        case SENSOR_VALUE:
+            return "SENSOR_VALUE";
+        case START:
+            return "START";
+        default:
+            return "???";
+    }
+}
+
 
 

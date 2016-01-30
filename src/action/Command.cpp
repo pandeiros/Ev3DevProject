@@ -6,5 +6,9 @@ Command::Command() : _debugInfo("Main command") { }
 
 void Command::execute() { }
 
-void Command::printDebug() { }
+std::string Command::getPrototype()
+{
+    return _debugInfo;
+}
+
 

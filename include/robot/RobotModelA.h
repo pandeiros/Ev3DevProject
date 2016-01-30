@@ -13,8 +13,8 @@ namespace ev3
         RobotModelA();
 
     private:
-        SharedPtrBehaviour generateBehaviour(Behaviour::BehaviourType type, StringVector & parameters);
-        SharedPtrAction generateAction(SharedPtrAction action, Action::ActionType type);
+        virtual SharedPtrBehaviour generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters) override;
+        Action * generateAction(Action * action, Action::ActionType type);
         //        void generateEndConditions(SharedPtrAction action, Action::ActionType type);
         //        SharedPtrAction generateAction(SharedPtrAction action, Action::ActionType type, StringVector parameters);
 

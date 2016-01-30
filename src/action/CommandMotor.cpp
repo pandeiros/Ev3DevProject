@@ -7,9 +7,9 @@ using namespace ev3;
 
 CommandMotor::CommandMotor(Motor & motor) : _motor(motor) { }
 
-void CommandMotor::printDebug()
+std::string CommandMotor::getPrototype()
 {
-    std::cout << "[MOTOR] " << _debugInfo << "\n";
+    return "<Motor> " + _debugInfo;
 }
 
 CommandMotorReset::CommandMotorReset(Motor & motor) : CommandMotor(motor)

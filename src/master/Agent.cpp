@@ -36,7 +36,11 @@ void Agent::processMessage(Message * message, Message * retMessage)
     {
         case RobotState::IDLE:
             if (_lastMessageType == Message::MASTER && type == Message::ACK)
+            {
                 _state = RobotState::ACTIVE;
+                retMessage->setType(Message::BEHAVIOUR);
+                retMessage->setParameters(_currentBehaviour->getPrototype());
+            }
             break;
         case RobotState::ACTIVE:
             if (_lastMessageType == Message::BEHAVIOUR)
@@ -57,13 +61,19 @@ void Agent::processMessage(Message * message, Message * retMessage)
         default:
             break;
     }
-    
+
     _commId = message->getMessageId();
-    
+
     retMessage->setSenderId(MASTER_ID);
     retMessage->setReceiverId(_id);
     retMessage->setMessageId(_commId);
 }
+
+void Agent::setBehaviour(SharedPtrBehaviour behaviour)
+{
+    _currentBehaviour = behaviour;
+}
+
 
 
 

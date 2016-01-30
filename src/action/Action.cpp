@@ -1,4 +1,5 @@
 #include "Action.h"
+#include "Logger.h"
 
 #include <sstream>
 
@@ -19,15 +20,21 @@ Action::~Action() { }
 
 void Action::execute()
 {
+    Logger::getInstance()->log("Action: " + getActionPrototype(),
+                              Logger::INFO);
     for (auto c : _commands)
     {
         c->execute();
-        c->printDebug();
+        Logger::getInstance()->log("Command: " + c->getPrototype(),
+                              Logger::VERBOSE);
     }
+    
+    _isExecuted = true;
 }
 
 bool Action::isFinished()
 {
+    Logger::getInstance()->log("End condition", Logger::VERBOSE);
     return _endCondition();
 }
 
@@ -61,13 +68,13 @@ ActionRepeat::ActionRepeat(StoredActions actions, unsigned int n)
 
 void ActionRepeat::execute()
 {
+    Logger::getInstance()->log("Action", Logger::VERBOSE);
     if (_n == 0)
     {
         if (_actions[_currentAction]->isFinished())
         {
             _currentAction = (_currentAction + 1) % _actions.size();
 
-            std::cout << _actions[_currentAction]->getActionPrototype() << "\n";
             _actions[_currentAction]->execute();
         }
     }
@@ -85,7 +92,6 @@ void ActionRepeat::execute()
             {
                 _currentAction = (_currentAction + 1) % _actions.size();
 
-                std::cout << _actions[_currentAction]->getActionPrototype() << "\n";
                 _actions[_currentAction]->execute();
             }
         }

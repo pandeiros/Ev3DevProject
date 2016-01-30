@@ -38,10 +38,12 @@ namespace ev3
         ~Logger(); // Prevent unwanted destruction
         static Logger * _instance;
 
-        LogLevel _level;
+        LogLevel _level = ERROR;
         LogOutput _output;
 
-//        void print(std::string & message, LogOutput output = STD_OUT);
-        std::string getLabel(LogLevel level);
+        std::string getLabel(LogLevel level, LogOutput output);
+        std::string getColor(LogLevel level, LogOutput output);
+        
+        bool _loggerForced = false;
     };
 }

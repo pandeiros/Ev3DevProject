@@ -25,8 +25,6 @@ namespace ev3
     {
         std::lock_guard<std::mutex> guard(_mutex);
         _messages.push(message);
-
-        message.print();
     }
 
     template<class T>

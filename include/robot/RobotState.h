@@ -43,7 +43,7 @@ namespace ev3
         ChangeMap _changes;
         LedControl * _led;
         Message::MessageType _pendingMessage = Message::EMPTY;
-        float _pendingTimeout = -1.f;
+        float _pendingTimeout = 0.f;
 
         HighResClock::time_point _masterTimeout = HighResClock::now();
         HighResClock::time_point _messageDelay = HighResClock::now();

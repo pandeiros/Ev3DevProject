@@ -108,7 +108,7 @@
             <pElem>include/utils</pElem>
             <pElem>include/action</pElem>
           </incDir>
-          <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11</commandLine>
+          <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11 -D__AGENT</commandLine>
         </ccTool>
       </compileType>
       <item path="include/action/Action.h" ex="false" tool="3" flavor2="0">
@@ -241,7 +241,7 @@
             <pElem>include/utils</pElem>
             <pElem>include/action</pElem>
           </incDir>
-          <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11</commandLine>
+          <commandLine>-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11 -D__AGENT</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

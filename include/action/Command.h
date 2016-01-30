@@ -25,10 +25,7 @@ namespace ev3
          */
         virtual void execute();
 
-        /**
-         * Print Command's readable name.
-         */
-        virtual void printDebug();
+        virtual std::string getPrototype();
     protected:
         /// String containing Command's debug name.
         std::string _debugInfo = "";

@@ -48,7 +48,7 @@ namespace ev3
         void setParameters(StringVector parameters);
 
         bool empty();
-        void print();
+        std::string getString();
 
         static std::string encodeMessage(Message & message);
         static Message decodeMessage(const std::string msg);
@@ -56,6 +56,8 @@ namespace ev3
         void reset();
 
     private:
+        std::string getStringType();
+        
         unsigned int _id;
         unsigned int _sender;
         unsigned int _receiver;

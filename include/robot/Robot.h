@@ -33,7 +33,7 @@ namespace ev3
         void send(Message message);
 
     protected:
-        virtual SharedPtrBehaviour generateBehaviour(Behaviour::BehaviourType type, StringVector parameters);
+        virtual SharedPtrBehaviour generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters);
 
         unsigned int _id = 0;
         unsigned int _commId = 0;
@@ -53,11 +53,13 @@ namespace ev3
 
     private:
         void processState();
+        void processEvents();
         void processMessage();
         void processBehaviour();
 
         void sendInfo();
 
+        bool _behaviourSet = false;
         Message _currentMessage;
     };
 }

@@ -1,19 +1,22 @@
-\documentclass[12pt, a4paper, notitlepage]{report}
+\documentclass[12pt, a4paper, notitlepage, polish]{report}
+
 
 \usepackage{abstract}
 \usepackage[english,polish]{babel}
+\usepackage{polski}
 \usepackage[utf8]{inputenc}
 \usepackage[titletoc,page]{appendix}
+\usepackage{lmodern,cmap}
+\usepackage[T1]{fontenc}
 
 \usepackage[acronym, toc]{glossaries}
 \makeglossaries
 \input{glossary.tex}
 
-\usepackage[T1]{fontenc}
 \usepackage[backend=biber,style=numeric-comp,sorting=nty,defernumbers=true]{biblatex}
 \usepackage[pdftex]{graphicx}
 
-\usepackage{hyperref}
+\usepackage[unicode]{hyperref}
 \hypersetup{
     hidelinks,
 }

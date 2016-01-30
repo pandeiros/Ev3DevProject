@@ -66,8 +66,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11
-CXXFLAGS=-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11
+CCFLAGS=-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11 -D__AGENT
+CXXFLAGS=-D_GLIBCXX_USE_NANOSLEEP -pthread -static-libstdc++ -std=c++11 -D__AGENT
 
 # Fortran Compiler Flags
 FFLAGS=

@@ -21,6 +21,7 @@ public:
     static const colorCode GREEN_FAINT;
     static const colorCode YELLOW_FAINT;
     static const colorCode BLUE_FAINT;
+    static const colorCode WHITE_FAINT;
 
     static const colorCode RESET;
 };

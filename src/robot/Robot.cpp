@@ -11,6 +11,7 @@
 #include "EventQueue.h"
 #include "Event.h"
 #include "Master.h"
+#include "Logger.h"
 
 using namespace ev3;
 
@@ -33,30 +34,53 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 {
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;
+    _currentBehaviour.reset();
 
     bool devicesChecked = true;
     devicesChecked = Devices::getInstance()->checkDevices(_requiredDevices);
     if (!devicesChecked)
     {
         // EXCEPTION
-        std::cout << "Nop...\n";
+        Logger::getInstance()->log("Devices incorrect!", Logger::ERROR);
     }
     else
-        std::cout << "Devices correct.\n";
+        Logger::getInstance()->log("Devices correct.", Logger::INFO);
 
+    // TEST ====================
+    
+//    _currentBehaviour = generateBehaviour(Behaviour::DRIVE_ON_SQUARE,
+//            StringVector({"100", "1"}));
+    
+    generateBehaviour(_currentBehaviour, Behaviour::DRIVE_ON_SQUARE,
+            StringVector({"400", "1"}));
+        
+    while (true)
+    {
+        if (_currentBehaviour.get() != nullptr)
+            _currentBehaviour->process();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        Logger::getInstance()->log("While...", Logger::VERBOSE);
+    }
+    return;
+    // =========================
 
     _currentMessage = receiveQueue->pop();
     while (true)
     {
+        if (_currentMessage.getType() != Message::EMPTY)
+            Logger::getInstance()->log("< ... < " + _currentMessage.getString(), Logger::VERBOSE);
+
         if (_currentMessage.getType() == Message::AGENT_OVER ||
             _currentMessage.getType() == Message::MASTER_OVER)
             break;
 
         //Devices::getInstance()->update();
 
+        processMessage();
+
         processState();
 
-        processMessage();
+        processEvents();
 
         processBehaviour();
 
@@ -65,7 +89,7 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
         if (!receiveQueue->empty() || _currentMessage.getType() != Message::EMPTY)
             _currentMessage = receiveQueue->pop();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
     return;
@@ -143,7 +167,7 @@ void Robot::processState()
         _state->updateTimer();
 
     _state = _state->process(_currentMessage);
-    
+
     Message::MessageType pending = _state->getPendingMessage();
     bool allowed = _state->isPendingEnabled();
 
@@ -156,15 +180,15 @@ void Robot::processState()
 
     if (pending != Message::EMPTY && allowed)
     {
-        Message message(_id == 0 ? std::rand() : _id,
+
+        Message message(_id == 0 ? std::rand() % 1000000 : _id,
                 MASTER_ID,
                 _commId++,
-                pending,
-                {
-                });
-        
+                pending, { });
+
+
         _sendQueue->push(message);
-        std::cout << "Sending AGENT packet.\n";
+        Logger::getInstance()->log("> ... > " + message.getString(), Logger::VERBOSE);
     }
 }
 
@@ -178,7 +202,27 @@ void Robot::processMessage()
 
     if (_currentMessage.getType() == Message::MASTER)
     {
+
         _id = _currentMessage.getReceiverId();
+        Logger::getInstance()->log("New ID aqcuired: " + std::to_string(_id), Logger::INFO);
+    }
+}
+
+void Robot::processEvents()
+{
+    while (!EventQueue::getInstance()->empty())
+    {
+        Event event = EventQueue::getInstance()->pop();
+
+        switch (event.getType())
+        {
+            case Event::BEHAVIOUR_START:
+                _behaviourSet = true;
+
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -187,46 +231,57 @@ void Robot::processBehaviour()
     // Replace behaviour with a new one.
     if (_currentMessage.getType() == Message::BEHAVIOUR)
     {
-        StringVector parameters = Behaviour::getParameters(_currentMessage.getParameters());
-
-        if (parameters.size() == 0)
-        {
-            // TODO Generate Event instead.
-            std::cout << "Parameters incorrect\n";
-
-            return;
-        }
-
         try
         {
-            Behaviour::BehaviourType type =
-                    static_cast<Behaviour::BehaviourType> (transcode<unsigned int>(parameters[0]));
+            Logger::getInstance()->log("Obtaining Behaviour parameters...", Logger::VERBOSE);
+            StringVector parameters = _currentMessage.getParameters();
+
+            if (parameters.size() == 0)
+            {
+                // TODO Generate Event instead.
+
+                Logger::getInstance()->log("Behaviour parameters incorrect!", Logger::WARNING);
+                return;
+            }
+
+            _behaviourSet = false;
+            unsigned int t = transcode<unsigned int>(parameters[0]);
+            Behaviour::BehaviourType type = static_cast<Behaviour::BehaviourType> (t);
 
             // Predefined Behaviour
             if (type != Behaviour::CUSTOM)
             {
-                _currentBehaviour = generateBehaviour(type,
+                Logger::getInstance()->log("Loading predefined Behaviour: " + std::to_string(type), Logger::INFO);
+                generateBehaviour(_currentBehaviour, type,
                         StringVector(parameters.begin() + 1, parameters.end()));
+
                 if (_currentBehaviour.get() == nullptr)
                 {
                     send(Message(_id, MASTER_ID, 0, Message::NOT,{}));
                 }
+                else
+                {
+                    send(Message(_id, MASTER_ID, 0, Message::ACK,{}));
+                }
             }
             else
             {
-
+                Logger::getInstance()->log("Loading custom Behaviour...", Logger::VERBOSE);
                 // Custom behaviour creation.
             }
         }
         catch (...)
         {
             // TODO
+
+            Logger::getInstance()->log("Processing Behaviour failed!", Logger::ERROR);
         }
     }
         // Continue with current behaviour.
     else
     {
-        if (_currentBehaviour)
+
+        if (_currentBehaviour.get() != nullptr && _behaviourSet)
             _currentBehaviour->process();
     }
 
@@ -234,12 +289,18 @@ void Robot::processBehaviour()
 
 void Robot::send(Message message)
 {
+
     message.setMessageId(_commId++);
+    Logger::getInstance()->log("> ... > " + message.getString(), Logger::VERBOSE);
+
     _sendQueue->push(message);
 }
 
-SharedPtrBehaviour Robot::generateBehaviour(Behaviour::BehaviourType type, StringVector parameters) {
- }
+SharedPtrBehaviour Robot::generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters)
+{
+
+    return std::shared_ptr<Behaviour>(nullptr);
+}
 
 void Robot::sendInfo() { }
 

@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <sstream>
+#include <iostream>
 
 namespace ev3
 {

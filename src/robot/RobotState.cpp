@@ -1,5 +1,7 @@
 #include "RobotState.h"
 #include "Utils.h"
+#include "Logger.h"
+#include "EventQueue.h"
 
 #include <iostream>
 
@@ -54,14 +56,19 @@ RobotState* RobotState::changeState(States state)
     switch (state)
     {
         case IDLE:
+            Logger::getInstance()->log("Changing state to IDLE", Logger::INFO);
             return new RobotStateIdle(_led);
         case ACTIVE:
+            Logger::getInstance()->log("Changing state to ACTIVE", Logger::INFO);
             return new RobotStateActive(_led);
         case WORKING:
+            Logger::getInstance()->log("Changing state to WORKING", Logger::INFO);
             return new RobotStateWorking(_led);
         case PAUSED:
+            Logger::getInstance()->log("Changing state to PAUSEd", Logger::INFO);
             return new RobotStatePaused(_led);
         case PANIC:
+            Logger::getInstance()->log("Changing state to PANIC", Logger::INFO);
             return new RobotStatePanic(_led);
         default:
             return this;
@@ -82,6 +89,7 @@ RobotStateActive::RobotStateActive(LedControl * led)
     {Message::START, WORKING}
 }, led)
 {
+    _pendingMessage = Message::ACK;
     led->flashColor(LedControl::YELLOW, 200, 0);
 }
 
@@ -127,10 +135,6 @@ RobotState* RobotStateIdle::process(Message msg)
             _messageDelay = HighResClock::now();
         }
     }
-    else if (msg.getType() == Message::MASTER)
-    {
-        _pendingMessage = Message::ACK;
-    }
 
     CHANGE_STATE;
 }
@@ -139,11 +143,11 @@ RobotState* RobotStateActive::process(Message msg)
 {
     if (DurationMilli(HighResClock::now() - _masterTimeout).count() >= MASTER_TIMEOUT)
     {
-        //_pendingMessage = Message::AGENT_OVER;
+        FORCE_STATE(PANIC);
     }
     else if (msg.getType() == Message::START)
     {
-        //_pendingMessage = Message::AGENT;
+        EventQueue::getInstance()->push(Event(Event::BEHAVIOUR_START));
     }
 
     CHANGE_STATE;

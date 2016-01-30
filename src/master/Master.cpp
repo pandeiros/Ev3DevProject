@@ -1,4 +1,5 @@
 #include "Master.h"
+#include "Logger.h"
 
 //#include <future>
 //#include <functional>
@@ -17,24 +18,21 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;
 
+    _currentBehaviour = std::make_shared<BehaviourDriveOnSquare>(100, true);
+
     bool stop = false;
 
     Message retMessage;
     retMessage.reset();
-    
+
     Message msg = receiveQueue->pop();
-    while (!stop)
+    while (true)
     {
+        if (msg.getType() != Message::EMPTY)
+            Logger::getInstance()->log("< ... < " + msg.getString(), Logger::VERBOSE);
+
         if (msg.getType() == Message::ABORT)
             break;
-
-        if (msg.empty())
-        {
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            if (!receiveQueue->empty())
-                msg = receiveQueue->pop();
-            continue;
-        }
 
         if (msg.getType() == Message::AGENT)
         {
@@ -42,6 +40,7 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
             unsigned int id = ++_agentId;
             agent.setId(id);
             agent.setCommId(msg.getMessageId());
+            agent.setBehaviour(_currentBehaviour);
 
             _agents.insert({id, agent});
 
@@ -63,23 +62,31 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
         }
         else if (_agents.find(msg.getSenderId()) != _agents.end())
             _agents[msg.getSenderId()].processMessage(&msg, &retMessage);
-        
+
         if (!retMessage.empty())
-            _sendQueue->push(retMessage);
+        {
+            send(retMessage);
+            retMessage.reset();
+        }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        msg = receiveQueue->pop();
+        if (!receiveQueue->empty() || msg.getType() != Message::EMPTY)
+            msg = receiveQueue->pop();
     }
+
+    Logger::getInstance()->log("Master finished.", Logger::INFO);
 
     return;
 }
 
-void Master::send(Message message) {
-    
+void Master::send(Message message)
+{
     _agents[message.getReceiverId()].updateLastMessage(&message);
+    Logger::getInstance()->log("> ... > " + message.getString(), Logger::VERBOSE);
+
     _sendQueue->push(message);
- }
+}
 
 void Master::stop()
 {

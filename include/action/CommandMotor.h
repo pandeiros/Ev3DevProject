@@ -19,11 +19,14 @@ namespace ev3
          */
         CommandMotor(Motor & motor);
         
+        
+        virtual std::string getPrototype() override;
         /**
          * Print CommandMotor readable name.
          * Adds "[MOTOR]" tag in front of the name.
          */
-        virtual void printDebug() override;
+        
+        // TODO CHANGE DOC HERE
     protected:
         /// Command parameter to turn speed regulation on a Motor on.
         const std::string SPEED_REGULATION_ON = "on";
