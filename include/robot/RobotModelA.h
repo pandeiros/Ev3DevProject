@@ -11,6 +11,10 @@ namespace ev3
     {
     public:
         RobotModelA();
+        
+
+        virtual std::string getString() override;
+
 
     private:
         virtual SharedPtrBehaviour generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters) override;

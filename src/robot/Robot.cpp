@@ -47,13 +47,13 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
         Logger::getInstance()->log("Devices correct.", Logger::INFO);
 
     // TEST ====================
-    
-//    _currentBehaviour = generateBehaviour(Behaviour::DRIVE_ON_SQUARE,
-//            StringVector({"100", "1"}));
-    
+
+    //    _currentBehaviour = generateBehaviour(Behaviour::DRIVE_ON_SQUARE,
+    //            StringVector({"100", "1"}));
+
     generateBehaviour(_currentBehaviour, Behaviour::DRIVE_ON_SQUARE,
             StringVector({"400", "1"}));
-        
+
     while (true)
     {
         if (_currentBehaviour.get() != nullptr)
@@ -294,6 +294,11 @@ void Robot::send(Message message)
     Logger::getInstance()->log("> ... > " + message.getString(), Logger::VERBOSE);
 
     _sendQueue->push(message);
+}
+
+std::string Robot::getString()
+{
+    return "<Base class Robot>";
 }
 
 SharedPtrBehaviour Robot::generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters)

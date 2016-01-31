@@ -31,6 +31,8 @@ namespace ev3
 
         void stop();
         void send(Message message);
+        
+        virtual std::string getString();
 
     protected:
         virtual SharedPtrBehaviour generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters);

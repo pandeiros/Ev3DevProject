@@ -19,6 +19,11 @@ RobotModelA::RobotModelA()
     this->_pulsePerUnitRatio = COUNT_PER_ROT / (M_PI * 2 * this->_wheelRadius * UNITS_PER_CENTIMETER);
 }
 
+std::string RobotModelA::getString()
+{
+    return "<Robot model A>";
+}
+
 SharedPtrBehaviour RobotModelA::generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters)
 {
     // TODO czemu behaviour uzalezniony od robota?
@@ -37,9 +42,6 @@ SharedPtrBehaviour RobotModelA::generateBehaviour(SharedPtrBehaviour & ptr, Beha
                 // Get square side and rotation direction.
                 unsigned int side = transcode<unsigned int>(parameters[0]);
                 bool isTurningRight = transcode<bool>(parameters[1]);
-                Logger::getInstance()->log("Drive on square: " + std::to_string(type) +
-                        ", " + std::to_string(side) + ", " +
-                        std::to_string(isTurningRight), Logger::INFO);
 
                 // Behaviour construction.
                 try
@@ -84,6 +86,7 @@ SharedPtrBehaviour RobotModelA::generateBehaviour(SharedPtrBehaviour & ptr, Beha
         Logger::getInstance()->log("Generating Behaviour failed!", Logger::ERROR);
     }
 
+    Logger::getInstance()->log(this->getString() + " " + ptr->getString(), Logger::INFO);
     return ptr;
 }
 
@@ -124,7 +127,7 @@ Action * RobotModelA::generateAction(Action * action, Action::ActionType type)
         {
             unsigned int position = dynamic_cast<ActionRotate*> (action)
                     ->getRotation() * _pulsePerUnitRatio;
-            
+
             int ccw = -1;
             if (position > 0)
                 ccw = 1;

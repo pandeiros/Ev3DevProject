@@ -48,6 +48,11 @@ StringVector Behaviour::getPrototype() { }
 
 StringVector Behaviour::getParameters(StringVector proto) { }
 
+std::string Behaviour::getString()
+{
+    return "";
+}
+
 BehaviourDriveOnSquare::BehaviourDriveOnSquare(unsigned int side, bool turningRight)
 : Behaviour(DRIVE_ON_SQUARE), _squareSide(side), _isTurningRight(turningRight) { }
 
@@ -62,13 +67,14 @@ StringVector BehaviourDriveOnSquare::getPrototype()
     };
 }
 
+std::string BehaviourDriveOnSquare::getString()
+{
+    return "Drive on square: side length (" + std::to_string(_squareSide) +
+            "), turning right(" + std::to_string(_isTurningRight) + ")";
+}
+
 BehaviourState::BehaviourState(Action * action, unsigned int nextState)
 : _action(action), _nextStateId(nextState) { }
-
-//
-//bool BehaviourState::isExecuted() {
-//    return _isExecuted;
-// }
 
 unsigned int BehaviourState::process()
 {
@@ -89,7 +95,7 @@ unsigned int BehaviourState::process()
         Logger::getInstance()->log("Finished", Logger::VERBOSE);
         return _nextStateId;
     }
-    
+
     return -1;
 }
 

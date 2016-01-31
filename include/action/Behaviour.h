@@ -5,6 +5,7 @@
 #include "Sensor.h"
 
 #include <unistd.h>
+#include <string>
 
 namespace ev3
 {
@@ -56,6 +57,7 @@ namespace ev3
         void setMeasurements(Measurements measurements);
 
         virtual StringVector getPrototype();
+        virtual std::string getString();
 
         static StringVector getParameters(StringVector proto);
 
@@ -76,6 +78,9 @@ namespace ev3
         BehaviourDriveOnSquare(BehaviourStates states, unsigned int side, bool turningRight);
 
         StringVector getPrototype() override;
+        
+        virtual std::string getString() override;
+
     private:
         unsigned int _squareSide;
         bool _isTurningRight;
