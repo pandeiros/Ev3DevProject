@@ -18,7 +18,7 @@ namespace ev3
         std::thread createThread(Queue<Message> * sendQueue, Queue<Message> * receiveQueue);
         void run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue);
 
-        void send(Message message);
+        void send(Message message, bool recordMessage = true);
         void stop();
     private:
         AgentMap _agents;

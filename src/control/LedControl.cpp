@@ -55,7 +55,7 @@ void LedControl::setColor(LedColors color)
             break;
         case AMBER:
             this->on(RED_ALL, MAX_BRIGHTNESS);
-            this->on(GREEN_ALL, 150);
+            this->on(GREEN_ALL, 220);
             break;
         case YELLOW:
             this->on(RED_ALL, 100);
@@ -147,7 +147,7 @@ void LedControl::flashColor(LedColors color, unsigned int msInterval, unsigned i
             break;
         case AMBER:
             leds = ALL;
-            greenBrightness = 150;
+            greenBrightness = 220;
             break;
         case YELLOW:
             leds = ALL;

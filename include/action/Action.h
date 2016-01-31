@@ -41,7 +41,8 @@ namespace ev3
             REPEAT, /**< Repeats execution of other \link Action Actions\endlink. */
             DRIVE_DISTANCE, /**< Power Motor to reach certain distance. */
             ROTATE, /**< Rotate Robot for given angle. */
-            STOP /**< Stop all active motors. */
+            STOP, /**< Stop all active motors. */
+            DRIVE_FOREVER /**< Drive forward or backward infinetely. */
         };
 
         /// String for empty Action prototype.
@@ -85,7 +86,7 @@ namespace ev3
          * @return Value returned from Action::_endCondition.
          */
         virtual bool isFinished();
-        
+
         virtual bool isExecuted();
 
         /**
@@ -93,6 +94,8 @@ namespace ev3
          * @return Encoded Action data into std::string.
          */
         virtual std::string getActionPrototype();
+
+        virtual std::string getString();
 
         /**
          * Set \link Command Commands\endlink to be executed.
@@ -124,7 +127,7 @@ namespace ev3
         {
             return true;
         };
-        
+
         bool _isExecuted = false;
 
         //TODO supported events
@@ -138,16 +141,19 @@ namespace ev3
 
         //void setRepeatCondition(EndCondition condition);
 
+
+        virtual std::string getString();
+
     private:
         StoredActions _actions;
         unsigned int _n;
         unsigned int _currentIteration = 0;
         unsigned int _currentAction = 0;
 
-//        EndCondition _repeatCondition = []()
-//        {
-//            return true;
-//        };
+        //        EndCondition _repeatCondition = []()
+        //        {
+        //            return true;
+        //        };
     };
 
     class ActionDriveDistance : public Action
@@ -159,6 +165,9 @@ namespace ev3
         int getDistance();
 
         virtual std::string getActionPrototype();
+
+        virtual std::string getString() override;
+
 
     private:
         int _distance;
@@ -174,7 +183,34 @@ namespace ev3
 
         virtual std::string getActionPrototype();
 
+        virtual std::string getString() override;;
+
+
     private:
         int _rotation;
+    };
+    
+    class ActionStop : public Action
+    {
+    public:
+        ActionStop();
+        ActionStop(CommandsVector commands);
+
+        virtual std::string getActionPrototype();
+
+        virtual std::string getString() override;;
+    };
+    
+    class ActionDriveForever : public Action
+    {
+    public:
+        ActionDriveForever(bool forward = true);
+        ActionDriveForever(CommandsVector commands, bool forward = true);
+
+        virtual std::string getActionPrototype();
+
+        virtual std::string getString() override;
+    private:
+        bool _isForward;
     };
 }

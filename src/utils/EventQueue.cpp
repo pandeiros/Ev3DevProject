@@ -17,19 +17,19 @@ void EventQueue::destroy()
     _instance = nullptr;
 }
 
-void EventQueue::push(Event element)
+void EventQueue::push(SharedPtrEvent element)
 {
     std::lock_guard<std::mutex> guard(_mutex);
     _queue.push(element);
 }
 
-Event EventQueue::pop()
+SharedPtrEvent EventQueue::pop()
 {
     std::lock_guard<std::mutex> guard(_mutex);
     if (_queue.empty())
-        return Event();
+        return nullptr;
 
-    Event event = _queue.front();
+    SharedPtrEvent event = _queue.front();
     _queue.pop();
 
     return event;

@@ -18,14 +18,17 @@ namespace ev3
     public:
         BehaviourState() = default;
         BehaviourState ( const BehaviourState & ) = default;	
-        BehaviourState(Action * action, unsigned int nextState);
+        BehaviourState(SharedPtrAction action, unsigned int nextState, bool isStopState = false);
 
         unsigned int process();
-        Action * getAction();
+        SharedPtrAction getAction();
+        void setNextState(const unsigned int next);
+        bool isStopState();
         //        bool isExecuted();
     private:
-        Action * _action;
+        SharedPtrAction _action = nullptr;
         bool _isExecuted = false;
+        bool _isStopState = false;
         unsigned int _nextStateId;
 
         // TODO events and reactions.
@@ -54,21 +57,30 @@ namespace ev3
         virtual void process();
 
         void setStates(BehaviourStates states);
+        void setStopState(BehaviourState state);
         void setMeasurements(Measurements measurements);
 
         virtual StringVector getPrototype();
         virtual std::string getString();
 
         static StringVector getParameters(StringVector proto);
+        
+        void stop();
+        void pause();
+        void resume();
+        void start();
 
     protected:
         BehaviourType _type;
 
         BehaviourState _currentState;
+        BehaviourState _stopState;
 
         BehaviourStates _states;
 
         Measurements _measurements;
+        
+        bool _active = false;
     };
 
     class BehaviourDriveOnSquare : public Behaviour
@@ -84,5 +96,16 @@ namespace ev3
     private:
         unsigned int _squareSide;
         bool _isTurningRight;
+    };
+    
+    class BehaviourExploreRandom : public Behaviour
+    {
+    public:
+        BehaviourExploreRandom();
+        BehaviourExploreRandom(BehaviourStates states);
+
+        StringVector getPrototype() override;
+        
+        virtual std::string getString() override;
     };
 }

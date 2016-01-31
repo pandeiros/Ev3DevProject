@@ -20,21 +20,19 @@ Action::~Action() { }
 
 void Action::execute()
 {
-    Logger::getInstance()->log("Action: " + getActionPrototype(),
-                              Logger::INFO);
+    Logger::getInstance()->log(getString(), Logger::DEBUG);
+
     for (auto c : _commands)
     {
         c->execute();
-        Logger::getInstance()->log("Command: " + c->getPrototype(),
-                              Logger::VERBOSE);
+        //        Logger::getInstance()->log("Command " + c->getString(), Logger::DEBUG);
     }
-    
+
     _isExecuted = true;
 }
 
 bool Action::isFinished()
 {
-    Logger::getInstance()->log("End condition", Logger::VERBOSE);
     return _endCondition();
 }
 
@@ -46,6 +44,11 @@ bool Action::isExecuted()
 std::string Action::getActionPrototype()
 {
     return EMPTY_PROTO;
+}
+
+std::string Action::getString()
+{
+    return "Base Action";
 }
 
 void Action::setCommands(CommandsVector commands)
@@ -68,7 +71,8 @@ ActionRepeat::ActionRepeat(StoredActions actions, unsigned int n)
 
 void ActionRepeat::execute()
 {
-    Logger::getInstance()->log("Action", Logger::VERBOSE);
+    Logger::getInstance()->log(getString(), Logger::DEBUG);
+
     if (_n == 0)
     {
         if (_actions[_currentAction]->isFinished())
@@ -104,10 +108,10 @@ void ActionRepeat::execute()
     }
 }
 
-//void ActionRepeat::setRepeatCondition(EndCondition condition)
-//{
-//    this->_repeatCondition = condition;
-//}
+std::string ActionRepeat::getString()
+{
+    return "Action repeat";
+}
 
 ActionDriveDistance::ActionDriveDistance(int distance)
 : Action(ActionType::DRIVE_DISTANCE), _distance(distance) { }
@@ -130,6 +134,11 @@ std::string ActionDriveDistance::getActionPrototype()
     return ss.str();
 }
 
+std::string ActionDriveDistance::getString()
+{
+    return "Action drive distance";
+}
+
 ActionRotate::ActionRotate(int rotation)
 : Action(ActionType::ROTATE), _rotation(rotation) { }
 
@@ -150,3 +159,47 @@ std::string ActionRotate::getActionPrototype()
     ss << _type << "::" << _rotation;
     return ss.str();
 }
+
+std::string ActionRotate::getString()
+{
+    return "Action rotate";
+}
+
+ActionStop::ActionStop()
+: Action(ActionType::STOP) { }
+
+ActionStop::ActionStop(CommandsVector commands)
+: Action(commands, ActionType::STOP) { }
+
+std::string ActionStop::getActionPrototype()
+{
+    return std::to_string(_type);
+}
+
+std::string ActionStop::getString()
+{
+    return "Action stop";
+}
+
+ActionDriveForever::ActionDriveForever(bool forward)
+: Action(ActionType::DRIVE_FOREVER), _isForward(forward) { }
+
+ActionDriveForever::ActionDriveForever(CommandsVector commands, bool forward)
+: Action(commands, ActionType::STOP), _isForward(forward) { }
+
+std::string ActionDriveForever::getActionPrototype()
+{
+    std::stringstream ss;
+
+    ss << _type << "::" << _isForward;
+    return ss.str();
+}
+
+std::string ActionDriveForever::getString()
+{
+    return "Action drive forever";
+}
+
+
+
+

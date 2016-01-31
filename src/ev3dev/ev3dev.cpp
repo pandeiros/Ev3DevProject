@@ -201,11 +201,8 @@ namespace ev3dev
 
         if ((dfd = opendir(dir.c_str())) != nullptr)
         {
-            //cout << "DIR: " << dir << "\n";
             while ((dp = readdir(dfd)) != nullptr)
             {
-
-                //cout << "  ENTRY: " << dp->d_name << "\n";
                 if (strncmp(dp->d_name, pattern.c_str(), pattern_length) == 0)
                 {
                     try
@@ -213,35 +210,22 @@ namespace ev3dev
                         _path = dir + dp->d_name + '/';
 
                         bool bMatch = true;
-                        //cout << "  Matches:\n";
                         for (auto &m : match)
                         {
                             const auto &attribute = m.first;
                             const auto &matches = m.second;
                             const auto strValue = get_attr_string(attribute);
-                            //            printf("%s\n", m.second.)
-
-                            cout << "  Available: " << attribute <<  " = \033[33;1m" << strValue << "\033[39;0m\n";
-                            cout << "  Checking within: ";
-                            for (auto &e : matches)
-                            {
-                                cout << e << "  ";
-                            }
 
                             if (!matches.empty() && !matches.begin()->empty() &&
                                 (matches.find(strValue) == matches.end()))
                             {
-                                cout << "    >>> \033[31mno match\033[39;0m\n";
                                 bMatch = false;
                                 break;
                             }
                         }
-
-                        //printf("%d\n", bMatch);
-
+                        
                         if (bMatch)
                         {
-                            cout << "    >>> \033[32;1mDEVICE CONNECTED\033[39;0m\n";
                             closedir(dfd);
                             return true;
                         }

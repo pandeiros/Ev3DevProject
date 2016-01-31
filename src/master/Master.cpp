@@ -29,7 +29,7 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     while (true)
     {
         if (msg.getType() != Message::EMPTY)
-            Logger::getInstance()->log("< ... < " + msg.getString(), Logger::VERBOSE);
+            Logger::getInstance()->log("<<<...." + msg.getString(), Logger::VERBOSE);
 
         if (msg.getType() == Message::ABORT)
             break;
@@ -53,7 +53,6 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
             {
                 if (_agents[id].getCommId() < msg.getMessageId())
                 {
-
                     send(Message(MASTER_ID, id, msg.getMessageId(), Message::PONG, { }));
                     _agents[id].setCommId(msg.getMessageId());
                 }
@@ -80,19 +79,20 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     return;
 }
 
-void Master::send(Message message)
+void Master::send(Message message, bool recordMessage)
 {
-    _agents[message.getReceiverId()].updateLastMessage(&message);
-    Logger::getInstance()->log("> ... > " + message.getString(), Logger::VERBOSE);
+    if (recordMessage)
+        _agents[message.getReceiverId()].updateLastMessage(&message);
+    
+    Logger::getInstance()->log("....>>>" + message.getString(), Logger::VERBOSE);
 
     _sendQueue->push(message);
 }
 
 void Master::stop()
 {
-
     for (auto & agent : _agents)
-        _sendQueue->push(Message(MASTER_ID, agent.second.getId(), 0, Message::MASTER_OVER, { }));
+        send(Message(MASTER_ID, agent.second.getId(), 0, Message::MASTER_OVER, { }), false);
 
     _receiveQueue->push(Message(0, 0, 0, Message::ABORT));
 }

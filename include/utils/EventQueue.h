@@ -7,14 +7,16 @@
 
 namespace ev3
 {    
+    typedef std::shared_ptr<Event> SharedPtrEvent;
+    
     class EventQueue
     {
     public:
         static EventQueue * getInstance();
         static void destroy();
         
-        void push(Event message);
-        Event pop();
+        void push(SharedPtrEvent message);
+        SharedPtrEvent pop();
         bool empty();
         unsigned int size();
         
@@ -26,7 +28,7 @@ namespace ev3
         
         static EventQueue * _instance;
 
-        std::queue<Event> _queue;
+        std::queue<SharedPtrEvent> _queue;
 
         std::mutex _mutex;
     };

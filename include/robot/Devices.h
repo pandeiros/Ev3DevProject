@@ -3,6 +3,7 @@
 #include "ev3dev.h"
 #include "Motor.h"
 #include "Sensor.h"
+#include "Utils.h"
 
 namespace ev3
 {
@@ -15,7 +16,7 @@ namespace ev3
         typedef std::map<ev3dev::port_type, Motor> MotorsVector;
         typedef std::map<ev3dev::port_type, Sensor> SensorsVector;
         typedef std::vector<std::pair<ev3dev::port_type, ev3dev::device_type> > RequiredDevices;
-        typedef std::map<ev3dev::port_type, std::vector<std::pair<int, int> > > SensorStatus;
+        typedef std::map<ev3dev::port_type, SensorValue > SensorStatus;
         
         static const ev3dev::port_type PORT_ANY;
                 
@@ -24,7 +25,8 @@ namespace ev3
         
         bool checkDevices(RequiredDevices & devices);
         void update();
-        void addListener();
+        void addListener(Sensor::SensorType type);
+        void removeListener(Sensor::SensorType type);
         
         Motor getMotor(ev3dev::port_type port);
         Sensor getSensor(ev3dev::port_type port);
@@ -37,6 +39,8 @@ namespace ev3
         Devices& operator=(const Devices&); // Prevent assignment
         ~Devices(); // Prevent unwanted destruction
         static Devices * _instance;
+        
+        std::map<Sensor::SensorType, bool> _listeners;
         
         MotorsVector _motors;
         SensorsVector _sensors;

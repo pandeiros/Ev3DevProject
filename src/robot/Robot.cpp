@@ -34,7 +34,9 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 {
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;
-    _currentBehaviour.reset();
+    //    _currentBehaviour.reset();
+
+    _state->getBehaviour().reset();
 
     bool devicesChecked = true;
     devicesChecked = Devices::getInstance()->checkDevices(_requiredDevices);
@@ -47,34 +49,31 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
         Logger::getInstance()->log("Devices correct.", Logger::INFO);
 
     // TEST ====================
-
-    //    _currentBehaviour = generateBehaviour(Behaviour::DRIVE_ON_SQUARE,
-    //            StringVector({"100", "1"}));
-
-    generateBehaviour(_currentBehaviour, Behaviour::DRIVE_ON_SQUARE,
-            StringVector({"400", "1"}));
-
-    while (true)
-    {
-        if (_currentBehaviour.get() != nullptr)
-            _currentBehaviour->process();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        Logger::getInstance()->log("While...", Logger::VERBOSE);
-    }
-    return;
+        Devices::getInstance()->addListener(Sensor::ULTRASONIC);
+        
+    //    generateBehaviour(_currentBehaviour, Behaviour::DRIVE_ON_SQUARE,
+    //            StringVector({"400", "1"}));
+    //
+    //    while (true)
+    //    {
+    //        if (_currentBehaviour.get() != nullptr)
+    //            _currentBehaviour->process();
+    //        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    //    }
+    //    return;
     // =========================
 
     _currentMessage = receiveQueue->pop();
     while (true)
     {
         if (_currentMessage.getType() != Message::EMPTY)
-            Logger::getInstance()->log("< ... < " + _currentMessage.getString(), Logger::VERBOSE);
+            Logger::getInstance()->log("<<<...." + _currentMessage.getString(), Logger::VERBOSE);
 
         if (_currentMessage.getType() == Message::AGENT_OVER ||
             _currentMessage.getType() == Message::MASTER_OVER)
             break;
 
-        //Devices::getInstance()->update();
+        Devices::getInstance()->update();
 
         processMessage();
 
@@ -82,7 +81,9 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
         processEvents();
 
-        processBehaviour();
+        ping();
+
+        //        processBehaviour();
 
         //respond();
 
@@ -91,74 +92,10 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
+    
+    stop();
 
     return;
-
-    //    if (devicesChecked)
-    //    {
-    //        auto motorLeft = Devices::getInstance()->getMotor(ev3dev::OUTPUT_B);
-    //        auto motorRight = Devices::getInstance()->getMotor(ev3dev::OUTPUT_C);
-    //
-    //        //auto us = _sensors.at(ev3dev::INPUT_1);
-    //
-    //        //std::cout << us.type_name() << "  " << us.num_values() << "  " << us.decimals() << "\n";
-    //
-    //        ActionDriveDistance * action = new ActionDriveDistance(500);
-    //        action->setCommands({
-    //            new CommandMotorReset(motorLeft),
-    //            new CommandMotorSetSpeedRegEnabled(motorLeft, true),
-    //            new CommandMotorSetSpeed(motorLeft, 400),
-    //            new ComAmandMotorRunForever(motorLeft),
-    //            new CommandMotorReset(motorRight),
-    //            new CommandMotorSetSpeedRegEnabled(motorRight, true),
-    //            new CommandMotorSetSpeed(motorRight, 400),
-    //            new CommandMotorRunForever(motorRight)
-    //        });
-    //
-    //        action->setEndCondition([&]()-> bool
-    //        {
-    //            return std::abs(motorLeft.getMotor().position()) > action->getDistance() * _pulsePerUnitRatio;
-    //        });
-    //
-    //        ActionRotate * action2 = new ActionRotate(180);
-    //        action2->setCommands({
-    //            new CommandMotorReset(motorLeft),
-    //            new CommandMotorSetSpeedRegEnabled(motorLeft, true),
-    //            new CommandMotorSetSpeed(motorLeft, 200),
-    //            new CommandMotorRunForever(motorLeft),
-    //            new CommandMotorReset(motorRight),
-    //            new CommandMotorSetSpeedRegEnabled(motorRight, true),
-    //            new CommandMotorSetSpeed(motorRight, -200),
-    //            new CommandMotorRunForever(motorRight)
-    //        });
-    //
-    //        action2->setEndCondition([&]()-> bool
-    //        {
-    //            return std::abs(motorLeft.getMotor().position()) > action2->getRotation() * _pulsePerUnitRatio;
-    //        });
-    //
-    //        Action * b = new Action({
-    //            new CommandMotorStop(motorLeft),
-    //            new CommandMotorStop(motorRight)
-    //        });
-    //
-    //        ActionRepeat * rep = new ActionRepeat({action, action2}, 2);
-    //
-    //        _currentBehaviour = Behaviour({
-    //            rep, b
-    //        });
-    //
-    //        //        Behaviour beh ({
-    //        //            rep, b
-    //        //        });
-    //        //        beh.execute();
-    //
-    //        _currentBehaviour.execute();
-    //        delete action;
-    //        delete action2;
-    //        delete b;
-    //        delete rep;
-    //    }
 }
 
 void Robot::processState()
@@ -167,6 +104,8 @@ void Robot::processState()
         _state->updateTimer();
 
     _state = _state->process(_currentMessage);
+
+    //std::cout << "ROBOT STATE " << _state->getBehaviour().get() << "\n";
 
     Message::MessageType pending = _state->getPendingMessage();
     bool allowed = _state->isPendingEnabled();
@@ -188,7 +127,7 @@ void Robot::processState()
 
 
         _sendQueue->push(message);
-        Logger::getInstance()->log("> ... > " + message.getString(), Logger::VERBOSE);
+        Logger::getInstance()->log("....>>>" + message.getString(), Logger::VERBOSE);
     }
 }
 
@@ -206,28 +145,7 @@ void Robot::processMessage()
         _id = _currentMessage.getReceiverId();
         Logger::getInstance()->log("New ID aqcuired: " + std::to_string(_id), Logger::INFO);
     }
-}
 
-void Robot::processEvents()
-{
-    while (!EventQueue::getInstance()->empty())
-    {
-        Event event = EventQueue::getInstance()->pop();
-
-        switch (event.getType())
-        {
-            case Event::BEHAVIOUR_START:
-                _behaviourSet = true;
-
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-void Robot::processBehaviour()
-{
     // Replace behaviour with a new one.
     if (_currentMessage.getType() == Message::BEHAVIOUR)
     {
@@ -252,10 +170,11 @@ void Robot::processBehaviour()
             if (type != Behaviour::CUSTOM)
             {
                 Logger::getInstance()->log("Loading predefined Behaviour: " + std::to_string(type), Logger::INFO);
-                generateBehaviour(_currentBehaviour, type,
+                SharedPtrBehaviour behaviour = generateBehaviour(type,
                         StringVector(parameters.begin() + 1, parameters.end()));
+                _state->setBehaviour(behaviour);
 
-                if (_currentBehaviour.get() == nullptr)
+                if (_state->getBehaviour().get() == nullptr || _state->getBehaviour() == nullptr)
                 {
                     send(Message(_id, MASTER_ID, 0, Message::NOT,{}));
                 }
@@ -277,21 +196,36 @@ void Robot::processBehaviour()
             Logger::getInstance()->log("Processing Behaviour failed!", Logger::ERROR);
         }
     }
-        // Continue with current behaviour.
-    else
+}
+
+void Robot::processEvents()
+{
+    while (!EventQueue::getInstance()->empty())
     {
+        SharedPtrEvent event = EventQueue::getInstance()->pop();
 
-        if (_currentBehaviour.get() != nullptr && _behaviourSet)
-            _currentBehaviour->process();
+        switch (event->getType())
+        {
+            case Event::BEHAVIOUR_START:
+                _state->getBehaviour()->start();
+                break;
+            case Event::BEHAVIOUR_STOP:
+                _state->getBehaviour().reset();
+                break;
+            case Event::SENSOR_WATCH:
+                send(Message(_id, MASTER_ID, 0, Message::SENSOR_VALUE,
+                        Sensor::prepareMessage(static_cast<EventSensorWatch*>(event.get())->getValue())));
+                break;
+            default:
+                break;
+        }
     }
-
 }
 
 void Robot::send(Message message)
 {
-
     message.setMessageId(_commId++);
-    Logger::getInstance()->log("> ... > " + message.getString(), Logger::VERBOSE);
+    Logger::getInstance()->log("....>>>" + message.getString(), Logger::VERBOSE);
 
     _sendQueue->push(message);
 }
@@ -301,9 +235,8 @@ std::string Robot::getString()
     return "<Base class Robot>";
 }
 
-SharedPtrBehaviour Robot::generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters)
+SharedPtrBehaviour Robot::generateBehaviour(Behaviour::BehaviourType type, StringVector parameters)
 {
-
     return std::shared_ptr<Behaviour>(nullptr);
 }
 
@@ -316,3 +249,13 @@ void Robot::stop()
 
     _receiveQueue->push(Message(0, 0, 0, Message::ABORT));
 }
+
+void Robot::ping()
+{
+    if (DurationMilli(HighResClock::now() - _masterPingTime).count() >= RobotState::MASTER_PING_TIME)
+    {
+        send(Message(_id, MASTER_ID, 0, Message::PING,{}));
+        _masterPingTime = HighResClock::now();
+    }
+}
+

@@ -1,6 +1,6 @@
 #pragma once
 #include "ev3dev.h"
-#include "Behaviour.h"
+//#include "Behaviour.h"
 #include "Action.h"
 #include "Utils.h"
 #include "Queue.h"
@@ -35,7 +35,7 @@ namespace ev3
         virtual std::string getString();
 
     protected:
-        virtual SharedPtrBehaviour generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters);
+        virtual SharedPtrBehaviour generateBehaviour(Behaviour::BehaviourType type, StringVector parameters);
 
         unsigned int _id = 0;
         unsigned int _commId = 0;
@@ -45,7 +45,7 @@ namespace ev3
         Devices::RequiredDevices _requiredDevices;
         AvailableActions _availableActions;
 
-        SharedPtrBehaviour _currentBehaviour;
+//        SharedPtrBehaviour _currentBehaviour;
         Queue<Message> * _sendQueue;
         Queue<Message> * _receiveQueue;
 
@@ -57,11 +57,14 @@ namespace ev3
         void processState();
         void processEvents();
         void processMessage();
-        void processBehaviour();
+//        void processBehaviour();
 
         void sendInfo();
+        void ping();
 
         bool _behaviourSet = false;
         Message _currentMessage;
+        
+        HighResClock::time_point _masterPingTime = HighResClock::now();
     };
 }

@@ -1,4 +1,5 @@
 #include "Sensor.h"
+#include "Utils.h"
 
 using namespace ev3;
 
@@ -29,6 +30,25 @@ unsigned int Sensor::getNumValues()
 {
     return _sensor.num_values();
 }
+
+Sensor::SensorType Sensor::getType()
+{
+    return _type;
+}
+
+StringVector Sensor::prepareMessage(SensorValue value)
+{
+    StringVector result;
+    for (auto & v : value)
+    {
+        result.push_back(std::to_string(v.first));
+        result.push_back(std::to_string(v.second));
+    }
+    
+    return result;
+}
+
+
 
 
 

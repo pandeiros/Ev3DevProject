@@ -18,15 +18,7 @@ namespace ev3
          * @param motor Motor to execute CommandMotor on.
          */
         CommandMotor(Motor & motor);
-        
-        
-        virtual std::string getPrototype() override;
-        /**
-         * Print CommandMotor readable name.
-         * Adds "[MOTOR]" tag in front of the name.
-         */
-        
-        // TODO CHANGE DOC HERE
+
     protected:
         /// Command parameter to turn speed regulation on a Motor on.
         const std::string SPEED_REGULATION_ON = "on";
@@ -144,5 +136,30 @@ namespace ev3
     private:
         /// Speed value in tacho pulses per second.
         int _value;
+    };
+    
+    class CommandMotorSetStopMode : public CommandMotor
+    {
+    public:
+        enum StopMode {
+            COAST,
+            BRAKE,
+            HOLD
+        };
+        
+        /**
+         * Constructor with ev3dev::motor parameter.
+         * @param motor Motor to execute CommandMotor on.
+         * @param mode TODO
+         */
+        CommandMotorSetStopMode(Motor & motor, StopMode mode);
+        
+        /**
+         * @see Command
+         */
+        void execute() override;
+
+    private:
+        StopMode _mode;
     };
 }

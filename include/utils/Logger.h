@@ -12,10 +12,11 @@ namespace ev3
          *
          */
         enum LogLevel {
-            VERBOSE = 1,
-            INFO = 1 << 1,
-            WARNING = 1 << 2,
-            ERROR = 1 << 3
+            DEBUG = 1,
+            VERBOSE = 1 << 1,
+            INFO = 1 << 2,
+            WARNING = 1 << 3,
+            ERROR = 1 << 4
         };
 
         enum LogOutput {
@@ -29,6 +30,7 @@ namespace ev3
 
         void log(std::string message, LogLevel level, LogOutput output = STD_OUT);
         void setLogLevel(LogLevel level);
+        void setLogLevel(std::string level);
         void setLogOutput(LogOutput output);
 
     private:

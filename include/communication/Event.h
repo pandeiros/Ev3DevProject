@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Sensor.h"
+#include "Utils.h"
+
 namespace ev3
 {
 
@@ -8,7 +11,9 @@ namespace ev3
     public:
         enum EventType {
             EMPTY,
-            BEHAVIOUR_START
+            BEHAVIOUR_START,
+            BEHAVIOUR_STOP,
+            SENSOR_WATCH
         };
         
         Event();
@@ -18,6 +23,16 @@ namespace ev3
 
     private:
         EventType _type;
+    };
+    
+    class EventSensorWatch : public Event 
+    {
+    public:
+        EventSensorWatch(Sensor::SensorType type, SensorValue value);
+        SensorValue getValue ();
+    private:
+        Sensor::SensorType _sensorType;
+        SensorValue _sensorValue;
     };
 }
 

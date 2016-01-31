@@ -24,8 +24,8 @@ namespace ev3
          * Execute stored function as a device command.
          */
         virtual void execute();
-
-        virtual std::string getPrototype();
+        
+        virtual std::string getString();
     protected:
         /// String containing Command's debug name.
         std::string _debugInfo = "";

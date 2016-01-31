@@ -24,7 +24,8 @@ void Agent::setCommId(const unsigned int commId)
 
 void Agent::updateLastMessage(Message* message)
 {
-    _lastMessageType = message->getType();
+    if (message->getType() != Message::PONG)
+        _lastMessageType = message->getType();
 }
 
 void Agent::processMessage(Message * message, Message * retMessage)

@@ -12,12 +12,16 @@ namespace ev3
     typedef std::chrono::high_resolution_clock HighResClock;
     typedef std::chrono::duration<double, std::milli> DurationMilli;
     typedef std::vector<std::string> StringVector;
+    typedef std::vector<std::pair<int, int> > SensorValue;
+    
 
     static const std::string MODE_MASTER = "master";
     static const std::string MODE_AGENT = "agent";
 
     static const std::string ERR_WRONG_NO_OF_ARGS = "Invalid number of parameters.\n";
     static const std::string ERR_WRONG_MODE = "Invalid mode given.\n";
+    static const std::string ERR_WRONG_LOG_LEVEL = "Invalid log level given.\n";
+    static const std::string ERR_WRONG_ARGUMENTS = "Wrong arguments!\n";
 
     static const float UNITS_PER_CENTIMETER = 10.f;
 

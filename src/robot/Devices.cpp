@@ -1,5 +1,6 @@
 #include "Devices.h"
 #include "Utils.h"
+#include "EventQueue.h"
 
 using namespace ev3;
 
@@ -12,6 +13,38 @@ Devices* Devices::getInstance()
     if (!_instance)
         _instance = new Devices;
     return _instance;
+}
+
+void Devices::update()
+{
+    for (auto & sensor : _sensors)
+    {
+        for (unsigned int i = 0; i < sensor.second.getNumValues(); ++i)
+        {
+            _status[sensor.first][i].first = sensor.second.getValue(i);
+            _status[sensor.first][i].second = sensor.second.getDecimals();
+        }
+    }
+
+    for (auto & type : _listeners)
+    {
+        for (auto & sensor : _sensors)
+        {
+            if (sensor.second.getType() == type.first)
+                EventQueue::getInstance()->push(
+                    std::make_shared<EventSensorWatch>(type.first, _status[sensor.first]));
+        }
+    }
+}
+
+void Devices::addListener(Sensor::SensorType type)
+{
+    _listeners[type] = true;
+}
+
+void Devices::removeListener(Sensor::SensorType type)
+{
+    _listeners[type] = false;
 }
 
 void Devices::destroy()

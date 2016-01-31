@@ -2,6 +2,7 @@
 #include "ColorUtils.h"
 
 #include <iostream>
+#include <exception>
 
 using namespace ev3;
 
@@ -23,6 +24,22 @@ void Logger::destroy()
 void Logger::setLogLevel(LogLevel level)
 {
     _level = level;
+}
+
+void Logger::setLogLevel(std::string level)
+{
+    if (level == "debug")
+        setLogLevel(DEBUG);
+    else if (level == "verbose")
+        setLogLevel(VERBOSE);
+    else if (level == "info")
+        setLogLevel(INFO);
+    else if (level == "warning")
+        setLogLevel(WARNING);
+    else if (level == "error")
+        setLogLevel(ERROR);
+    else
+        throw std::exception();
 }
 
 void Logger::setLogOutput(LogOutput output)
@@ -66,6 +83,9 @@ std::string Logger::getLabel(LogLevel level, LogOutput output)
     std::string label = "[";
     switch (level)
     {
+        case DEBUG:
+            label += " DEBUG ";
+            break;
         case VERBOSE:
             label += "VERBOSE";
             break;
@@ -85,7 +105,7 @@ std::string Logger::getLabel(LogLevel level, LogOutput output)
     label += "]";
     if (output != FILE)
         label += ColorUtils::RESET;
-    
+
     return label;
 }
 
@@ -97,6 +117,9 @@ std::string Logger::getColor(LogLevel level, LogOutput output)
     std::string label = "";
     switch (level)
     {
+        case DEBUG:
+            label = ColorUtils::BLUE;
+            break;
         case VERBOSE:
             label = ColorUtils::WHITE_FAINT;
             break;

@@ -7,8 +7,11 @@
 
 #define CHANGE_STATE if (_changes.find(msg.getType()) == _changes.end()) \
 return this; \
+SharedPtrBehaviour behaviour = _currentBehaviour; \
 delete this; \
-return this->switchState(msg.getType())
+RobotState * newState = this->switchState(msg.getType()); \
+newState->setBehaviour(behaviour); \
+return newState;    
 
 #define FORCE_STATE(state) delete this;\
 return this->changeState(state)
@@ -16,6 +19,7 @@ return this->changeState(state)
 using namespace ev3;
 
 const float RobotState::MASTER_TIMEOUT = 10.f * 1000; // In milliseconds.
+const float RobotState::MASTER_PING_TIME = 3.f * 1000; // In milliseconds.
 
 RobotState::RobotState(ChangeMap changes, LedControl * led)
 : _changes(changes), _led(led), _masterTimeout(HighResClock::now()) { }
@@ -45,6 +49,16 @@ bool RobotState::isPendingEnabled()
         return false;
 }
 
+void RobotState::setBehaviour(SharedPtrBehaviour behaviour)
+{
+    _currentBehaviour = behaviour;
+}
+
+SharedPtrBehaviour RobotState::getBehaviour()
+{
+    return _currentBehaviour;
+}
+
 RobotState* RobotState::switchState(Message::MessageType type)
 {
     States state = _changes[type];
@@ -53,26 +67,35 @@ RobotState* RobotState::switchState(Message::MessageType type)
 
 RobotState* RobotState::changeState(States state)
 {
+    RobotState * newState;
+    
     switch (state)
     {
         case IDLE:
             Logger::getInstance()->log("Changing state to IDLE", Logger::INFO);
-            return new RobotStateIdle(_led);
+            newState = new RobotStateIdle(_led);
+            break;
         case ACTIVE:
             Logger::getInstance()->log("Changing state to ACTIVE", Logger::INFO);
-            return new RobotStateActive(_led);
+            newState = new RobotStateActive(_led);
+            break;
         case WORKING:
             Logger::getInstance()->log("Changing state to WORKING", Logger::INFO);
-            return new RobotStateWorking(_led);
+            newState = new RobotStateWorking(_led);
+            break;
         case PAUSED:
-            Logger::getInstance()->log("Changing state to PAUSEd", Logger::INFO);
-            return new RobotStatePaused(_led);
+            Logger::getInstance()->log("Changing state to PAUSED", Logger::INFO);
+            newState = new RobotStatePaused(_led);
+            break;
         case PANIC:
             Logger::getInstance()->log("Changing state to PANIC", Logger::INFO);
-            return new RobotStatePanic(_led);
+            newState = new RobotStatePanic(_led);
+            break;
         default:
-            return this;
+            newState = this;
     }
+
+    return newState;
 }
 
 RobotStateIdle::RobotStateIdle(LedControl * led)
@@ -120,7 +143,6 @@ RobotStatePanic::RobotStatePanic(LedControl* led)
 
 RobotState* RobotStateIdle::process(Message msg)
 {
-    //    std::cout << DurationMilli(HighResClock::now() - _masterTimeout).count() << "\n";
     if (DurationMilli(HighResClock::now() - _masterTimeout).count() >= MASTER_TIMEOUT)
     {
         // Cannot connect to the master, enter Panic state.
@@ -147,7 +169,7 @@ RobotState* RobotStateActive::process(Message msg)
     }
     else if (msg.getType() == Message::START)
     {
-        EventQueue::getInstance()->push(Event(Event::BEHAVIOUR_START));
+        EventQueue::getInstance()->push(std::make_shared<Event>(Event::BEHAVIOUR_START));
     }
 
     CHANGE_STATE;
@@ -155,33 +177,30 @@ RobotState* RobotStateActive::process(Message msg)
 
 RobotState* RobotStateWorking::process(Message msg)
 {
-    //std::cout << DurationMilli(HighResClock::now() - _masterTimeout).count() << "\n";
     if (DurationMilli(HighResClock::now() - _masterTimeout).count() >= MASTER_TIMEOUT)
     {
         // Cannot connect to the master, enter PAUSED state.
+
+        _currentBehaviour->stop();
         FORCE_STATE(PAUSED);
     }
-    // TODO Sending data
-    //    else if ()
-    //    {
-    //        _pendingMessage = Message::AGENT;
-    //    }
+
+    // Process behaviour.
+    if (_currentBehaviour.get() != nullptr && _currentBehaviour != nullptr) // && _behaviourSet)
+        _currentBehaviour->process();
+    else
+        Logger::getInstance()->log("Behaviour is NULL!", Logger::ERROR);
 
     CHANGE_STATE;
 }
 
 RobotState* RobotStatePaused::process(Message msg)
 {
-    //std::cout << DurationMilli(HighResClock::now() - _masterTimeout).count() << "\n";
     if (DurationMilli(HighResClock::now() - _masterTimeout).count() >= MASTER_TIMEOUT)
     {
         // Cannot connect to the master, enter PANIC state.
         FORCE_STATE(PANIC);
     }
-    //    else if (msg.getType() != Message::MASTER)
-    //    {
-    //        _pendingMessage = Message::AGENT;
-    //    }
 
     CHANGE_STATE;
 }

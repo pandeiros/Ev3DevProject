@@ -24,14 +24,13 @@ std::string RobotModelA::getString()
     return "<Robot model A>";
 }
 
-SharedPtrBehaviour RobotModelA::generateBehaviour(SharedPtrBehaviour & ptr, Behaviour::BehaviourType type, StringVector parameters)
+SharedPtrBehaviour RobotModelA::generateBehaviour(Behaviour::BehaviourType type, StringVector parameters)
 {
     // TODO czemu behaviour uzalezniony od robota?
 
-    StoredActions actions;
-    //    SharedPtrBehaviour ptr;
-
     BehaviourStates states;
+    BehaviourState stopState;
+    SharedPtrBehaviour behaviour;
 
     try
     {
@@ -46,35 +45,19 @@ SharedPtrBehaviour RobotModelA::generateBehaviour(SharedPtrBehaviour & ptr, Beha
                 // Behaviour construction.
                 try
                 {
-                    //                    states.push_back(
-                    //                            BehaviourState(
-                    //                            std::make_shared<ActionRepeat>(StoredActions({
-                    //                                                           generateAction(std::make_shared<ActionDriveDistance>(side), Action::DRIVE_DISTANCE),
-                    //                                                           generateAction(std::make_shared<ActionRotate>(isTurningRight ? 90 : -90), Action::ROTATE)
-                    //
-                    //                    }), 2), 0)
-                    //                    );
-
-                    ActionDriveDistance * forward = new ActionDriveDistance(side);
-                    ActionRotate * rotate = new ActionRotate(isTurningRight ? 90 : -90);
                     states.push_back(
-                            BehaviourState(generateAction(forward, Action::DRIVE_DISTANCE), 1));
+                            BehaviourState(generateAction(std::make_shared<ActionDriveDistance>(side), Action::DRIVE_DISTANCE), 1));
                     states.push_back(
-                            BehaviourState(generateAction(rotate, Action::ROTATE), 0));
+                            BehaviourState(generateAction(std::make_shared<ActionRotate>(isTurningRight ? 90 : -90), Action::ROTATE), 0));
 
-                    //                            generateAction(forward, Action::DRIVE_DISTANCE)
-                    //                            //                        generateAction(std::make_shared<ActionRotate>(isTurningRight ? 90 : -90), Action::ROTATE)
-                    //
-                    //                            , 0)
-                    //                            );
-
+                    stopState = BehaviourState(generateAction(std::make_shared<ActionStop>(), Action::STOP), 0, true);
                 }
                 catch (...)
                 {
                     Logger::getInstance()->log("Generating Actions failed!", Logger::ERROR);
                 }
 
-                ptr = std::make_shared<BehaviourDriveOnSquare>(states, side, isTurningRight);
+                behaviour = std::make_shared<BehaviourDriveOnSquare>(states, side, isTurningRight);
                 break;
             }
             default:
@@ -86,47 +69,46 @@ SharedPtrBehaviour RobotModelA::generateBehaviour(SharedPtrBehaviour & ptr, Beha
         Logger::getInstance()->log("Generating Behaviour failed!", Logger::ERROR);
     }
 
-    Logger::getInstance()->log(this->getString() + " " + ptr->getString(), Logger::INFO);
-    return ptr;
+    behaviour->setStopState(stopState);
+    std::cout << behaviour.get() << "\n";
+    Logger::getInstance()->log(this->getString() + " " + behaviour->getString(), Logger::INFO);
+    return behaviour;
 }
 
-Action * RobotModelA::generateAction(Action * action, Action::ActionType type)
+SharedPtrAction RobotModelA::generateAction(SharedPtrAction action, Action::ActionType type)
 {
-
     auto motorLeft = Devices::getInstance()->getMotor(ev3dev::OUTPUT_B);
     auto motorRight = Devices::getInstance()->getMotor(ev3dev::OUTPUT_C);
 
     switch (type)
     {
         case Action::DRIVE_DISTANCE:
-
         {
             unsigned int distance = dynamic_cast<ActionDriveDistance*>
-                    (action)->getDistance() * _pulsePerUnitRatio;
+                    (action.get())->getDistance() * _pulsePerUnitRatio;
 
             action->setCommands({
                 std::make_shared<CommandMotorReset>(motorLeft),
+                std::make_shared<CommandMotorReset>(motorRight),
                 std::make_shared<CommandMotorSetSpeedRegEnabled>(motorLeft, true),
                 std::make_shared<CommandMotorSetSpeed>(motorLeft, 700),
                 std::make_shared<CommandMotorRunForever>(motorLeft),
-                std::make_shared<CommandMotorReset>(motorRight),
                 std::make_shared<CommandMotorSetSpeedRegEnabled>(motorRight, true),
                 std::make_shared<CommandMotorSetSpeed>(motorRight, 700),
                 std::make_shared<CommandMotorRunForever>(motorRight),
             });
-            action->setEndCondition([&, distance]()-> bool
+            action->setEndCondition([&, distance, action]()-> bool
             {
                 bool v = std::abs(Devices::getInstance()->getMotor(ev3dev::OUTPUT_B)
                         .getMotor().position()) > distance;
-                Logger::getInstance()->log("Functor " + std::to_string(v), Logger::VERBOSE);
+                Logger::getInstance()->log(action->getString(), Logger::VERBOSE);
                 return v;
             });
             break;
         }
         case Action::ROTATE:
         {
-            unsigned int position = dynamic_cast<ActionRotate*> (action)
-                    ->getRotation() * _pulsePerUnitRatio;
+            unsigned int position = dynamic_cast<ActionRotate*> (action.get())->getRotation() * _pulsePerUnitRatio;
 
             int ccw = -1;
             if (position > 0)
@@ -134,10 +116,10 @@ Action * RobotModelA::generateAction(Action * action, Action::ActionType type)
 
             action->setCommands({
                 std::make_shared<CommandMotorReset>(motorLeft),
+                std::make_shared<CommandMotorReset>(motorRight),
                 std::make_shared<CommandMotorSetSpeedRegEnabled>(motorLeft, true),
                 std::make_shared<CommandMotorSetSpeed>(motorLeft, 200 * ccw),
                 std::make_shared<CommandMotorRunForever>(motorLeft),
-                std::make_shared<CommandMotorReset>(motorRight),
                 std::make_shared<CommandMotorSetSpeedRegEnabled>(motorRight, true),
                 std::make_shared<CommandMotorSetSpeed>(motorRight, 200 * -ccw),
                 std::make_shared<CommandMotorRunForever>(motorRight)
@@ -146,6 +128,34 @@ Action * RobotModelA::generateAction(Action * action, Action::ActionType type)
             {
                 return std::abs(Devices::getInstance()->getMotor(ev3dev::OUTPUT_B).
                         getMotor().position()) > std::abs(position);
+            });
+            break;
+        }
+        case Action::DRIVE_FOREVER:
+        {
+            action->setCommands({
+                std::make_shared<CommandMotorReset>(motorLeft),
+                std::make_shared<CommandMotorReset>(motorRight),
+                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorLeft, true),
+                std::make_shared<CommandMotorSetSpeed>(motorLeft, 700),
+                std::make_shared<CommandMotorRunForever>(motorLeft),
+                std::make_shared<CommandMotorSetSpeedRegEnabled>(motorRight, true),
+                std::make_shared<CommandMotorSetSpeed>(motorRight, 700),
+                std::make_shared<CommandMotorRunForever>(motorRight)
+            });
+            action->setEndCondition([&]()-> bool
+            {
+                return false;
+            });
+            break;
+        }
+        case Action::STOP:
+        {
+            action->setCommands({
+                std::make_shared<CommandMotorSetStopMode>(motorLeft, CommandMotorSetStopMode::BRAKE),
+                std::make_shared<CommandMotorSetStopMode>(motorRight, CommandMotorSetStopMode::BRAKE),
+                std::make_shared<CommandMotorStop>(motorLeft),
+                std::make_shared<CommandMotorStop>(motorRight)
             });
             break;
         }

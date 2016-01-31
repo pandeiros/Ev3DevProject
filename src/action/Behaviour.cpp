@@ -1,14 +1,14 @@
 #include "Behaviour.h"
 #include "Logger.h"
+#include "EventQueue.h"
 
 #include <iostream>
 
 using namespace ev3;
 
-Behaviour::~Behaviour()
-{
-    for (auto & state : _states)
-        delete(state.getAction());
+Behaviour::~Behaviour() {
+    //    for (auto & state : _states)
+    //        delete(state.getAction());
 }
 
 Behaviour::Behaviour(BehaviourType type, BehaviourStates states)
@@ -23,14 +23,35 @@ Behaviour::Behaviour(BehaviourType type)
 
 void Behaviour::process()
 {
-    Logger::getInstance()->log("Behaviour process", Logger::VERBOSE);
+    if (!_active)
+        return;
+
+    Logger::getInstance()->log("Behaviour process", Logger::DEBUG);
     unsigned int result = _currentState.process();
 
     try
     {
         if (result >= 0 && result < _states.size())
         {
-            _currentState = _states[result];
+            if (_currentState.isStopState())
+            {
+                _currentState = _states[result];
+            }
+            else
+            {
+                if (_stopState.getAction() != nullptr)
+                {
+                    _stopState.setNextState(result);
+                    _currentState = _stopState;
+                }
+                else
+                    _currentState = _states[result];
+            }
+            //            _currentState = _states[result];
+        }
+        else if (result == -1)
+        {
+            EventQueue::getInstance()->push(std::make_shared<Event>(Event::BEHAVIOUR_STOP));
         }
     }
     catch (...)
@@ -44,6 +65,11 @@ void Behaviour::setStates(BehaviourStates states)
     _states = states;
 }
 
+void Behaviour::setStopState(BehaviourState state)
+{
+    _stopState = state;
+}
+
 StringVector Behaviour::getPrototype() { }
 
 StringVector Behaviour::getParameters(StringVector proto) { }
@@ -51,6 +77,38 @@ StringVector Behaviour::getParameters(StringVector proto) { }
 std::string Behaviour::getString()
 {
     return "";
+}
+
+void Behaviour::stop()
+{
+    _stopState.process();
+    _currentState.setNextState(-1);
+    _active = true;
+}
+
+void Behaviour::pause()
+{
+    _stopState.process();
+    _active = false;
+}
+
+void Behaviour::resume()
+{
+    _active = true;
+}
+
+void Behaviour::start()
+{
+    _active = true;
+    if (_stopState.getAction())
+    {
+        _stopState.setNextState(0);
+        _currentState = _stopState;
+    }
+    else if (_states.size() > 0)
+        _currentState = _states[0];
+    
+    Logger::getInstance()->log("Behaviour start.", Logger::VERBOSE);
 }
 
 BehaviourDriveOnSquare::BehaviourDriveOnSquare(unsigned int side, bool turningRight)
@@ -73,36 +131,44 @@ std::string BehaviourDriveOnSquare::getString()
             "), turning right(" + std::to_string(_isTurningRight) + ")";
 }
 
-BehaviourState::BehaviourState(Action * action, unsigned int nextState)
-: _action(action), _nextStateId(nextState) { }
+BehaviourState::BehaviourState(SharedPtrAction action, unsigned int nextState, bool isStopState)
+: _action(action), _nextStateId(nextState), _isStopState(isStopState) { }
 
 unsigned int BehaviourState::process()
 {
-    Logger::getInstance()->log("State", Logger::VERBOSE);
-
     if (!_action)
     {
         Logger::getInstance()->log("Null Action pointer!", Logger::ERROR);
     }
     else if (_action->getType() == Action::REPEAT || !_isExecuted)
     {
-        Logger::getInstance()->log("Execute", Logger::VERBOSE);
         _action->execute();
         _isExecuted = true;
     }
     else if (_action->isFinished())
     {
-        Logger::getInstance()->log("Finished", Logger::VERBOSE);
         return _nextStateId;
     }
 
     return -1;
 }
 
-Action* BehaviourState::getAction()
+SharedPtrAction BehaviourState::getAction()
 {
     return _action;
 }
+
+void BehaviourState::setNextState(const unsigned int next)
+{
+    _nextStateId = next;
+}
+
+bool BehaviourState::isStopState()
+{
+    return _isStopState;
+}
+
+
 
 
 

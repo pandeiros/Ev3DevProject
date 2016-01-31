@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ev3dev.h"
+#include "Utils.h"
 
 namespace ev3
 {
@@ -25,6 +26,9 @@ namespace ev3
         float getValueF(unsigned int n);
         int getDecimals();
         unsigned int getNumValues();
+        SensorType getType();
+        
+        static StringVector prepareMessage(SensorValue value);
 
     private:
         SensorType _type;

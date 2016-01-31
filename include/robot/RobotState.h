@@ -3,6 +3,7 @@
 #include "Message.h"
 #include "LedControl.h"
 #include "Utils.h"
+#include "Behaviour.h"
 
 #include <map>
 #include <chrono>
@@ -24,6 +25,7 @@ namespace ev3
         };
 
         const static float MASTER_TIMEOUT;
+        const static float MASTER_PING_TIME;
 
         typedef std::map<Message::MessageType, States> ChangeMap;
 
@@ -32,12 +34,16 @@ namespace ev3
 
         Message::MessageType getPendingMessage();
         void updateTimer();
-        
+
         bool isPendingEnabled();
 
+        void setBehaviour(SharedPtrBehaviour behaviour);
+        SharedPtrBehaviour getBehaviour();
     protected:
         RobotState* switchState(Message::MessageType type);
         RobotState* changeState(States state);
+
+        SharedPtrBehaviour _currentBehaviour;
 
         States _state;
         ChangeMap _changes;
@@ -62,14 +68,14 @@ namespace ev3
         RobotStateActive(LedControl * led);
         RobotState * process(Message msg);
     };
-    
+
     class RobotStateWorking : public RobotState
     {
     public:
         RobotStateWorking(LedControl * led);
         RobotState * process(Message msg);
     };
-    
+
     class RobotStatePaused : public RobotState
     {
     public:

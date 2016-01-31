@@ -8,7 +8,7 @@ namespace ev3
 {
     static const unsigned int MAX_COMM_ITERATIONS = 10;
     static const unsigned int SEND_RETRIES = 3;
-
+    
     class Communication
     {
     public:
