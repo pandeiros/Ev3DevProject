@@ -1,4 +1,5 @@
 #include "Communication.h"
+#include "Logger.h"
 
 #include <iostream>
 
@@ -24,8 +25,32 @@ void Communication::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueu
     while (!stop)
     {
         receive();
-        send();
+
+        // Sending.
+        unsigned int count = 0;
+        while (!_receiveQueue->empty() && count++ < MAX_COMM_ITERATIONS)
+        {
+            Message msg = _receiveQueue->pop();
+
+            if (msg.getType() == Message::AGENT_OVER && !isMaster)
+            {
+                Logger::getInstance()->log("Comm. exiting...", Logger::INFO);
+                return;
+            }
+
+            if (msg.empty())
+                continue;
+
+            std::string messageStr = Message::encodeMessage(msg);
+            for (unsigned int i = 0; i < SEND_RETRIES; ++i)
+            {
+                if (_commUtils.sendMessage(_socket, _port, msg, messageStr, _isMaster))
+                    break;
+            }
+        }
     }
+
+    Logger::getInstance()->log("Comm. exiting...", Logger::INFO);
 }
 
 void Communication::receive()
@@ -42,29 +67,12 @@ void Communication::receive()
         }
         else
             break;
-        
+
         msg = Message();
     }
 }
 
-void Communication::send()
-{
-    unsigned int count = 0;
-    while (!_receiveQueue->empty() && count++ < MAX_COMM_ITERATIONS)
-    {
-        Message msg = _receiveQueue->pop();
-
-        if (msg.empty())
-            continue;
-        
-        std::string messageStr = Message::encodeMessage(msg);
-        for (unsigned int i = 0; i < SEND_RETRIES; ++i)
-        {
-            if (_commUtils.sendMessage(_socket, _port, msg, messageStr, _isMaster))
-                break;
-        }
-    }
-}
+void Communication::send() { }
 
 
 

@@ -3,6 +3,7 @@
 #include "Action.h"
 #include "Utils.h"
 #include "Sensor.h"
+#include "Event.h"
 
 #include <unistd.h>
 #include <string>
@@ -13,23 +14,30 @@ namespace ev3
 
     // TODO Move to separate file.
 
+    typedef std::map<Event::EventType, unsigned int> ReactionsTransitions;
+
     class BehaviourState
     {
     public:
         BehaviourState() = default;
-        BehaviourState ( const BehaviourState & ) = default;	
+        BehaviourState(const BehaviourState &) = default;
         BehaviourState(SharedPtrAction action, unsigned int nextState, bool isStopState = false);
+        BehaviourState(SharedPtrAction action, unsigned int nextState, ReactionsTransitions reactions);
 
         unsigned int process();
         SharedPtrAction getAction();
         void setNextState(const unsigned int next);
         bool isStopState();
+        void setReactions(ReactionsTransitions reactions);
+        int getReaction(Event::EventType type);
         //        bool isExecuted();
     private:
         SharedPtrAction _action = nullptr;
         bool _isExecuted = false;
         bool _isStopState = false;
         unsigned int _nextStateId;
+
+        ReactionsTransitions _reactions;
 
         // TODO events and reactions.
     };
@@ -45,18 +53,20 @@ namespace ev3
         enum BehaviourType
         {
             CUSTOM,
-            DRIVE_ON_SQUARE
+            DRIVE_ON_SQUARE,
+            EXPLORE_RANDOM
         };
 
         Behaviour() = default;
         virtual ~Behaviour();
-        
+
         Behaviour(BehaviourType type, BehaviourStates states);
         Behaviour(BehaviourType type);
 
         virtual void process();
 
         void setStates(BehaviourStates states);
+        void setReactionStates(BehaviourStates reactionStates);
         void setStopState(BehaviourState state);
         void setMeasurements(Measurements measurements);
 
@@ -64,11 +74,12 @@ namespace ev3
         virtual std::string getString();
 
         static StringVector getParameters(StringVector proto);
-        
+
         void stop();
         void pause();
         void resume();
         void start();
+        void react(Event::EventType type);
 
     protected:
         BehaviourType _type;
@@ -77,9 +88,10 @@ namespace ev3
         BehaviourState _stopState;
 
         BehaviourStates _states;
+        BehaviourStates _reactionStates;
 
         Measurements _measurements;
-        
+
         bool _active = false;
     };
 
@@ -90,14 +102,14 @@ namespace ev3
         BehaviourDriveOnSquare(BehaviourStates states, unsigned int side, bool turningRight);
 
         StringVector getPrototype() override;
-        
+
         virtual std::string getString() override;
 
     private:
         unsigned int _squareSide;
         bool _isTurningRight;
     };
-    
+
     class BehaviourExploreRandom : public Behaviour
     {
     public:
@@ -105,7 +117,7 @@ namespace ev3
         BehaviourExploreRandom(BehaviourStates states);
 
         StringVector getPrototype() override;
-        
+
         virtual std::string getString() override;
     };
 }

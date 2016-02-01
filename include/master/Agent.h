@@ -22,9 +22,11 @@ namespace ev3
         void updateLastMessage(Message * message);
         
         void setBehaviour(SharedPtrBehaviour behaviour);
+        void setMeasurement(Measurements measurements);
         
     private:
         SharedPtrBehaviour _currentBehaviour;
+        Measurements _measurements;
         
         RobotState::States _state = RobotState::IDLE;
         unsigned int _id;

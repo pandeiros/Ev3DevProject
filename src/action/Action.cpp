@@ -150,8 +150,6 @@ int ActionRotate::getRotation()
     return _rotation;
 }
 
-//bool ActionDriveDistance::isFinished() { }
-
 std::string ActionRotate::getActionPrototype()
 {
     std::stringstream ss;
@@ -163,6 +161,51 @@ std::string ActionRotate::getActionPrototype()
 std::string ActionRotate::getString()
 {
     return "Action rotate";
+}
+
+ActionRotateRandDirection::ActionRotateRandDirection(int rotation)
+: ActionRotate(rotation)
+{
+    _type = ROTATE_RANDOM_DIR;
+}
+
+ActionRotateRandDirection::ActionRotateRandDirection(CommandsVector commands, int rotation)
+: ActionRotate(commands, rotation)
+{
+    _type = ROTATE_RANDOM_DIR;
+}
+
+std::string ActionRotateRandDirection::getActionPrototype()
+{
+    std::stringstream ss;
+
+    ss << _type << "::" << _rotation;
+    return ss.str();
+}
+
+std::string ActionRotateRandDirection::getString()
+{
+    return "Action rotate";
+}
+
+void ActionRotateRandDirection::execute()
+{
+    Action::execute();
+    
+    Motor left = dynamic_cast<CommandMotor*>(_commands[0].get())->getMotor();
+    Motor right = dynamic_cast<CommandMotor*>(_commands[1].get())->getMotor();
+    
+    int random = std::rand() % 2 == 0 ? 1 : -1;
+
+    auto left1 = std::make_shared<CommandMotorSetSpeed>(left, 200 * random);
+    auto left2 = std::make_shared<CommandMotorRunForever>(left);
+    auto right1 = std::make_shared<CommandMotorSetSpeed>(right, 200 * -random);
+    auto right2 = std::make_shared<CommandMotorRunForever>(right);
+    
+    left1->execute();
+    left2->execute();
+    right1->execute();
+    right2->execute();
 }
 
 ActionStop::ActionStop()
@@ -199,6 +242,12 @@ std::string ActionDriveForever::getString()
 {
     return "Action drive forever";
 }
+
+bool ActionDriveForever::isForward()
+{
+    return _isForward;
+}
+
 
 
 

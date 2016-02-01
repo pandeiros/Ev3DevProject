@@ -1,5 +1,7 @@
 #include "EventQueue.h"
 
+#include "Logger.h"
+
 using namespace ev3;
 
 EventQueue * EventQueue::_instance = nullptr;
@@ -21,6 +23,8 @@ void EventQueue::push(SharedPtrEvent element)
 {
     std::lock_guard<std::mutex> guard(_mutex);
     _queue.push(element);
+
+    Logger::getInstance()->log("Generated event: " + element->getStringType(), Logger::VERBOSE);
 }
 
 SharedPtrEvent EventQueue::pop()

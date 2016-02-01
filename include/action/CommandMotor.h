@@ -18,6 +18,8 @@ namespace ev3
          * @param motor Motor to execute CommandMotor on.
          */
         CommandMotor(Motor & motor);
+        
+        Motor getMotor();
 
     protected:
         /// Command parameter to turn speed regulation on a Motor on.

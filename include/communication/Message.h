@@ -29,7 +29,10 @@ namespace ev3
             START,
             RESUME,
             PAUSE,
-            SENSOR_VALUE
+            ACTION_OK,
+            ACTION_INTERR,
+            SENSOR_VALUE,
+            MEASURE
         };
 
         Message();

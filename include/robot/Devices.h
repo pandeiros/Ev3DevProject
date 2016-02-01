@@ -30,6 +30,8 @@ namespace ev3
         
         Motor getMotor(ev3dev::port_type port);
         Sensor getSensor(ev3dev::port_type port);
+        void setSafetyTouchSensor(ev3dev::port_type port);
+        void setProximitySensor(ev3dev::port_type port);
         
         void stopAllDevices();
         
@@ -41,6 +43,9 @@ namespace ev3
         static Devices * _instance;
         
         std::map<Sensor::SensorType, bool> _listeners;
+        
+        std::map<ev3dev::port_type, int> _safetyTouchSensors;
+        std::map<ev3dev::port_type, int> _proximitySensors;
         
         MotorsVector _motors;
         SensorsVector _sensors;

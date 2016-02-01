@@ -65,7 +65,7 @@ int main(int argc, char * argv[])
 
     logger->setLogOutput(ev3::Logger::STD_OUT);
 
-    ev3::ColorUtils::printColorTest();
+//    ev3::ColorUtils::printColorTest();
 
     if (mode == ev3::MODE_MASTER)
     {
@@ -101,6 +101,8 @@ int main(int argc, char * argv[])
 
         // MIND SWITCHED QUEUES!
         robot->run(receiveQueue, sendQueue);
+        
+        logger->log("Robot exiting...", ev3::Logger::INFO);
 
         communicationThread.join();
 

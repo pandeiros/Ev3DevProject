@@ -12,6 +12,11 @@ CommandMotorReset::CommandMotorReset(Motor & motor) : CommandMotor(motor)
     _debugInfo = "<Motor> Reset";
 }
 
+Motor CommandMotor::getMotor()
+{
+    return _motor;
+}
+
 void CommandMotorReset::execute()
 {
     _motor.getMotor().reset();

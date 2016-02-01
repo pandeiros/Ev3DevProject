@@ -1,6 +1,7 @@
 #include "Devices.h"
 #include "Utils.h"
 #include "EventQueue.h"
+#include "Logger.h"
 
 using namespace ev3;
 
@@ -17,6 +18,7 @@ Devices* Devices::getInstance()
 
 void Devices::update()
 {
+    // Update values;
     for (auto & sensor : _sensors)
     {
         for (unsigned int i = 0; i < sensor.second.getNumValues(); ++i)
@@ -30,9 +32,44 @@ void Devices::update()
     {
         for (auto & sensor : _sensors)
         {
-            if (sensor.second.getType() == type.first)
+            if (sensor.second.getType() == type.first && type.second)
                 EventQueue::getInstance()->push(
                     std::make_shared<EventSensorWatch>(type.first, _status[sensor.first]));
+            type.second = false;
+        }
+    }
+
+    // Check safety touch sensors.
+//    unsigned int index = 0;
+    for (auto & touch : _safetyTouchSensors)
+    {
+        if (_status.find(touch.first) != _status.end())
+        {
+            int oldValue = touch.second;
+            int newValue = _status[touch.first][0].first;
+            if (oldValue == 0 && newValue > 0)
+                EventQueue::getInstance()->push(
+                    std::make_shared<Event>(Event::OBSTACLE_DETECTED));
+
+            touch.second = newValue;
+        }
+    }
+    
+    // Check proximity sensors
+    for (auto & proximity : _proximitySensors)
+    {
+        if (_status.find(proximity.first) != _status.end())
+        {
+            int oldValue = proximity.second;
+            int newValue = _status[proximity.first][0].first;
+            Logger::getInstance()->log("Checking proximity " + 
+            std::to_string(newValue), Logger::DEBUG);
+        
+            if (oldValue > 100 && newValue < 300)
+                EventQueue::getInstance()->push(
+                    std::make_shared<Event>(Event::PROXIMITY_ALERT));
+
+            proximity.second = newValue;
         }
     }
 }
@@ -40,6 +77,16 @@ void Devices::update()
 void Devices::addListener(Sensor::SensorType type)
 {
     _listeners[type] = true;
+}
+
+void Devices::setSafetyTouchSensor(ev3dev::port_type port)
+{
+    _safetyTouchSensors[port] = 1;
+}
+
+void Devices::setProximitySensor(ev3dev::port_type port)
+{
+    _proximitySensors[port] = 1;
 }
 
 void Devices::removeListener(Sensor::SensorType type)
@@ -143,25 +190,35 @@ bool Devices::checkDevices(RequiredDevices & requiredDevices)
     unsigned int ready = requiredDevices.size();
     for (auto & device : requiredDevices)
     {
+        unsigned int temp = ready;
         for (auto & mapping : _motors)
         {
             if ((mapping.first == device.first || device.first == PORT_ANY) &&
                 mapping.second.getMotor().type_name() == device.second)
             {
                 updateCountPerRot(mapping.second.getMotor().count_per_rot());
-
+                Logger::getInstance()->log("Device connected: " + device.second + " at " +
+                        device.first, Logger::VERBOSE);
                 --ready;
+                break;
             }
         }
 
         for (auto & mapping : _sensors)
         {
             if ((mapping.first == device.first || device.first == PORT_ANY) &&
-                mapping.second.getSensor().type_name() == device.second)
+                mapping.second.getSensor().driver_name() == device.second)
             {
+                Logger::getInstance()->log("Device connected: " + device.second + " at " +
+                        device.first, Logger::VERBOSE);
                 --ready;
+                break;
             }
         }
+
+        if (temp == ready)
+            Logger::getInstance()->log("Missing device: " + device.second + " at " +
+                device.first, Logger::WARNING);
     }
 
     // Allocate status values.

@@ -28,7 +28,7 @@ namespace ev3
         unsigned int getNumValues();
         SensorType getType();
         
-        static StringVector prepareMessage(SensorValue value);
+        static StringVector prepareMessage(SensorValue value, SensorType type);
 
     private:
         SensorType _type;

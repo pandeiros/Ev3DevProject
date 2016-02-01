@@ -30,6 +30,7 @@ namespace ev3
 
         unsigned int _agentId = MASTER_ID;
 
+        Measurements _measurements;
     };
 }
 

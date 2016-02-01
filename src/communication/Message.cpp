@@ -137,6 +137,10 @@ std::string Message::getStringType()
             return "ABORT";
         case ACK:
             return "ACK";
+        case ACTION_OK:
+            return "ACTION_OK";
+        case ACTION_INTERR:
+            return "ACTION_INTERR";
         case AGENT:
             return "AGENT";
         case AGENT_OVER:
@@ -149,6 +153,8 @@ std::string Message::getStringType()
             return "MASTER";
         case MASTER_OVER:
             return "MASTER_OVER";
+        case MEASURE:
+            return "MEASURE";
         case NOT:
             return "NOT";
         case PAUSE:

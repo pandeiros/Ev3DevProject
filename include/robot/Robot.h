@@ -66,5 +66,7 @@ namespace ev3
         Message _currentMessage;
         
         HighResClock::time_point _masterPingTime = HighResClock::now();
+        
+        unsigned int _score;
     };
 }

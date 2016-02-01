@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <exception>
+#include <ctime>
+#include <sstream>
 
 using namespace ev3;
 
@@ -51,6 +53,19 @@ void Logger::setLogOutput(LogOutput output)
 
 void Logger::log(std::string message, LogLevel level, LogOutput output)
 {
+//    time_t currentTime;
+//    struct tm *localTime;
+//
+//    time(&currentTime); // Get the current time
+//    localTime = localtime(&currentTime); // Convert the current time to the local time
+//
+//    int Hour = localTime->tm_hour;
+//    int Min = localTime->tm_min;
+//    int Sec = localTime->tm_sec;
+//
+//    std::stringstream ss;
+//    ss << "[" << Hour << ":" << Min << ":" << Sec << "]";
+
     if (level >= _level)
     {
         switch (output)
@@ -60,6 +75,7 @@ void Logger::log(std::string message, LogLevel level, LogOutput output)
                 if (_loggerForced)
 #endif
                     std::cout << getColor(level, output) <<
+//                    ss.str() <<
                     getLabel(level, output) <<
                     " " << message << "\n";
                 break;
@@ -69,6 +85,7 @@ void Logger::log(std::string message, LogLevel level, LogOutput output)
                 if (_loggerForced)
 #endif
                     std::cerr << getColor(level, output) <<
+//                    ss.str() <<
                     getLabel(level, output) <<
                     " " << message << "\n";
                 break;

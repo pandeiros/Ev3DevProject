@@ -44,13 +44,15 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     {
         // EXCEPTION
         Logger::getInstance()->log("Devices incorrect!", Logger::ERROR);
+        stop();
+        return;
     }
     else
         Logger::getInstance()->log("Devices correct.", Logger::INFO);
 
     // TEST ====================
-        Devices::getInstance()->addListener(Sensor::ULTRASONIC);
-        
+    //        _state->getBehaviour()->setMeasurements({Sensor::ULTRASONIC});
+
     //    generateBehaviour(_currentBehaviour, Behaviour::DRIVE_ON_SQUARE,
     //            StringVector({"400", "1"}));
     //
@@ -67,7 +69,7 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     while (true)
     {
         if (_currentMessage.getType() != Message::EMPTY)
-            Logger::getInstance()->log("<<<...." + _currentMessage.getString(), Logger::VERBOSE);
+            Logger::getInstance()->log(AGENT_RECEIVE + _currentMessage.getString(), Logger::VERBOSE);
 
         if (_currentMessage.getType() == Message::AGENT_OVER ||
             _currentMessage.getType() == Message::MASTER_OVER)
@@ -92,7 +94,7 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    
+
     stop();
 
     return;
@@ -127,7 +129,7 @@ void Robot::processState()
 
 
         _sendQueue->push(message);
-        Logger::getInstance()->log("....>>>" + message.getString(), Logger::VERBOSE);
+        Logger::getInstance()->log(AGENT_SEND + message.getString(), Logger::VERBOSE);
     }
 }
 
@@ -141,9 +143,17 @@ void Robot::processMessage()
 
     if (_currentMessage.getType() == Message::MASTER)
     {
-
         _id = _currentMessage.getReceiverId();
         Logger::getInstance()->log("New ID aqcuired: " + std::to_string(_id), Logger::INFO);
+    }
+
+    if (_currentMessage.getType() == Message::MEASURE)
+    {
+        Measurements m;
+        for (auto & s : _currentMessage.getParameters())
+            m.push_back(static_cast<Sensor::SensorType> (transcode<int>(s)));
+
+        _state->getBehaviour()->setMeasurements(m);
     }
 
     // Replace behaviour with a new one.
@@ -212,9 +222,24 @@ void Robot::processEvents()
             case Event::BEHAVIOUR_STOP:
                 _state->getBehaviour().reset();
                 break;
+            case Event::OBSTACLE_DETECTED:
+                _state->getBehaviour()->react(event->getType());
+                break;
+            case Event::PROXIMITY_ALERT:
+                _state->getBehaviour()->react(event->getType());
+                break;
             case Event::SENSOR_WATCH:
                 send(Message(_id, MASTER_ID, 0, Message::SENSOR_VALUE,
-                        Sensor::prepareMessage(static_cast<EventSensorWatch*>(event.get())->getValue())));
+                        Sensor::prepareMessage(
+                        static_cast<EventSensorWatch*> (event.get())->getValue(),
+                        static_cast<EventSensorWatch*> (event.get())->getType())));
+                break;
+
+            case Event::ACTION_FINISHED:
+                send(Message(_id, MASTER_ID, 0, Message::ACTION_OK,{std::to_string(static_cast<EventAction*> (event.get())->getActionType())}));
+                break;
+            case Event::ACTION_INTERR:
+                send(Message(_id, MASTER_ID, 0, Message::ACTION_INTERR,{std::to_string(static_cast<EventAction*> (event.get())->getActionType())}));
                 break;
             default:
                 break;
@@ -224,19 +249,22 @@ void Robot::processEvents()
 
 void Robot::send(Message message)
 {
+
     message.setMessageId(_commId++);
-    Logger::getInstance()->log("....>>>" + message.getString(), Logger::VERBOSE);
+    Logger::getInstance()->log(AGENT_SEND + message.getString(), Logger::VERBOSE);
 
     _sendQueue->push(message);
 }
 
 std::string Robot::getString()
 {
+
     return "<Base class Robot>";
 }
 
 SharedPtrBehaviour Robot::generateBehaviour(Behaviour::BehaviourType type, StringVector parameters)
 {
+
     return std::shared_ptr<Behaviour>(nullptr);
 }
 
@@ -244,10 +272,12 @@ void Robot::sendInfo() { }
 
 void Robot::stop()
 {
+
     Devices::getInstance()->stopAllDevices();
     _ledControl.endFlashing();
 
-    _receiveQueue->push(Message(0, 0, 0, Message::ABORT));
+    _receiveQueue->push(Message(0, 0, 0, Message::AGENT_OVER));
+    _sendQueue->push(Message(0, 0, 0, Message::AGENT_OVER));
 }
 
 void Robot::ping()

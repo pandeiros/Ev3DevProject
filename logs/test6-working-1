@@ -1,0 +1,81 @@
+[37;2m[VERBOSE][39;0m Device connected: lego-ev3-l-motor at outB
+[37;2m[VERBOSE][39;0m Device connected: lego-ev3-l-motor at outC
+[37;2m[VERBOSE][39;0m Device connected: lego-ev3-touch at in2
+[37;2m[VERBOSE][39;0m Device connected: lego-ev3-us at in1
+[32m[ INFO  ][39;0m Devices correct.
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:  261283 | Receiver:     1 | Msg. Id:     0 | Type:      AGENT | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:  261283 | Receiver:     1 | Msg. Id:     0 | Type:      AGENT | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     0 | Type:     MASTER | Parameters: 
+[32m[ INFO  ][39;0m New ID aqcuired: 3
+[32m[ INFO  ][39;0m Changing state to ACTIVE
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     1 | Type:        ACK | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     2 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     1 | Type:  BEHAVIOUR | Parameters: 1 | 1000 | 1 | 
+[37;2m[VERBOSE][39;0m Obtaining Behaviour parameters...
+[32m[ INFO  ][39;0m Loading predefined Behaviour: 1
+0x1a091c
+[32m[ INFO  ][39;0m <Robot model A> Drive on square: side length (1000), turning right(1)
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     3 | Type:        ACK | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     2 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     3 | Type:      START | Parameters: 
+[37;2m[VERBOSE][39;0m Generated event: BEHAVIOUR_START
+[32m[ INFO  ][39;0m Changing state to WORKING
+[37;2m[VERBOSE][39;0m Behaviour start.
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     0 | Type:    MEASURE | Parameters: 2 | 0 | 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     4 | Type: SENSOR_VALUE | Parameters: 2 | 1054 | 1 | 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     5 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     5 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m Generated event: PROXIMITY_ALERT
+[33;1m[WARNING][39;0m Reaction not found. 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     6 | Type: SENSOR_VALUE | Parameters: 2 | 1672 | 1 | 
+[37;2m[VERBOSE][39;0m Generated event: PROXIMITY_ALERT
+[33;1m[WARNING][39;0m Reaction not found. 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     7 | Type: SENSOR_VALUE | Parameters: 2 | 481 | 1 | 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     8 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     8 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     9 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    10 | Type: SENSOR_VALUE | Parameters: 2 | 385 | 1 | 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     9 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    11 | Type: SENSOR_VALUE | Parameters: 2 | 1358 | 1 | 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    12 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:    12 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m Generated event: PROXIMITY_ALERT
+[33;1m[WARNING][39;0m Reaction not found. 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    13 | Type: SENSOR_VALUE | Parameters: 2 | 195 | 1 | 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    14 | Type: SENSOR_VALUE | Parameters: 2 | 804 | 1 | 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    15 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:    15 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m Generated event: PROXIMITY_ALERT
+[37;2m[VERBOSE][39;0m Generated event: PROXIMITY_ALERT
+[33;1m[WARNING][39;0m Reaction not found. 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    16 | Type: SENSOR_VALUE | Parameters: 2 | 164 | 1 | 
+[37;2m[VERBOSE][39;0m Generated event: OBSTACLE_DETECTED
+[33;1m[WARNING][39;0m Reaction not found. 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    17 | Type: SENSOR_VALUE | Parameters: 2 | 321 | 1 | 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    18 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:    18 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    19 | Type: SENSOR_VALUE | Parameters: 2 | 372 | 1 | 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    20 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    21 | Type: SENSOR_VALUE | Parameters: 2 | 908 | 1 | 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    22 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    23 | Type: SENSOR_VALUE | Parameters: 2 | 370 | 1 | 
+[37;2m[VERBOSE][39;0m Generated event: SENSOR_WATCH
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    24 | Type: SENSOR_VALUE | Parameters: 2 | 2387 | 1 | 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    25 | Type:       PING | Parameters: 
+[32m[ INFO  ][39;0m Changing state to PAUSED
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    26 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    27 | Type:       PING | Parameters: 
+[33;1m[WARNING][39;0m Signal caught: 2
+[32m[ INFO  ][39;0m Comm. exiting...

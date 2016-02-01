@@ -36,9 +36,10 @@ Sensor::SensorType Sensor::getType()
     return _type;
 }
 
-StringVector Sensor::prepareMessage(SensorValue value)
+StringVector Sensor::prepareMessage(SensorValue value, SensorType type)
 {
     StringVector result;
+    result.push_back(std::to_string(type));
     for (auto & v : value)
     {
         result.push_back(std::to_string(v.first));

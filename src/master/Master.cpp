@@ -18,7 +18,8 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;
 
-    _currentBehaviour = std::make_shared<BehaviourDriveOnSquare>(100, true);
+    _currentBehaviour = std::make_shared<BehaviourExploreRandom>();
+    _measurements = Measurements({Sensor::ULTRASONIC, Sensor::TOUCH});
 
     bool stop = false;
 
@@ -29,7 +30,7 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
     while (true)
     {
         if (msg.getType() != Message::EMPTY)
-            Logger::getInstance()->log("<<<...." + msg.getString(), Logger::VERBOSE);
+            Logger::getInstance()->log(MASTER_RECEIVE + msg.getString(), Logger::VERBOSE);
 
         if (msg.getType() == Message::ABORT)
             break;
@@ -41,6 +42,7 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
             agent.setId(id);
             agent.setCommId(msg.getMessageId());
             agent.setBehaviour(_currentBehaviour);
+            agent.setMeasurement(_measurements);
 
             _agents.insert({id, agent});
 
@@ -53,14 +55,18 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
             {
                 if (_agents[id].getCommId() < msg.getMessageId())
                 {
+
                     send(Message(MASTER_ID, id, msg.getMessageId(), Message::PONG, { }));
                     _agents[id].setCommId(msg.getMessageId());
                 }
             }
 
         }
-        else if (_agents.find(msg.getSenderId()) != _agents.end())
-            _agents[msg.getSenderId()].processMessage(&msg, &retMessage);
+//        else if (_agents.find(msg.getSenderId()) != _agents.end())
+//            _agents[msg.getSenderId()].processMessage(&msg, &retMessage);
+        
+        for (auto & agent : _agents)
+            agent.second.processMessage(&msg, &retMessage);
 
         if (!retMessage.empty())
         {
@@ -83,14 +89,15 @@ void Master::send(Message message, bool recordMessage)
 {
     if (recordMessage)
         _agents[message.getReceiverId()].updateLastMessage(&message);
-    
-    Logger::getInstance()->log("....>>>" + message.getString(), Logger::VERBOSE);
+
+    Logger::getInstance()->log(MASTER_SEND + message.getString(), Logger::VERBOSE);
 
     _sendQueue->push(message);
 }
 
 void Master::stop()
 {
+
     for (auto & agent : _agents)
         send(Message(MASTER_ID, agent.second.getId(), 0, Message::MASTER_OVER, { }), false);
 

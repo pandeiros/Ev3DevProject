@@ -1,0 +1,30 @@
+[37;2m[VERBOSE][39;0m Device connected: lego-ev3-l-motor at outB
+[37;2m[VERBOSE][39;0m Device connected: lego-ev3-l-motor at outC
+[37;2m[VERBOSE][39;0m Device connected: lego-ev3-touch at in2
+[37;2m[VERBOSE][39;0m Device connected: lego-ev3-us at in1
+[32m[ INFO  ][39;0m Devices correct.
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:  496324 | Receiver:     1 | Msg. Id:     0 | Type:      AGENT | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:  496324 | Receiver:     1 | Msg. Id:     0 | Type:      AGENT | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       0 | Receiver:     1 | Msg. Id:     1 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     0 | Type:     MASTER | Parameters: 
+[32m[ INFO  ][39;0m New ID aqcuired: 3
+[32m[ INFO  ][39;0m Changing state to ACTIVE
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     2 | Type:        ACK | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     2 | Type:  BEHAVIOUR | Parameters: 1 | 1000 | 1 | 
+[37;2m[VERBOSE][39;0m Obtaining Behaviour parameters...
+[32m[ INFO  ][39;0m Loading predefined Behaviour: 1
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     3 | Type:        NOT | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     4 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     4 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     5 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     5 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     6 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  ... <<< [M] Sender:       1 | Receiver:     3 | Msg. Id:     6 | Type:       PONG | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     7 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     8 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:     9 | Type:       PING | Parameters: 
+[32m[ INFO  ][39;0m Changing state to PANIC
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    10 | Type:       PING | Parameters: 
+[37;2m[VERBOSE][39;0m  [A] >>> ... Sender:       3 | Receiver:     1 | Msg. Id:    11 | Type:       PING | Parameters: 
+[33;1m[WARNING][39;0m Signal caught: 2
+[32m[ INFO  ][39;0m Comm. exiting...

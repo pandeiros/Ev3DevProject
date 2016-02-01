@@ -41,6 +41,7 @@ namespace ev3
             REPEAT, /**< Repeats execution of other \link Action Actions\endlink. */
             DRIVE_DISTANCE, /**< Power Motor to reach certain distance. */
             ROTATE, /**< Rotate Robot for given angle. */
+            ROTATE_RANDOM_DIR, /**< Rotate for given angle, clockwise or counterclockwise at random. */
             STOP, /**< Stop all active motors. */
             DRIVE_FOREVER /**< Drive forward or backward infinetely. */
         };
@@ -185,9 +186,21 @@ namespace ev3
 
         virtual std::string getString() override;;
 
-
-    private:
+    protected:
         int _rotation;
+    };
+    
+    class ActionRotateRandDirection : public ActionRotate
+    {
+    public:
+        ActionRotateRandDirection(int rotation);
+        ActionRotateRandDirection(CommandsVector commands, int rotation);
+
+        virtual std::string getActionPrototype();
+
+        virtual std::string getString() override;;
+
+        virtual void execute() override;
     };
     
     class ActionStop : public Action
@@ -210,6 +223,8 @@ namespace ev3
         virtual std::string getActionPrototype();
 
         virtual std::string getString() override;
+        
+        bool isForward();
     private:
         bool _isForward;
     };

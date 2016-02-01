@@ -14,7 +14,6 @@ namespace ev3
     typedef std::vector<std::string> StringVector;
     typedef std::vector<std::pair<int, int> > SensorValue;
     
-
     static const std::string MODE_MASTER = "master";
     static const std::string MODE_AGENT = "agent";
 
@@ -22,6 +21,11 @@ namespace ev3
     static const std::string ERR_WRONG_MODE = "Invalid mode given.\n";
     static const std::string ERR_WRONG_LOG_LEVEL = "Invalid log level given.\n";
     static const std::string ERR_WRONG_ARGUMENTS = "Wrong arguments!\n";
+    
+    static const std::string AGENT_SEND         = " [A] >>> ... ";
+    static const std::string AGENT_RECEIVE      = " ... <<< [M] ";
+    static const std::string MASTER_SEND        = " [M] >>> ... ";
+    static const std::string MASTER_RECEIVE     = " ... <<< [A] ";
 
     static const float UNITS_PER_CENTIMETER = 10.f;
 

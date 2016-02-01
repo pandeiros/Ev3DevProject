@@ -1,9 +1,7 @@
-\documentclass[12pt, a4paper, notitlepage, polish]{report}
-
+\documentclass[12pt, a4paper, notitlepage]{report}
 
 \usepackage{abstract}
 \usepackage[english,polish]{babel}
-\usepackage{polski}
 \usepackage[utf8]{inputenc}
 \usepackage[titletoc,page]{appendix}
 \usepackage{lmodern,cmap}
@@ -21,6 +19,7 @@
     hidelinks,
 }
 
+% \usepackage[stable]{footmisc}
 \usepackage{wrapfig}
 \usepackage[font=small,labelfont=bf,justification=centering]{caption}
 \usepackage{subcaption}
@@ -41,6 +40,8 @@
 \addtolength{\textheight}{1cm}
 
 \overfullrule=5mm
+\sloppy
+% TODO Check for all unnecessary line breaks \\
 
 \addbibresource{bibliography.bib}
 \frenchspacing
@@ -74,8 +75,10 @@
 
 \cleardoublepage
 \phantomsection
+\renewcommand\listfigurename{Spis rysunków}
 \addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
+
 
 \appendix
 \chapter{Załączniki}

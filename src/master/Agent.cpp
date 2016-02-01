@@ -54,6 +54,15 @@ void Agent::processMessage(Message * message, Message * retMessage)
             }
             break;
         case RobotState::WORKING:
+            if (_lastMessageType == Message::START)
+            {
+                retMessage->setType(Message::MEASURE);
+                
+                StringVector params;
+                for (auto & m : _measurements)
+                    params.push_back(std::to_string(m));
+                retMessage->setParameters(params);
+            }
             break;
         case RobotState::PAUSED:
             break;
@@ -74,6 +83,12 @@ void Agent::setBehaviour(SharedPtrBehaviour behaviour)
 {
     _currentBehaviour = behaviour;
 }
+
+void Agent::setMeasurement(Measurements measurements)
+{
+    _measurements = measurements;
+}
+
 
 
 
