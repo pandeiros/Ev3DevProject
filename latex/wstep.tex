@@ -1,17 +1,16 @@
 \chapter{Wstęp}
 \label{ch:wstep}
 
-Celem niniejszej pracy było zaprojektowanie i implementacja aplikacji kontrolującej zachowanie robotów mobilnych. Jest ona odpowiedzialna za nadzór nad zachowaniami robotów (agentów), sterowanie sensorami i efektorami oraz komunikację z wyższymi warstwami architektury, weryfikującymi poprawność całego systemu. Zachowania robota są opisane za pomocą automatów skończonych. Warstwa komunikacyjna dostarcza interfejs przesyłania specjalnych komunikatów za pomocą protokołu UDP.\\
+Celem niniejszej pracy było zaprojektowanie i implementacja aplikacji kontrolującej zachowanie robotów mobilnych. Jest ona odpowiedzialna za nadzór nad\,zachowaniami robotów (agentów), sterowanie \glslink{sensor}{sensorami} i efektorami oraz komunikację z wyższymi warstwami architektury, weryfikującymi poprawność całego systemu. Zachowania robota są opisane za pomocą automatów skończonych. Warstwa komunikacyjna dostarcza interfejs przesyłania specjalnych komunikatów za pomocą protokołu \Gls{udp}.\\
 
-Aplikacja jest zaprojektowana do uruchamiania na systemach Unixowych, w szczególności na klocku centralnym LEGO, a także na komputerze osobistym w roli nadzorcy. Warstwa połączeniowa jest punktem wspólnym architektury ARM z inną, używając do komunikacji interfejsu gniazd sieciowych.
+Aplikacja jest zaprojektowana do uruchamiania na systemach Unixowych, w\,szczególności na klocku centralnym LEGO, a także na komputerze osobistym w\,roli nadzorcy. Warstwa połączeniowa jest punktem wspólnym architektury \Gls{arm} z inną, używając do komunikacji interfejsu gniazd sieciowych.
 \clearpage
 
 \section{Motywacja}
 
-Motywacją do podjęcia powyższego tematu było przetestowanie możliwości programowania oraz technicznych robota zbudowanego z klocków LEGO Mindstorms EV3. Aplikacja działająca na klocku była napisana z użyciem biblioteki\\
-ev3dev \cite{ev3dev} w języku C++.
+Motywacją do podjęcia powyższego tematu było przetestowanie możliwości technicznych oraz programowania robota zbudowanego z klocków LEGO Mindstorms EV3. Aplikacja działająca na klocku była napisana z użyciem biblioteki ev3dev \cite{ev3dev} w języku C++.
 
-Możliwość dostępu do sterującego klockiem centralnym systemu Linux zdejmuje ograniczenie używania prostych środowisk graficznych i pozwala osiągnąć dużo więcej małym kosztem. Należało zatem sprawdzić, co najnowsza wersja \\LEGO Mindstorms ma do zaoferowania, w szczególności:
+Możliwość dostępu do sterującego klockiem centralnym systemu Linux zdejmuje ograniczenie używania prostych środowisk graficznych i pozwala osiągnąć dużo więcej małym kosztem. Należało zatem sprawdzić, co najnowsza wersja LEGO Mindstorms ma do zaoferowania, w\,szczególności:
 \begin{itemize}
     \item Wydajność napisanych aplikacji z użyciem ww. bilbioteki
     \item Skuteczność komunikacji z wykorzystaniem bezprzewodowej sieci Wi-Fi
@@ -28,25 +27,23 @@ Zostały przyjęte następujące założenia:
   \item Każdy robot samodzielnie generuje sposób wykonania danej akcji na podstawie dostępnych urządzeń
   \item Zachowania mogą być dynamicznie tworzone z użyciem specjalnej składni
   \item Urządzeniem nadzorującym może być inny robot, ale pożądana jest też możliwość kontroli z poziomu zwykłego komputera
-  \item Agenci komunikują się zarówno z jednostką centralną (nadzorująca) jak i między sobą za pomocą sieci bezprzewodowej
+  \item Agenci komunikują się zarówno z jednostką centralną (nadzorująca), jak\,i między sobą za pomocą sieci bezprzewodowej
   \item Do poprawnej komunikacji wymagana jest jedna, wspólna dla wszystkich jednostek, istniejąca sieć
-  \item System powinien dostosować się do braków w łączności, umożliwiając komunikację przez pośrednictwo innych agentów
+  \item System powinien dostosować się do braków w łączności, umożliwiając komunikację za pośrednictwem innych agentów
   \item Agent może poruszać się tylko po płaskiej powierzchni.
 \end{itemize}
 
 % \section{Ograniczenia}
-%
-% \ldots
 % TODO
 
 \section{Zawartość rozdziałów}
 
 \begin{description}
-  \item[ {~\ref{ch:wstep} \hyperref[ch:wstep]{Wstęp} -} ]zawiera cel pracy razem z założeniami i ograniczeniami.
-  \item[ {~\ref{ch:opis_systemu} \hyperref[ch:opis_systemu]{Opis systemu} -} ]opisuje dokładnie aspekty projektowe i technologiczne oraz zawiera wytyczne dotyczące wykorzystanych narzędzi.
-  \item[ {~\ref{ch:budowa_aplikacji} \hyperref[ch:budowa_aplikacji]{Budowa aplikacji} -} ]szczegółowo omawia wykorzystane w projekcie klasy, ich wzajemne zależności oraz podział na moduły.
-  \item[ {~\ref{ch:zachowania} \hyperref[ch:zachowania]{Zachowania} -} ]zawiera opis budowy oraz działania zachowań złożonych robota wraz z przykładami.
-  \item[ {~\ref{ch:komunikacja} \hyperref[ch:komunikacja]{Komunikacja} -} ]opisuje szczegóły implementacji warstwy połączeniowej, bazującej na interfejsie gniazd sieciowych i protokole UDP.
-  \item[ {~\ref{ch:testowanie} \hyperref[ch:testowanie]{Testowanie aplikacji} -} ]zawiera przebieg przykładowych testów i ich rezultaty.
-  \item[ {~\ref{ch:podsumowanie} \hyperref[ch:podsumowanie]{Podsumowanie} -} ]zawiera wnioski końcowe z przebiegu projektowania aplikacji oraz przeprowadzonych testów.
+  \item[ {~\ref{ch:wstep}. \hyperref[ch:wstep]{Wstęp} -} ]zawiera cel pracy razem z założeniami i ograniczeniami
+  \item[ {~\ref{ch:opis_systemu}. \hyperref[ch:opis_systemu]{Opis systemu} -} ]opisuje dokładnie aspekty projektowe i technologiczne oraz zawiera wytyczne dotyczące wykorzystanych narzędzi
+  \item[ {~\ref{ch:budowa_aplikacji}. \hyperref[ch:budowa_aplikacji]{Budowa aplikacji} -} ]szczegółowo omawia wykorzystane w projekcie klasy, ich wzajemne zależności oraz podział na moduły
+  \item[ {~\ref{ch:zachowania}. \hyperref[ch:zachowania]{Zachowania} -} ]zawiera opis budowy oraz działania zachowań złożonych\\robota wraz z przykładami
+  \item[ {~\ref{ch:komunikacja}. \hyperref[ch:komunikacja]{Komunikacja} -} ]opisuje szczegóły implementacji warstwy połączeniowej, bazującej na interfejsie gniazd sieciowych i protokole UDP, a także komunikacji wewnętrznej bazującej na zdarzeniach
+  \item[ {~\ref{ch:testowanie}. \hyperref[ch:testowanie]{Testowanie aplikacji} -} ]zawiera przebieg przykładowych testów i ich\\rezultaty
+  \item[ {~\ref{ch:podsumowanie}. \hyperref[ch:podsumowanie]{Podsumowanie} -} ]zawiera wnioski końcowe z przebiegu projektowania\\aplikacji oraz przeprowadzonych testów.
 \end{description}

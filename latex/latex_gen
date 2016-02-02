@@ -1,10 +1,11 @@
 #! /bin/sh
 
-# ls | grep -v .tex | grep -v .bib | xargs rm
+ls | grep -v .tex | grep -v .bib | xargs rm
 
 pdflatex main
 biber main
 makeglossaries main
+pdflatex main
 pdflatex main
 pdflatex main
 

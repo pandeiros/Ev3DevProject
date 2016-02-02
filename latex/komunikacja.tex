@@ -11,45 +11,77 @@ Komunikacja przez sieć odbywa się przy użyciu protokołu UDP oraz z wykorzyst
     \item Wielkość kolejki przechowującej ostatnio odebrane pakiety: 50
 \end{itemize}
 
-W klasie {\tt CommUtils} zdefiniowane są metody {\tt sendMessage, receiveMessage} oraz {\tt receiveMessageDelay}. Przetwarzają one zdefiniowane struktury aplikacji na niskopoziomowe bufory danych wysyłane lub odbierane za pomocą systemowych funkcji (rysunek ...). W trakcie ich wykonywania sprawdzane są dostępne interfejsy sieciowe oraz następuje tworzenie gniazd na zadanym porcie. Metoda {\tt receiveMessage} jest blokująca, natomiast {\tt receiveMessageDelay} czeka na odpowiedź tylko przez zadany w milisekundach interwał.
+W klasie {\tt CommUtils} zdefiniowane są metody {\tt sendMessage, receiveMessage} oraz {\tt receiveMessageDelay}. Przetwarzają one zdefiniowane struktury aplikacji na niskopoziomowe bufory danych wysyłane lub odbierane za pomocą systemowych funkcji (Rysunek \ref{fig:low_level_comm}). W trakcie ich wykonywania sprawdzane są dostępne interfejsy sieciowe oraz następuje tworzenie gniazd na zadanym porcie. Metoda {\tt receiveMessage} jest blokująca, natomiast {\tt receiveMessageDelay} czeka na odpowiedź tylko przez zadany w milisekundach interwał.
 
-% TODO Rysunek
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=1\textwidth]{diagrams/low_level_comm.png}
+    \caption{Uproszczony diagram niskopoziomowej komunikacji.\label{fig:low_level_comm}}
+\end{figure}
 
 \subsection{Synchronizacja z nadzorcą}
 
-Na samym początku, tuż po uruchomieniu agentów i nadzorcy, następuje synchronizacja. Nadzorca nasłuchuje sieć, oczekując na wiadomości typu AGENT. Uruchomiony agent jest w stanie IDLE i wysyła wiadomość typu AGENT na adres rozgłoszeniowy z losowym identyfikatorem agenta, oczekując na komunikat MASTER. Czekanie nie trwa dłużej niż zadany interwał czasu (domyślnie nadzorca ma 10 sekund na odpowiedź). Nadzorca odbiera żądanie od agenta i dodaje go do swojej bazy, jednocześnie przypisując mu identyfikator oraz zapamiętując adres ip. Następnie na adres wysyłany jest komunikat MASTER z nowo przydzielonym identyfikatorem wpisanym w miejsce odbiorcy. Jeśli agent przyjmie taki pakiet, zwraca wiadomość typu ACK. Po takiej wymianie wiadomości (rysunek ...), dany robot jest zsynchronizowany, ma przypisany numer identyfikujący oraz jest odnotowany w bazie. Następuje przejście do stanu ACTIVE, oznaczające danego agenta, jako aktywnego w systemie.
+Na samym początku, tuż po uruchomieniu agentów i nadzorcy, następuje synchronizacja. Nadzorca nasłuchuje sieć, oczekując na wiadomości typu AGENT. Uruchomiony agent jest w stanie IDLE i wysyła wiadomość typu AGENT na adres rozgłoszeniowy z losowym identyfikatorem agenta, oczekując na komunikat MASTER. Czekanie nie trwa dłużej niż zadany interwał czasu (domyślnie nadzorca ma 10 sekund na odpowiedź). Nadzorca odbiera żądanie od agenta i dodaje go do swojej bazy, jednocześnie przypisując mu identyfikator oraz zapamiętując adres ip. Następnie na adres wysyłany jest komunikat MASTER z nowo przydzielonym identyfikatorem wpisanym w miejsce odbiorcy. Jeśli agent przyjmie taki pakiet, zwraca wiadomość typu ACK. Po takiej wymianie wiadomości (rysunek \ref{fig:comm_synch}), dany robot jest zsynchronizowany, ma przypisany numer identyfikujący oraz jest odnotowany w bazie. Następuje przejście do stanu ACTIVE, oznaczające danego agenta, jako aktywnego w systemie.
 
-% TODO Rysunek
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=0.75\textwidth]{diagrams/comm_synch.png}
+    \caption{Diagram komunikacji dla poprawnego rozpoczęcia zachowania.\label{fig:comm_synch}}
+\end{figure}
 
-W przypadku braku aktywnego agenta, nadzorca pozostaje bezczynny. Jeśli aktywny agent nie zostanie zsynchronizowany, przechodzi on do stanu PANIC (patrz:~\ref{sec:utrata_polaczenia} \hyperref[sec:utrata_polaczenia]{Utrata połączenia z nadzorcą}).
+W przypadku braku aktywnego agenta, nadzorca pozostaje bezczynny. Jeśli\,aktywny agent nie zostanie zsynchronizowany, przechodzi on do stanu PANIC (rysunek \ref{fig:comm_idle_panic}, patrz:~\ref{sec:utrata_polaczenia} \hyperref[sec:utrata_polaczenia]{Utrata połączenia z nadzorcą}).
 
-W każdym stanie oprócz stanu PANIC, z zadanym interwałem czasowym wysyłane są do nadzorcy wiadomości podtrzymujące połączenie. Agent wysyła komunikat PING, nadzorca natychmiast po jego odebraniu odsyła pakiet PONG. Jeśli oczekiwanie przekroczy zadany próg czasowy, następuje przejście do nowego stanu.
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=0.75\textwidth]{diagrams/comm_idle_panic.png}
+    \caption{Diagram komunikacji dla braku synchronizacji z nadzorcą.\label{fig:comm_idle_panic}}
+\end{figure}
+
+W każdym stanie oprócz stanu PANIC, z zadanym interwałem czasowym wysyłane są do nadzorcy wiadomości podtrzymujące połączenie. Agent wysyła komunikat PING, nadzorca natychmiast po jego odebraniu odsyła pakiet PONG. Jeśli oczekiwanie przekroczy zadany próg czasowy, następuje przejście do nowego stanu (rysunek {\ref{fig:comm_active_panic}}).
+
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=0.75\textwidth]{diagrams/comm_active_panic.png}
+    \caption{Diagram komunikacji dla utraty połączenia po synchronizacji.\label{fig:comm_active_panic}}
+\end{figure}
 
 \subsection{Oczekiwanie na aktywację}
 
-W stanie ACTIVE agent oczekuje na przydzielenie zadania. Jeśli takie nie nadchodzi, wysyłane są pakiety podtrzymujące połączenie. W przypadku braku komunikatów zwrotnych, robot przechodzi do stanu PANIC (rysunek ...).
+W stanie ACTIVE agent oczekuje na przydzielenie zadania. Jeśli takie nie nadchodzi, wysyłane są pakiety podtrzymujące połączenie. W przypadku braku komunikatów zwrotnych, robot przechodzi do stanu PANIC (rysunek \ref{fig:comm_active_panic}).
 
-% TODO Rysunek
-
-Nadzorca decyduje o przydzieleniu konkretnego zachowania danemu agentowi. Wysyła do niego wiadomość typu BEHAVIOUR z parametrami zawierającymi jego typ oraz ewentualne dodatkowe argumenty. Jeśli agent zdolny jest do wykonywania danego zadania, zwraca pakiet ACK, w przeciwnym razie pakiet NOT. Komunikat ACK skutkuje odpowiedzią START, po której agent przechodzi do stanu WORKING. W przypadku komnunikatu NOT, nadzorca może zdefiniować inne zadanie lub pozostować agenta tymczasowo nieaktywnego. (rysunek ...)
-
-% TODO Rysunek
+Nadzorca decyduje o przydzieleniu konkretnego zachowania danemu agentowi. Wysyła do niego wiadomość typu BEHAVIOUR z parametrami zawierającymi jego typ oraz ewentualne dodatkowe argumenty. Jeśli agent zdolny jest do wykonywania danego zadania, zwraca pakiet ACK, w przeciwnym razie pakiet NOT. Komunikat ACK skutkuje odpowiedzią START, po której agent przechodzi do stanu WORKING. W przypadku komnunikatu NOT, nadzorca może zdefiniować inne zadanie lub pozostować agenta tymczasowo nieaktywnego (rysunek \ref{fig:comm_synch}).
 
 \subsection{Przetwarzanie zachowania}
 
-Agent może przetwarzać zlecone instrukcje tylko w stanie WORKING. Po każdej prawidłowo zakończonej akcji, wysyłana jest wiadomość typu ACTION\_OK z identyfikatorem poprawnie wykonanej akcji. Pozwala to nadzorcy logować przebieg pray agentów. W przypadku zakłócenia przebiegu wykonania, robot może wysłać pakiet ACTION\_INTERR, jeśli zaszło jakieś zdarzenie wymagające zmiany postępowania, a także pakiet ACTION\_ERR, jeśli wystąpił błąd. W pierwszym przypadku, jeśli robot sam nie może określić następnej czynności, następuje oczekiwanie na pakiet CONTINUE. W drugim przypadku, robot bezwarunkowo zawiesza aktualną działalność i oczekuje na wiadomość RESTART, która rozpocznie przebieg bieżącego zachowania od nowa lub w przypadku wiadomości BEHAVIOUR, przebieg nowego zachowania. Niezależnie od rodzaju wiadomości wznawiającej, agent odpowiada komunikatami ACK lub NOT (rysunek ...).
+Agent może przetwarzać zlecone instrukcje tylko w stanie WORKING. Po każdej prawidłowo zakończonej akcji, wysyłana jest wiadomość typu ACTION\_OK z identyfikatorem poprawnie wykonanej akcji. Pozwala to nadzorcy logować przebieg pray agentów. W przypadku zakłócenia przebiegu wykonania, robot może wysłać pakiet ACTION\_INTERR, jeśli zaszło jakieś zdarzenie wymagające zmiany postępowania, a także pakiet ACTION\_ERR, jeśli wystąpił błąd. W pierwszym przypadku, jeśli robot sam nie może określić następnej czynności, następuje oczekiwanie na pakiet CONTINUE. W drugim przypadku, robot bezwarunkowo zawiesza aktualną działalność i oczekuje na wiadomość RESTART, która rozpocznie przebieg bieżącego zachowania od nowa lub w przypadku wiadomości BEHAVIOUR, przebieg nowego zachowania. Niezależnie od rodzaju wiadomości wznawiającej, agent odpowiada komunikatami ACK lub NOT.
 
-% TODO Rysunek
+W czasie wykonywania akcji, pobierane są odczyty z sensorów. Jeśli zachowanie ma zdefiniowane konkretne sensory, których pomiary są potrzebne, wysyłane są wiadomości typu SENSOR\_VALUE wraz z pomiarem (rysunek \ref{fig:comm_working_process}). Nadzorca interpretuje je i w miarę możliwości zapamiętuje. Mogą one zadecydować o zmianie zachowania danego robota.
 
-W czasie wykonywania akcji, pobierane są odczyty z sensorów. Jeśli zachowanie ma zdefiniowane konkretne sensory, których pomiary są potrzebne, wysyłane są wiadomości typu SENSOR\_VALUE wraz z pomiarem. Nadzorca interpretuje je i w miarę możliwości zapamiętuje. Mogą one zadecydować o zmianie zachowania danego robota.
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=0.75\textwidth]{diagrams/comm_working_process.png}
+    \caption{Przykładowy przebieg dla stanu WORKING.\label{fig:comm_working_process}}
+\end{figure}
 
-Brak odpowiedzi na wiadomości podtrzymujące lub wysłanie wiadomośći typu PAUSE skutkuje przejściem do stanu PAUSED. Otrzymanie pakietu STAND\_BY powoduje przejście agenta z powrotem w stan ACTIVE.
+Brak odpowiedzi na wiadomości podtrzymujące lub wysłanie wiadomości typu PAUSE skutkuje przejściem do stanu PAUSED (rysunek \ref{fig:comm_working_panic}. Otrzymanie pakietu STAND\_BY powoduje przejście agenta z powrotem w stan ACTIVE.
+
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=0.75\textwidth]{diagrams/comm_working_panic.png}
+    \caption{Brak komunikacji w stanie WORKING.\label{fig:comm_working_panic}}
+\end{figure}
 
 \subsection{Bezczynność agenta}
 
 W stanie PAUSED, robot pamięta aktualny przebieg zachowania ale nie wykonuje żadnych czynności. Dopiero po otrzymaniu komunikatu RESUME i odesłaniu odpowiedzi ACK, może powrócić do stanu WORKING i kontynuować wstrzymane zachowanie.
 
-Brak wiadomości podtrzymujących od strony nadzorcy powoduj przejście do stanu PANIC.
+Brak wiadomości podtrzymujących od strony nadzorcy powoduje przejście do\,stanu PANIC (rysunek \ref{fig:comm_pause_process}).
+
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=0.75\textwidth]{diagrams/comm_pause_process.png}
+    \caption{Diagram komunikacji dla stany pauzy.\label{fig:comm_pause_process}}
+\end{figure}
 
 \section{Komunikacja wewnątrz jednostki}
 
@@ -59,7 +91,7 @@ W obrębie jednego agenta, wyróżnia się dwie podstawowe formy komunikacji: wi
 
 Przy uruchomieniu programu, tworzony jest dodatkowy wątek komunikacyjny, który jest zsynchronizowany z wątkiem głównym robota (lub nadzorcy). Wymiana informacji odbywa się za pomocą dwóch, przeciwnie przydzielonych obiektów klasy szablonowej {\tt Queue}, która zawiera interfejs obsługi kolejki wiadomości wraz z operacjami jednoczesnego dostępu wielu wątków. Kolejka wiadomości odbieranych przez klasę {\tt Robot} jest kolejką wiadomości wysyłanych przez klasę {\tt Communication} i odwrotnie w przypadku drugiego obiektu.
 
-Po stronie komunikacji odbywa się jedynie przesyłanie i odbieranie pakietów między fizycznymi urządzeniami oraz sprawdzanie duplikatów. Interpretacją zajmuje się wątek główny. Wszystkie możliwe do wysłania pakiety są zapisywane w klasie {\tt Message}, w której skład wchodzą następujące elementy:
+Po stronie komunikacji odbywa się jedynie przesyłanie i odbieranie pakietów między fizycznymi urządzeniami oraz sprawdzanie duplikatów. Interpretacją zajmuje się wątek główny. Wszystkie możliwe do wysłania pakiety są zapisywane w\,klasie {\tt Message}, w której skład wchodzą następujące elementy:
 \begin{itemize}
     \item Identyfikator nadawcy, przydzielany automatycznie
     \item Identyfikator odbiorcy, stały i równy 1 w przypadku, gdy odbiorcą jest nadzorca. W przeciwnym razie wybierany spośród agentów z bazy
@@ -68,19 +100,17 @@ Po stronie komunikacji odbywa się jedynie przesyłanie i odbieranie pakietów m
     \item (opcjonalnie) Dodatkowe parametry w zależniości od typu wiadomości.
 \end{itemize}
 
-Przed wysłaniem, wiadomość będą obiektem zamieniana jest na łańcuch znaków zawierający jej prototyp. Przykładowy prototyp może wyglądać następująco:
+Przed wysłaniem, wiadomość będąca obiektem zamieniana jest na łańcuch znaków zawierający jej prototyp. Przykładowy prototyp może wyglądać następująco:
 \begin{center} {\tt 14:1:254:5:foo:bar},\\ \end{center}
-gdzie wartości oddzielone separatorem (domyślnie dwukropek) oznaczają kolejno: identyfikator agenta, identyfikator odbiorcy (nadzorcy), numer wiadomości, typ wiadomości oraz dodatkowe parametry.
+gdzie wartości oddzielone separatorem (domyślnie dwukropek) oznaczają kolejno: identyfikator agenta, identyfikator odbiorcy (nadzorcy), numer wiadomości, typ\,wiadomości oraz dodatkowe parametry.
 
-Przy odbieraniu kolejnych wiadomości, w buforze cyklicznym zapisywane są ich prototypy. Nowe wiadomości zastępują stare, jeśli bufor jest w całości zapełniony. Przed dodaniem prototypu do bufora, następuje sprawdzenie, czy nie jest on już w nim zapisany. Jeśli tak, oznacza to odebranie duplikatu i odrzucenie wiadomości. Rozwiązanie to jest konieczne w przypadku wielu agentów, gdyż kopie wysyłanych przez nich wiadomości mogą przychodzić naprzemiennie.
+Przy odbieraniu kolejnych wiadomości, w buforze cyklicznym zapisywane są ich prototypy. Nowe wiadomości zastępują stare, jeśli bufor jest w całości zapełniony. Przed dodaniem prototypu do bufora, następuje sprawdzenie, czy nie jest on już w\,nim zapisany. Jeśli tak, oznacza to odebranie duplikatu i odrzucenie wiadomości. Rozwiązanie to jest konieczne w przypadku wielu agentów, gdyż kopie wysyłanych przez nich wiadomości mogą przychodzić naprzemiennie.
 
-Odebrany i zakwalifikowany do przyjęcia prototyp zostaje zdekodowany do postaci obiektu klasy {\tt Message} i przesłany do wątku głównego w celu interpretacji. Pakiety, które zawierają niezaktualizowane identyfikatory wiadomości lub błędne informacje o nadawcy są odrzucane. Ma to miejsce szczególnie w przypadku pakietów wysyłanych na adres rozgłoszeniowy, np. podczas synchronizacji agenta z nadzorcą.
+Odebrany i zakwalifikowany do przyjęcia prototyp zostaje zdekodowany do postaci obiektu klasy {\tt Message} i przesłany do wątku głównego w celu interpretacji. Pakiety, które zawierają niezaktualizowane identyfikatory wiadomości lub błędne informacje o nadawcy są odrzucane. Ma to miejsce szczególnie w przypadku pakietów wysyłanych na adres rozgłoszeniowy, np. podczas synchronizacji agenta z\,nadzorcą.
 
 \subsection{Zdarzenia}
 
-W celu usprawnienia komunikacji oraz zwiększenia czytelności całej aplikacji, konkretne warstwy i moduły komunikują się z klasą {\tt Robot} za pomocą zdarzeń opisanych klasą {\tt Event}. Kolejka przechowująca zdarzenia jest wspólna dla całej instancji aplikacji. Dodawać nowe elementy mogą klasy zachowań, akcji czy urządzeń, a jedynym punktem wyjścia jest główna klasa robota (rysunek ...), który interpretuje zdarzenie i reaguje na nie.
-
-% TODO Rysunek
+W celu usprawnienia komunikacji oraz zwiększenia czytelności całej aplikacji, konkretne warstwy i moduły komunikują się z klasą {\tt Robot} za pomocą zdarzeń opisanych klasą {\tt Event}. Kolejka przechowująca zdarzenia jest wspólna dla całej instancji aplikacji. Dodawać nowe elementy mogą klasy zachowań, akcji czy urządzeń, a jedynym punktem wyjścia jest główna klasa robota (rysunek \ref{fig:event_queue}), który interpretuje zdarzenie i reaguje na nie.
 
 Rozróżniane są zdarzenia zwykłe oraz krytyczne, które przerywają wykonywanie części bądź wszystkich działań. Do takich zdarzeń należą np. odłączenie urządzenia czy niski poziom baterii robota. Pozostałe zdarzenia mogą przyjmować formę czysto informacyjną (np. poprawnie podłączone urządzenia), ostrzegającą (np. wykryto zderzenie) lub zgłaszającą wystąpienie wyjątku. Taka forma wewnętrznej komunikacji zdejmuje konieczność przekazywania zdarzeń w argumentach wielu funkcji lub pamiętania bezpośrednich referencji do obiektów generujących zdarzenia oraz pozwala łatwo koordynować cały cykl życia obiektu {\tt Event} z poziomu jednej kolejki. Ponadto, dodanie lub usunięcie nowego obiektu generującego bądź nasłuchującego jest proste i nie ingeruje zbyt mocno w istniejącą strukturę komunikacji.
 

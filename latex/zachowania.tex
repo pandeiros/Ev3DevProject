@@ -7,43 +7,53 @@ Zachowania definiują najwyższy stopień abstrakcji sterowania agentem. Oprócz
 
 Każde zachowanie składa się z kilku elementów:
 \begin{itemize}
-    \item Listy stanów, z których każdy zawiera konkretną akcję
-    \item Listy możliwych przejść dla danego stanu
-    \item Reakcji, które wystąpią po zajściu danego zdarzenia (np. cofnięcie się po uderzeniu w przeszkodę).
+    \item Listy stanów, z których każdy zawiera konkretną akcję oraz zdefiniowane przejście
+    \item Reakcji, które wystąpią po zajściu danego zdarzenia (np. cofnięcie się po\,uderzeniu w przeszkodę)
+    \item Stanu stopującego działanie agenta, wykorzystywanego w razie problemów
+    \item Opcjonalnych parametrów.
 \end{itemize}
-
-Lista stanów, opisanych klasą {\tt RobotState}, zawiera zarówno stany podstawowe, opisujące zamierzone działanie wykonywanych akcji, ale także stany pośrednie - reakcje.
 
 \subsection{Tworzenie zachowań}
 
 Stworzenie zachowania może odbyć się na dwa sposoby. Pierwszym z nich jest skorzystanie z zachowania już zdefiniowanego w bibliotece. W tym przypadku zbierane są ustalone wcześniej, odpowiednio ukonkretnione akcje razem z warunkami przejść. Drugim wariantem jest stworzenie własnego zachowania. Jeśli taki typ zostanie wykryty, do agenta należy dostarczyć dodatkowe dane opisujące użyte akcje, przejścia i zdarzenia.
 
-\ldots
-
 % TODO XML ?
 
 \subsection{Sterowanie wykonywanymi akcjami}
 
-Klasa {\tt Behaviour} przechowuje informację o bieżącym stanie. W każdej iteracji pętli głównej robota, następuje sprawdzenie, czy nie otrzymano instrukcji zakończenia z warsty wyższej lub czy nie wystąpiło zdarzenie krytyczne. Następnie przetwarzany jest bieżący stan. Jeżeli akcja została wykonana, sprawdzany jest jej warunek zakończenia. W przypadku pomyślnego zakończenia akcji, następuje przejście do domyślnego stanu następnego. Jeśli natomiast w trakcie wykonywania akcji zostanie przechwycone zdarzenie, jest ono porównywane z listą obsługiwanych zdarzeń danego stanu. Typowy scenariusz zakłada wybranie stanu pośredniego, który prawidłowo zareaguje na zaistniałe zdarzenie, a następnie przekaże kontrolę dalej, zapewniając normalny dalszy przebieg (rysunek ...). Jeśli zdarzenie nie jest obsługiwane, ewentualna zmiana stanu jest ignorowana (zdarzenia krytyczne obsługiwane są przez warstwę wyższą).
+Klasa {\tt Behaviour} przechowuje informację o bieżącym stanie. W każdej iteracji pętli głównej robota, następuje sprawdzenie, czy nie otrzymano instrukcji zakończenia z warsty wyższej lub czy nie wystąpiło zdarzenie krytyczne. Następnie przetwarzany jest bieżący stan. Jeżeli akcja została wykonana, sprawdzany jest jej warunek zakończenia. W przypadku pomyślnego zakończenia akcji, następuje przejście do\,domyślnego stanu następnego. Jeśli natomiast w trakcie wykonywania akcji zostanie przechwycone zdarzenie, jest ono porównywane z listą obsługiwanych zdarzeń danego stanu. Typowy scenariusz zakłada wybranie stanu pośredniego, który prawidłowo zareaguje na zaistniałe zdarzenie, a następnie przekaże kontrolę dalej, zapewniając normalny dalszy przebieg (rysunek \ref{fig:behaviour_transitions}). Jeśli zdarzenie nie jest obsługiwane, ewentualna zmiana stanu jest ignorowana (zdarzenia krytyczne obsługiwane są przez warstwę wyższą).
 
-% TODO Rysunek
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=0.75\textwidth]{diagrams/behaviour_transitions.png}
+    \caption{Diagram stanów zachowania oraz przetwarzania reakcji.\label{fig:behaviour_transitions}}
+\end{figure}
 
-W przypadku zaistnienia konieczności zmiany stanu, ustawiana jest specjalna flaga. Odczytuje ją klasa zachowania, pobierając następny stan i ustawiając go jako bieżący. Możliwe jest natomiast pominięcie definicji następnego stanu w przypadku akcji o nieokreślonych granicach wykonywania. Za poprawny przebieg wykonania odpowiadają wtedy zdefiniowane przejścia zachodzące po wystąpieniu zdarzenia lub zinterpretowane komunikaty z sieci.
-
-% \subsection{Przejścia pomiędzy stanami}
-
-% \section{Wykonywanie zachowania}
+Jeśli stan zwróci wartość nieujemną, to oznacza ona identyfikator kolejnego stanu. Możliwe jest natomiast pominięcie definicji następnego stanu w przypadku akcji o nieokreślonych granicach wykonywania. Za poprawny przebieg wykonania odpowiadają wtedy zdefiniowane przejścia zachodzące po wystąpieniu zdarzenia lub zinterpretowane komunikaty z sieci.
 
 \subsection{Zbieranie danych}
 
-Bieżące zachowanie robota może wymuszać zbieranie danych z podłączonych sensorów. Należy wtedy zdefiniować specjalną listę zawierającą typy sensorów, których pomiar ma być przekazywany dalej. W każdym kroku przetwarzania zachowania generowane są raporty typu SENSOR\_VALUE, które umieszczone w kolejce wiadomości robota mogą być przekazane innemu urządzeniu, domyślnie nadzorcy. Jest to rozszerzenie funkcjonalności zachowań o dodatkowy cel, bowiem np. znalezienie interesującego fragmentu otoczenia może skutkować zamianą logiki robota na inną z zamiarem eksploatacji danego miejsca (rysunek ...). Przykładowym scenariuszem może być np. szukanie powierzchni o konkretnym kolorze, a następie poruszanie się tylko w jej obrębie.
+Bieżące zachowanie robota może wymuszać zbieranie danych z podłączonych sensorów. Należy wtedy zdefiniować specjalną listę zawierającą typy sensorów, których pomiar ma być przekazywany dalej. W każdym kroku przetwarzania zachowania generowane są raporty typu SENSOR\_VALUE, które umieszczone w kolejce wiadomości robota mogą być przekazane innemu urządzeniu, domyślnie nadzorcy. Jest\,to rozszerzenie funkcjonalności zachowań o dodatkowy cel, bowiem np. znalezienie interesującego fragmentu otoczenia może skutkować zamianą logiki robota na\,inną z zamiarem eksploatacji danego miejsca (rysunek \ref{fig:measurements}). Przykładowym scenariuszem może być np. szukanie powierzchni o konkretnym kolorze, a następie poruszanie się tylko w jej obrębie.
 
-% TODO Rysunek, robot jeździ i znajduje kolorową powierchnię, a następnie zmienia cel na eksploatację.
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=0.75\textwidth]{diagrams/measurements.png}
+    \caption{Uproszczony schemat przykładowego przebiegu eksploracji z późniejszą eksploatacją.\label{fig:measurements}}
+\end{figure}
 
 \section{Przykładowe zachowania}
 
-Definicje zachowań mogą przyjmować różne formy. Przykładowo, zadanie zwiedzanie otoczenia może być zdefiniowane jako poruszanie się z pilnowaniem lewej lub prawej krawędzi lub poruszanie się po prostej aż do napotkania przeszkody i obieranie ustalonego bądź losowego kąta obrotu. Niezależnie od zdefiniowanego rodzaju zachowania, ważny pozostaje jej cel. Jednakże jego wyznaczaniem i interpretacją zajmuje się warsta wyższa, a z poziomu zachowania można wydobyć tylko informację, czy dany cel został osiągnięty i czy nadal jest osiągalny. Poniżej przedstawione są przykładowe zachowania.
+Definicje zachowań mogą przyjmować różne formy. Przykładowo, zadanie zwiedzania otoczenia może być zdefiniowane jako poruszanie się z pilnowaniem lewej lub prawej krawędzi lub poruszanie się po prostej aż do napotkania przeszkody i obieranie ustalonego bądź losowego kąta obrotu. Niezależnie od zdefiniowanego rodzaju zachowania, ważny pozostaje jej cel. Jednakże jego wyznaczaniem i interpretacją zajmuje się warsta wyższa, a z poziomu zachowania można wydobyć tylko informację, czy dany cel został osiągnięty i czy nadal jest osiągalny. Poniżej przedstawione jest przykładowe zachowanie.
 
 \subsection{Zwiedzanie otoczenia}
 
-\subsection{Ruch po podłożu o zadanym kolorze}
+Na rysunku \ref{fig:explore} znajduje się przykładowy algorytm zwiedzania otoczenia. Składa się z dwóch podstawowych stanów oraz dwóch stanów reakcji, zachodzących po zajściu konkretnych zdarzeń. Na uwagę zasługują specjalne stany pośrednie (oznaczone na diagramie nazwą \textit{pause}), których obecność jest krytyczna zarówno dla dokładności akcji, jak i pomiarów. Przez ich krótki czas trwania, robot wytraca swoją prędkość, kalibrując pozycję motorów oraz dokonując adekwatnego pomiaru z wybranych sensorów. Jeśli zaszło zdarzenie krytyczne lub zachowanie musi zostać zatrzymane, następuje przejście do stanu końcowego.
+
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=1\textwidth]{diagrams/explore.png}
+    \caption{Szczegółowy diagram zwiedzania otoczenia.\label{fig:explore}}
+\end{figure}
+
+% TODO
+% \subsection{Ruch po podłożu o zadanym kolorze}

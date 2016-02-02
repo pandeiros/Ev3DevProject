@@ -14,8 +14,8 @@ Przy projektowaniu systemu, należało uwzględnić cechy charakterystyczne wiel
     \item Oprogramowanie monitoruje poziom baterii i reaguje na zmiany jego poziomu
     \item Oprogramowanie umożliwia komunikację z innymi robotami za pomocą sieci bezprzewodowej
     \item Komunikacja jest szybka i odporna na błędy oraz gubienie pakietów
-    \item Kod aplikacji jest czytelny oraz utrzymuje niezmienną konwencję nazewnictwa
-    \item Kod aplikacji, w szczególności pliki nagłówkowe, jest dobrze udokumentowany.
+    \item Kod aplikacji jest czytelny oraz utrzymuje niezmienną konwencję\\nazewnictwa
+    \item Kod aplikacji, w szczególności pliki nagłówkowe, jest dobrze\\udokumentowany.
 \end{itemize}
 
 \section{Użyta technologia}
@@ -28,19 +28,19 @@ Istnieje wiele dostępnych środowisk na licencji otwartego oprogramowania, dedy
 
 Projekt leJOS \cite{lejos} jest oprogramowaniem zastępującym domyślnie zainstalowany system na klocku centralnym. Bazuje on na maszynie wirtualnej języka Java i jest kompatybilny z platformami Linux, Windows oraz Mac OS X. Programowanie aplikacji oraz transfer plików wykonywalnych do robota odbywa się za pomocą wtyczki do środowiska Eclipse lub za pomocą linii poleceń.
 
-Środowisko udostępnia wiele możliwości języka Java, w szczególności obsługę synchronizacji i wyjątków, wątki oraz większość klas z pakietów java.lang, java.util oraz java.io. Dostarcza ono także ujednolicony interfejs do obsługi sensorów. Na wyświetlaczu klocka centralnego udostępniony jest nowy interfejs graficzny z wieloma dodatkowymi funkcjonalnościami. Ponadto, leJOS posiada wiele zdefiniowanych modułów obsługujących połączenia z wieloma robotami, algorytmy lokalizacyjne czy dostęp do konsoli klocka LEGO. Co ważniejsze, są one uruchamiane na zwykłym komputerze, a nadzór odbywa się zdalnie.
+Środowisko udostępnia wiele możliwości języka Java, w szczególności obsługę synchronizacji i wyjątków, wątki oraz większość klas z pakietów java.lang, java.util oraz java.io. Dostarcza ono także ujednolicony interfejs do obsługi sensorów. Na\,wyświetlaczu klocka centralnego udostępniony jest nowy interfejs graficzny z wieloma dodatkowymi funkcjonalnościami. Ponadto, leJOS posiada wiele zdefiniowanych modułów obsługujących połączenia z wieloma robotami, algorytmy lokalizacyjne czy dostęp do konsoli klocka LEGO. Co ważniejsze, są one uruchamiane na\,zwykłym komputerze, a nadzór odbywa się zdalnie.
 
 Mimo oferowanego bogactwa możliwości, środowisko leJOS nie byłoby dobrym wyborem. Zastąpienie oryginalnego oprogramowania klocka, dodatkowe wykorzystanie zasobów urządzenia przez maszynę wirtualną, czy brak niskopoziomowego wsparcia to główne powody dla których ta biblioteka została odrzucona.
 
 \subsubsection{MonoBrick}
 
-Innym multiplatformowym środowiskiem, które współpracuje z zestawem Mindstorms EV3 jest biblioteka .NET o nazwie MonoBrick \cite{monobrick}. Wspiera ona języki takie jak C\#, F\# czy IronPython. Instalacja oprogramowania nie zastępuje domyślnego systemu na klocku, ale uruchamiana jest oddzielnie z poziomu karty SD. Oferowane możliwości są prawie tak duże, jak w przypadku leJOS, aczkolwiek projektowi brakowało solidnej dokumentacji, a także wiele odnośników na stronie prowadziło do nieistniejących witryn.
+Innym wieloplatformowym środowiskiem, które współpracuje z zestawem Mindstorms EV3, jest biblioteka .NET o nazwie MonoBrick \cite{monobrick}. Wspiera ona języki takie jak C\#, F\# czy IronPython. Instalacja oprogramowania nie zastępuje domyślnego systemu na klocku, ale uruchamiana jest oddzielnie z poziomu karty SD. Oferowane możliwości są prawie tak duże, jak w przypadku leJOS, aczkolwiek projektowi brakowało solidnej dokumentacji, a także wiele odnośników na stronie prowadziło do nieistniejących witryn.
 
 Powoływanie się na niepewną bibliotekę, która nie umożliwia natywnej kompilacji kodu, byłoby dużym błędem. Projekt prężnie się rozwija, ale w trakcie wyboru docelowego oprogramowania nie był wystarczająco stabilny i funkcjonalny.
 
 \subsubsection{ev3dev}
 
-Najbardziej dogodnym rozwiązaniem okazał się projekt ev3dev. Jest to dopasowana do potrzeb klocka LEGO dystrybucja Linuxa (Debian Jessie), która jest wgrywana na kartę SD i uruchamiana obok istniejącego systemu. Zawsze istnieje możliwość przywrócenia domyślnego stanu klocka przez wyjęcie karty z systemem. Platforma stworzona w ramach ev3dev zawiera wiele sterowników, nie tylko do akcesoriów zestawu EV3, ale także poprzednich dystrybucji LEGO Mindstorms oraz komponentów wytwarzanych przez osoby trzecie. Możliwe jest programowanie klocka w języku C/C++, ale ev3dev obsługuje też wiele innych języków, takich jak Python czy Lua. To wszystko daje dużą swobodę samego programowania, jak i sposobu tworzenia programu i komunikacji z urządzeniem. Kompilacja aplikacji może odbywać się bezpośrednio na urządzeniu lub na komputerze z wbudowanym kompilatorem na procesory typu ARM. Komunikacja z klockiem centralnym realizowalna jest na trzy sposoby: za pomocą Wi-Fi, Bluetooth lub przy użyciu kabla USB.
+Najbardziej dogodnym rozwiązaniem okazał się projekt ev3dev. Jest to dopasowana do potrzeb klocka LEGO dystrybucja Linuxa (Debian Jessie), która jest wgrywana na kartę SD i uruchamiana obok istniejącego systemu. Zawsze istnieje możliwość przywrócenia domyślnego stanu klocka przez wyjęcie karty z systemem. Platforma stworzona w ramach ev3dev zawiera wiele sterowników, nie tylko do\,akcesoriów zestawu EV3, ale także poprzednich dystrybucji LEGO Mindstorms oraz komponentów wytwarzanych przez osoby trzecie. Możliwe jest programowanie klocka w języku C/C++, ale ev3dev obsługuje też wiele innych języków, takich jak Python czy Lua. To\,wszystko daje dużą swobodę samego programowania, jak\,i sposobu tworzenia programu i komunikacji z urządzeniem. Kompilacja aplikacji może odbywać się bezpośrednio na urządzeniu lub na komputerze z wbudowanym kompilatorem na procesory typu ARM. Komunikacja z klockiem centralnym realizowalna jest na trzy sposoby: za pomocą Wi-Fi, Bluetooth lub przy użyciu kabla USB.
 
 Zalety, takie jak praca w natywnym, obiektowym języku na natywnej platformie, niskopoziomowość, pełna kontrola nad sprzętem oraz brak narzutów maszyn wirtualnych zadecydowały o przyjęciu ev3dev jako biblioteki wykorzystanej w tym projekcie.
 
@@ -48,6 +48,7 @@ Zalety, takie jak praca w natywnym, obiektowym języku na natywnej platformie, n
 
 Parametry klocka centralnego:
 \begin{description}
+    \item[System:] Debian Jessie
     \item[Wyświetlacz:] 178x128 pikseli, monochromatyczny
     \item[Procesor:] TI Sitara AM1808 300MHz
     \item[Pamięć:] 64MB RAM, 16MB Flash, slot na kartę microSDHC
@@ -55,29 +56,30 @@ Parametry klocka centralnego:
 \end{description}
 
 \subsection{Konfiguracja}
-Konfiguracja nowego systemu odbyła się w kilku krokach:
+
+Każda jednostka z wgraną biblioteką ev3dev posiada użytkownika {\tt robot} z hasłem {\tt maker}. Konfiguracja nowego systemu odbyła się w kilku krokach:
 
 \begin{enumerate}
-    \item Na kartę microSDHC wgrany został specjalne spreparowany obraz systemu, pobrany ze strony głównej projektu ev3dev.
-    \item Przy użyciu połączenia SSH przez kabel USB, system został skonfigurowany i pobrane zostały wszystkie wymagane pakiety.
-    \item Dalsza komunikacja odbywała się bezprzewodowo z użyciem urządzenia NETGEAR WNA1100, podłączonego do portu USB klocka centralnego.
-    \item Aplikacja była kompilowana na laptopie z systemem Ubuntu i synchronizowana zdalnie z robotem.
+    \item Na kartę microSDHC wgrany został specjalne spreparowany obraz systemu, pobrany ze strony głównej projektu ev3dev
+    \item Pierwsze uruchomienie robota z wgranym obrazem na karcie było poprzedzone długim przygotowaniem wszystkich plików
+    \item Przy użyciu połączenia SSH przez kabel USB, system został skonfigurowany i pobrane zostały wszystkie wymagane pakiety
+    \item Dalsza komunikacja odbywała się bezprzewodowo z użyciem urządzenia NETGEAR WNA1100, podłączonego do portu USB klocka centralnego
+    \item Aplikacja była kompilowana na laptopie z systemem Ubuntu 15.10 i synchronizowana zdalnie z robotem.
 \end{enumerate}
 
 \subsection{Biblioteka}
-W ramach projektu ev3dev dostępne są dwa pliki źródłowe napisane w języku C++. Dostarczają one wymagany interfejs do sterowania klockiem centralnym i podłączonymi do niego urządzeniami.\\
+W ramach projektu ev3dev dostępne są dwa pliki źródłowe napisane w języku C++. Dostarczają one wymagany interfejs do sterowania klockiem centralnym i\,podłączonymi do niego urządzeniami.\\
 
-\noindent Wersja użytej biblioteki: 0.9.2-pre, rev 3.
+\noindent Wersja użytej biblioteki: 0.9.3-pre, rev 2.
 
 \subsubsection{Wprowadzone zmiany}
-Biblioteka nie była kompatybilna ze wszystkimi urządzeniami dostarczonymi przez LEGO, dlatego wymagane było:
-\begin{itemize}
-    \item Dopisanie rozpoznawalnych nazw sterowników dla sensorów
-    \item Zaimplementowanie własnej obsługi diod LED przedniego panelu, w szczególności funkcji migania
-\end{itemize}
+Początkowo, w wersji 0.9.2-pre, biblioteka nie była kompatybilna ze wszystkimi urządzeniami dostarczonymi przez LEGO. Wymagane było dopisanie rozpoznawalnych nazw sterowników dla sensorów oraz zaimplementowanie własnej obsługi diod LED przedniego panelu, w szczególności funkcji migania. Ponadto dopisane zostało specjalne pole klasy {\tt ev3dev::motor} pamiętające jego typ.
+
+W finalnej fazie projektowania, biblioteka została zaktualizowana do najnowszej wersji 0.9.3-pre, co zdjęło konieczność posiadania specjalnych nazw sterowników, a także znacząco przyspieszyło obsługę interfejsu klocka oraz transmisję danych.
 
 \subsection{Możliwości}
-Użyte środowisko Linux orax język programowania C++ dostarczają praktycznie pełnię możliwości programistycznych, a w szczególności:
+Użyte środowisko Linux orax język programowania C++ dostarczają wiele możliwości programistycznych, a w szczególności:
+
 \begin{itemize}
     \item Użycie biblioteki {\tt stl} i zgodność ze standardem C++11
     \item Wątki
@@ -91,26 +93,26 @@ Projekt aplikacji był rozwijany z wykorzystaniem narzędzie NetBeans. Mimo iż 
 \subsubsection{Konfiguracje aplikacji}
 Zostały zdefiniowane dwie domyślne konfiguracje:
 \begin{itemize}
-    \item D\_ARM: konfiguracja przeznaczona na urządzenia z procesorami typu\\ ARM. Domyślnie przeznaczona do uruchamiania na robocie mobilnym
+    \item D\_ARM: konfiguracja przeznaczona na urządzenia z procesorami typu ARM. Domyślnie przeznaczona do uruchamiania na robocie mobilnym
     \begin{description}
         \item[{\small Kompilator:}] {\small arm-linux-gnueabi-g++}
-        \item[{\small Flagi kompilacji:}] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread\\ -static-libstdc++ -std=c++11 -DAGENT}
+        \item[{\small Flagi kompilacji:}] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread -static-libstdc++ -std=c++11 -DAGENT}
     \end{description}
     \item D\_DESKTOP: konfiguracja kompilowana z myślą o tradycyjnych komputerach osobistych. Domyślnie przeznaczona do uruchomienia w trybie nadzorcy systemu, komunikującego się zdalnie z robotami.
     \begin{description}
         \item[{\small Kompilator:}] {\small g++}
-        \item[{\small Flagi kompilacji:}] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread\\ -static-libstdc++ -std=c++11}
+        \item[{\small Flagi kompilacji:}] {\small -D\_GLIBCXX\_USE\_NANOSLEEP -pthread -static-libstdc++ -std=c++11}
     \end{description}
 \end{itemize}
 \noindent Obie konfiguracje posiadają dodatkowo wersję z przedrostkiem {\tt R\_}, które oznaczają wersję Release zamiast wersji Debug.\\
 
-Inne użyte narzędzia to przede wszystkim aplikacja Doxygen służąca generowaniu dokumentacji kodu programu, system kontroli wersji Git do zarządzania całym projektem oraz oprogramowanie LaTeX, za pomocą którego wygenerowany został ten dokument.
+Inne użyte narzędzia to przede wszystkim aplikacja Doxygen służąca generowaniu dokumentacji kodu programu, system kontroli wersji \gls{git} do zarządzania całym projektem oraz oprogramowanie LaTeX, za pomocą którego wygenerowany został ten dokument.
 
 \subsection{Konstrukcja robota}
 W celu przetestowania zaimplementowanych funkcjonalności, wyposażono robota w następujące elementy:
 \begin{itemize}
-    \item Dwa duże motory do poruszania się po płaskiej powierzchni.
-    \item Ultradźwiękowy sensor odległości ustawiony przodem do kierunku poruszania się.
-    \item Przedni zderzak oraz sensor dotyku do wykrywania zderzeń.
+    \item Dwa duże motory do poruszania się po płaskiej powierzchni
+    \item Ultradźwiękowy sensor odległości ustawiony w kierunku poruszania się
+    \item Przedni zderzak oraz sensor dotyku do wykrywania zderzeń
     \item Sensor koloru do wykrywania zmian w odcieniu powierzchni.
 \end{itemize}

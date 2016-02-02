@@ -7,10 +7,6 @@
 \usepackage{lmodern,cmap}
 \usepackage[T1]{fontenc}
 
-\usepackage[acronym, toc]{glossaries}
-\makeglossaries
-\input{glossary.tex}
-
 \usepackage[backend=biber,style=numeric-comp,sorting=nty,defernumbers=true]{biblatex}
 \usepackage[pdftex]{graphicx}
 
@@ -19,8 +15,13 @@
     hidelinks,
 }
 
+\usepackage[acronym, toc]{glossaries}
+\makeglossaries
+\input{glossary.tex}
+
 % \usepackage[stable]{footmisc}
 \usepackage{wrapfig}
+\usepackage{float}
 \usepackage[font=small,labelfont=bf,justification=centering]{caption}
 \usepackage{subcaption}
 \usepackage{listings}
@@ -41,7 +42,6 @@
 
 \overfullrule=5mm
 \sloppy
-% TODO Check for all unnecessary line breaks \\
 
 \addbibresource{bibliography.bib}
 \frenchspacing
@@ -72,6 +72,7 @@
 
 % \glsaddall
 \printglossary[title=Słownik pojęć,toctitle=Słownik pojęć]
+% \printglossary[title=Skróty, type=\acronymtype]
 
 \cleardoublepage
 \phantomsection

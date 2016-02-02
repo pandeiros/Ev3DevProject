@@ -9,9 +9,9 @@
 
 \begin{description}
     \item[Ruch z zadaną prędkością -]wykonanie akcji powoduje utrzymywanie stałej prędkości obu motorów przez czas nieograniczony
-    \item[Zatrzymywanie -]robot wprawiony w ruch zatrzymuje się niemal natychmiastowo. W zależności od sposobu zatrzymywania się, czas po którym prędkość jest równa zeru, a co za tym idzie, dystans hamowania, zmienia się. W przypadku trybu {\tt coast} jest on największy i równy od 1 do 5 cm w zależności od szybkości jazdy. Zaś w przypadku trybu {\tt hold}, koła zatrzymują się natychmiast i dystans maleje do maksymalnie 2 cm na śliskiej powierzchni
-    \item[Ruch na zadaną odległość -]akcja wykonywana poprawnie z dokładnością do kilku nadmiarowych centymetrów. Nadwyżka odległości zależy od ustalonego trybu zatrzymywania oraz rodzaju nawierzchni, a wynika z opóźnienia odczytów z efektorów. Na podstawie zmierzonego promienia koła,\\zadanej odległości oraz ilości jednostek w jednym pełnym obrocie, można wyliczyć docelową pozycję motoru i zatrzymać go, gdy ta zostanie osiągnięta
-    \item[Obrót -]jest wykonywany wokół osi równo oddalonej od obu kół. Podobnie jak w przypadku ruchu, sprawdzana jest zmiana położenia motoru, której docelowa wartość wyliczana jest na podstawie rozstawu kół i kąta. Gdy jeden efektor ma zadaną wartość dodatnią prędkości, drugi ma wartość przeciwną. Wykryto odchylenie o kilka stopni przy większych prędkościach. Zalecana jest zatem mała prędkość obrotu, w celu uzyskania większej precyzjis
+    \item[Zatrzymywanie -]robot wprawiony w ruch zatrzymuje się niemal natychmiastowo. W zależności od sposobu zatrzymywania się, czas po którym prędkość jest równa zeru, a co za tym idzie, dystans hamowania, zmienia się. W\,przypadku trybu {\tt coast} jest on największy i równy od 1 do 5 cm w zależności od szybkości jazdy. Zaś w przypadku trybu {\tt hold}, koła zatrzymują się natychmiast i dystans maleje do maksymalnie 2 cm na śliskiej powierzchni
+    \item[Ruch na zadaną odległość -]akcja wykonywana poprawnie z dokładnością do\,kilku nadmiarowych centymetrów. Nadwyżka odległości zależy od ustalonego trybu zatrzymywania oraz rodzaju nawierzchni, a wynika z opóźnienia odczytów z efektorów. Na podstawie zmierzonego promienia koła, zadanej odległości oraz ilości jednostek w jednym pełnym obrocie, można wyliczyć docelową pozycję motoru i zatrzymać go, gdy ta zostanie osiągnięta
+    \item[Obrót -]jest wykonywany wokół osi równo oddalonej od obu kół. Podobnie jak w przypadku ruchu, sprawdzana jest zmiana położenia motoru, której docelowa wartość wyliczana jest na podstawie rozstawu kół i kąta. Gdy jeden efektor ma zadaną wartość dodatnią prędkości, drugi ma wartość przeciwną. Wykryto odchylenie o kilka stopni przy większych prędkościach. Zalecana jest zatem mała prędkość obrotu, w celu uzyskania większej precyzji.
 
     % TODO
     % \item[Skręt -]
@@ -24,9 +24,9 @@
 \begin{description}
     \item[Warunki:]Robot implementuje wymagane przez zachowanie akcje, posiada urządzenia umożliwiające wykonanie tych akcji oraz jest w stanie ACTIVE, WORKING lub PAUSED
     \item[Przypadek 1 - Brak wymaganych urządzeń:]Robot zgłasza błąd i przerywa działanie
-    \item[Przypadek 2 - Robot nie implementuje akcji:]Zgłoszenie ostrzeżenia (domyślnie wysyłany jest komunikat zwrotny od niepowodzeniu przypisania zachowania)
+    \item[Przypadek 2 - Robot nie implementuje akcji:]Zgłoszenie ostrzeżenia (domyślnie wysyłany jest komunikat zwrotny o niepowodzeniu przypisania zachowania)
     \item[Przypadek 3 - Nieprawidłowy stan:]Brak działania (domyślnie dostarczono zły komunikat, więc jest on ignorowany)
-    \item[Przypadek 3 - Warunki spełnione:]Następuje przypisanie zachowania, a następnie wygenerowanie zdarzenia BEHAVIOUR\_START, które przechwycone przez klasę {\tt Robot} uruchamia je.\\
+    \item[Przypadek 3 - Warunki spełnione:]Następuje przypisanie zachowania, a\,następnie wygenerowanie zdarzenia BEHAVIOUR\_START, które przechwycone przez klasę {\tt Robot} uruchamia je.\\
 \end{description}
 
 \subsubsection*{\underline{Ostrzeżenie o bliskim obiekcie}}
@@ -35,7 +35,7 @@
     \item[Warunki:]Robot posiada sensor odległości oraz zachowanie ma zdefiniowaną reakcję na zdarzenie PROXIMITY\_ALERT
     \item[Przypadek 1 - Brak sensora:]Jeśli robot powinien go posiadać, zgłaszany jest błąd. Jeśli nie - to zdarzenie nie będzie generowane
     \item[Przypadek 2 - Brak zdefiniowanej reakcji:]Zdarzenie jest wygenerowane, ale nie podjęte są żadne działania
-    \item[Przypadek 3 - Warunki spełnione:]Zgłoszone zdarzenie jest przesłane do zachowania i następuje natychmiastowe zatrzymanie robota, a następnie przejście w stan pośredni oraz kontynuowanie zachowania w kolejnym domyślnym stanie.\\
+    \item[Przypadek 3 - Warunki spełnione:]Zgłoszone zdarzenie jest przesłane do\,zachowania i następuje natychmiastowe zatrzymanie robota, a następnie przejście w stan pośredni oraz kontynuowanie zachowania w kolejnym domyślnym stanie.\\
 \end{description}
 
 \subsubsection{\underline{Ostrzeżenie o przeszkodzie}}
@@ -44,12 +44,12 @@
     \item[Warunki:]Robot posiada sensor nacisku oraz zachowanie ma zdefiniowaną reakcję na zdarzenie OBSTACLE\_DETECTED
     \item[Przypadek 1 - Brak sensora:]Jeśli robot powinien go posiadać, zgłaszany jest błąd. Jeśli nie - to zdarzenie nie będzie generowane
     \item[Przypadek 2 - Brak zdefiniowanej reakcji:]Zdarzenie jest wygenerowane, ale nie podjęte są żadne działania
-    \item[Przypadek 3 - Warunki spełnione:]Zgłoszone zdarzenie jest przesłane do zachowania i następuje natychmiastowe zatrzymanie robota, a następnie przejście w stan pośredni oraz kontynuowanie zachowania w kolejnym domyślnym stanie.\\
+    \item[Przypadek 3 - Warunki spełnione:]Zgłoszone zdarzenie jest przesłane do\,zachowania i następuje natychmiastowe zatrzymanie robota, a następnie przejście w stan pośredni oraz kontynuowanie zachowania w kolejnym domyślnym stanie.\\
 \end{description}
 
 \subsubsection{\underline{Niski poziom baterii}}
 
-Przetestowany dla poziomu większego niż minimalne dopuszczalne napięcie. Po jego przekroczeniu, wygenerowane zostało zdarzenie BATTERY\_LOW, wysłano komunikat o niskim naładowaniu baterii oraz nastąpiło zamknięcie aplikacji.
+Przetestowany dla poziomu większego niż minimalne dopuszczalne napięcie. Po\,jego przekroczeniu, wygenerowane zostało zdarzenie BATTERY\_LOW, wysłano komunikat o niskim naładowaniu baterii oraz nastąpiło zamknięcie aplikacji.
 
 \subsection{Testowanie przejść między stanami}
 
@@ -60,7 +60,7 @@ Komunikaty niezarządzające przetwarzaniem danego stanu są ignorowane.
 \begin{description}
     \item[Początek stanu -]Dioda miga na żółto
     \item[Brak odpowiedzi od nadzorcy -]Po ustalonym czasie, przejście w stan PANIC
-    \item[Synchronizacja z nadzorcą -]Nadanie identyfikatora agentowi i przejście w\\stan ACTIVE
+    \item[Synchronizacja z nadzorcą -]Nadanie identyfikatora agentowi i przejście w\,stan ACTIVE
 \end{description}
 
 \subsubsection{\underline{Stan ACTIVE}}
@@ -68,17 +68,17 @@ Komunikaty niezarządzające przetwarzaniem danego stanu są ignorowane.
 \begin{description}
     \item[Początek stanu -]Dioda miga na zielono
     \item[Brak odpowiedzi od nadzorcy -]Po ustalonym czasie, przejście w stan PANIC
-    \item[Przesłanie zachowania i komunikatu START -]Przypisanie zachowania,\\przejście w stan WORKING, rozpoczęcie przetwarzania zachowania.
+    \item[Przesłanie zachowania i komunikatu START -]Przypisanie zachowania, przejście w stan WORKING, rozpoczęcie przetwarzania zachowania.
 \end{description}
 
 \subsubsection{\underline{Stan WORKING}}
 
 \begin{description}
     \item[Początek stanu -]Dioda świeci stale na zielono
-    \item[Brak odpowiedzi od nadzorcy -]Po ustalonym czasie, przejście w stan\\PAUSED oraz zatrzymanie zachowania
-    \item[Przesłanie komunikatu STOP -]Zatrzymanie zachowania, przejście do stanu ACTIVE
-    \item[Przesłanie komunikatu PAUSE -]Zatrzymanie zachowania, przejście do stanu PAUSED
-    \item[Przesłanie komunikatu START -]Rozpoczęcie wykonywania zachowania od nowa.
+    \item[Brak odpowiedzi od nadzorcy -]Po ustalonym czasie, przejście w stan PAUSED oraz zatrzymanie zachowania
+    \item[Przesłanie komunikatu STOP -]Zatrzymanie zachowania, przejście do\,stanu ACTIVE
+    \item[Przesłanie komunikatu PAUSE -]Zatrzymanie zachowania, przejście do\,stanu PAUSED
+    \item[Przesłanie komunikatu START -]Rozpoczęcie wykonywania zachowania od\,nowa.
 \end{description}
 
 \subsubsection{\underline{Stan PAUSED}}
@@ -86,16 +86,16 @@ Komunikaty niezarządzające przetwarzaniem danego stanu są ignorowane.
 \begin{description}
     \item[Początek stanu -]Dioda świeci stale na pomarańczowo
     \item[Brak odpowiedzi od nadzorcy -]Po ustalonym czasie, przejście w stan PANIC
-    \item[Przesłanie komunikatu RESUME -]Wznowienie zachowania, przejście do\\stanu WORKING
-    \item[Przesłanie komunikatu STOP -]Zatrzymanie zachowania, przejście do stanu ACTIVE
-    \item[Przesłanie komunikatu START -]Rozpoczęcie wykonywania zachowania od nowa, przejście do stanu WORKING.
+    \item[Przesłanie komunikatu RESUME -]Wznowienie zachowania, przejście do\,stanu WORKING
+    \item[Przesłanie komunikatu STOP -]Zatrzymanie zachowania, przejście do\,stanu ACTIVE
+    \item[Przesłanie komunikatu START -]Rozpoczęcie wykonywania zachowania od\,nowa, przejście do stanu WORKING.
 \end{description}
 
 \subsubsection{\underline{Stan PANIC}}
 
 \begin{description}
     \item[Początek stanu -]Dioda miga na czerwono
-    \item[Brak odpowiedzi od nadzorcy -]Wysłanie komunikatów PANIC na adres\\rozgłoszeniowy
+    \item[Brak odpowiedzi od nadzorcy -]Wysłanie komunikatów PANIC na adres rozgłoszeniowy
     \item[Odebranie komunikatu od innych agentów -]Bez zmian
     \item[Odebranie komunikatu od nadzorcy -]Przejście do stanu ACTIVE, nadanie nowego identyfikatora.
 \end{description}
