@@ -21,21 +21,20 @@
 
 \subsubsection{\underline{Rozpoczęcie przetwarzania zachowania}}
 
+
 \begin{description}
     \item[Warunki:]Robot implementuje wymagane przez zachowanie akcje, posiada urządzenia umożliwiające wykonanie tych akcji oraz jest w stanie ACTIVE, WORKING lub PAUSED
     \item[Przypadek 1 - Brak wymaganych urządzeń:]Robot zgłasza błąd i przerywa działanie
+        \lstinputlisting{listings/test1-1}
+
     \item[Przypadek 2 - Robot nie implementuje akcji:]Zgłoszenie ostrzeżenia (domyślnie wysyłany jest komunikat zwrotny o niepowodzeniu przypisania zachowania)
+        \lstinputlisting{listings/test1-2}
+
     \item[Przypadek 3 - Nieprawidłowy stan:]Brak działania (domyślnie dostarczono zły komunikat, więc jest on ignorowany)
-    \item[Przypadek 3 - Warunki spełnione:]Następuje przypisanie zachowania, a\,następnie wygenerowanie zdarzenia BEHAVIOUR\_START, które przechwycone przez klasę {\tt Robot} uruchamia je.\\
-\end{description}
+        \lstinputlisting{listings/test1-3}
 
-\subsubsection*{\underline{Ostrzeżenie o bliskim obiekcie}}
-
-\begin{description}
-    \item[Warunki:]Robot posiada sensor odległości oraz zachowanie ma zdefiniowaną reakcję na zdarzenie PROXIMITY\_ALERT
-    \item[Przypadek 1 - Brak sensora:]Jeśli robot powinien go posiadać, zgłaszany jest błąd. Jeśli nie - to zdarzenie nie będzie generowane
-    \item[Przypadek 2 - Brak zdefiniowanej reakcji:]Zdarzenie jest wygenerowane, ale nie podjęte są żadne działania
-    \item[Przypadek 3 - Warunki spełnione:]Zgłoszone zdarzenie jest przesłane do\,zachowania i następuje natychmiastowe zatrzymanie robota, a następnie przejście w stan pośredni oraz kontynuowanie zachowania w kolejnym domyślnym stanie.\\
+    \item[Przypadek 4 - Warunki spełnione:]Następuje przypisanie zachowania, a\,następnie wygenerowanie zdarzenia BEHAVIOUR\_START, które przechwycone przez klasę {\tt Robot} uruchamia je.
+        \lstinputlisting{listings/test1-4}
 \end{description}
 
 \subsubsection{\underline{Ostrzeżenie o przeszkodzie}}
@@ -43,8 +42,23 @@
 \begin{description}
     \item[Warunki:]Robot posiada sensor nacisku oraz zachowanie ma zdefiniowaną reakcję na zdarzenie OBSTACLE\_DETECTED
     \item[Przypadek 1 - Brak sensora:]Jeśli robot powinien go posiadać, zgłaszany jest błąd. Jeśli nie - to zdarzenie nie będzie generowane
+        \lstinputlisting{listings/test2-1}
     \item[Przypadek 2 - Brak zdefiniowanej reakcji:]Zdarzenie jest wygenerowane, ale nie podjęte są żadne działania
+        \lstinputlisting{listings/test2-2}
     \item[Przypadek 3 - Warunki spełnione:]Zgłoszone zdarzenie jest przesłane do\,zachowania i następuje natychmiastowe zatrzymanie robota, a następnie przejście w stan pośredni oraz kontynuowanie zachowania w kolejnym domyślnym stanie.\\
+        \lstinputlisting{listings/test2-3}
+\end{description}
+
+\subsubsection*{\underline{Ostrzeżenie o bliskim obiekcie}}
+
+\begin{description}
+    \item[Warunki:]Robot posiada sensor odległości oraz zachowanie ma zdefiniowaną reakcję na zdarzenie PROXIMITY\_ALERT
+    \item[Przypadek 1 - Brak sensora:]Jeśli robot powinien go posiadać, zgłaszany jest błąd. Jeśli nie - to zdarzenie nie będzie generowane
+        \lstinputlisting{listings/test3-1}
+    \item[Przypadek 2 - Brak zdefiniowanej reakcji:]Zdarzenie jest wygenerowane, ale nie podjęte są żadne działania
+        \lstinputlisting{listings/test3-2}
+    \item[Przypadek 3 - Warunki spełnione:]Zgłoszone zdarzenie jest przesłane do\,zachowania i następuje natychmiastowe zatrzymanie robota, a następnie przejście w stan pośredni oraz kontynuowanie zachowania w kolejnym domyślnym stanie.\\
+        \lstinputlisting{listings/test3-3}
 \end{description}
 
 \subsubsection{\underline{Niski poziom baterii}}
@@ -60,7 +74,9 @@ Komunikaty niezarządzające przetwarzaniem danego stanu są ignorowane.
 \begin{description}
     \item[Początek stanu -]Dioda miga na żółto
     \item[Brak odpowiedzi od nadzorcy -]Po ustalonym czasie, przejście w stan PANIC
+        \lstinputlisting{listings/test6-idle-1}
     \item[Synchronizacja z nadzorcą -]Nadanie identyfikatora agentowi i przejście w\,stan ACTIVE
+        \lstinputlisting{listings/test6-idle-2}
 \end{description}
 
 \subsubsection{\underline{Stan ACTIVE}}
@@ -68,7 +84,9 @@ Komunikaty niezarządzające przetwarzaniem danego stanu są ignorowane.
 \begin{description}
     \item[Początek stanu -]Dioda miga na zielono
     \item[Brak odpowiedzi od nadzorcy -]Po ustalonym czasie, przejście w stan PANIC
+        \lstinputlisting{listings/test6-active-1}
     \item[Przesłanie zachowania i komunikatu START -]Przypisanie zachowania, przejście w stan WORKING, rozpoczęcie przetwarzania zachowania.
+        \lstinputlisting{listings/test6-active-2}
 \end{description}
 
 \subsubsection{\underline{Stan WORKING}}
@@ -76,9 +94,11 @@ Komunikaty niezarządzające przetwarzaniem danego stanu są ignorowane.
 \begin{description}
     \item[Początek stanu -]Dioda świeci stale na zielono
     \item[Brak odpowiedzi od nadzorcy -]Po ustalonym czasie, przejście w stan PAUSED oraz zatrzymanie zachowania
+        \lstinputlisting{listings/test6-working-1}
     \item[Przesłanie komunikatu STOP -]Zatrzymanie zachowania, przejście do\,stanu ACTIVE
+        \lstinputlisting{listings/test6-working-2}
     \item[Przesłanie komunikatu PAUSE -]Zatrzymanie zachowania, przejście do\,stanu PAUSED
-    \item[Przesłanie komunikatu START -]Rozpoczęcie wykonywania zachowania od\,nowa.
+        \lstinputlisting{listings/test6-working-3}
 \end{description}
 
 \subsubsection{\underline{Stan PAUSED}}
@@ -86,27 +106,32 @@ Komunikaty niezarządzające przetwarzaniem danego stanu są ignorowane.
 \begin{description}
     \item[Początek stanu -]Dioda świeci stale na pomarańczowo
     \item[Brak odpowiedzi od nadzorcy -]Po ustalonym czasie, przejście w stan PANIC
+        \lstinputlisting{listings/test6-paused-1}
     \item[Przesłanie komunikatu RESUME -]Wznowienie zachowania, przejście do\,stanu WORKING
+        \lstinputlisting{listings/test6-paused-2}
     \item[Przesłanie komunikatu STOP -]Zatrzymanie zachowania, przejście do\,stanu ACTIVE
-    \item[Przesłanie komunikatu START -]Rozpoczęcie wykonywania zachowania od\,nowa, przejście do stanu WORKING.
+        \lstinputlisting{listings/test6-paused-3}
 \end{description}
 
-\subsubsection{\underline{Stan PANIC}}
-
-\begin{description}
-    \item[Początek stanu -]Dioda miga na czerwono
-    \item[Brak odpowiedzi od nadzorcy -]Wysłanie komunikatów PANIC na adres rozgłoszeniowy
-    \item[Odebranie komunikatu od innych agentów -]Bez zmian
-    \item[Odebranie komunikatu od nadzorcy -]Przejście do stanu ACTIVE, nadanie nowego identyfikatora.
-\end{description}
+% TODO
+% \subsubsection{\underline{Stan PANIC}}
+%
+% \begin{description}
+%     \item[Początek stanu -]Dioda miga na czerwono
+%     \item[Brak odpowiedzi od nadzorcy -]Wysłanie komunikatów PANIC na adres rozgłoszeniowy
+%     \item[Odebranie komunikatu od innych agentów -]Bez zmian
+%     \item[Odebranie komunikatu od nadzorcy -]Przejście do stanu ACTIVE, nadanie nowego identyfikatora.
+% \end{description}
 
 
 \section{Testy funkcjonalne}
 
 % TODO
 
-\subsection{Testowanie zachowań złożonych}
+\subsection{Testowanie zachowania złożonego i komunikacji}
 
-\subsection{Testowanie komunikacji}
+Na poniższym listingu przedstawiono jeden pełny przebieg zachowania wraz z komunikatami komunikacyjnymi i przejściami między stanami.
 
-% \subsubsection{Przykładowy równoległy }
+\lstinputlisting{listings/test-explore}
+
+% \subsection{Testowanie komunikacji}

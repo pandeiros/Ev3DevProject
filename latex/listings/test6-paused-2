@@ -1,0 +1,9 @@
+.......
+[ INFO  ] Changing state to PAUSED
+[VERBOSE] A >> .. Sender:       2 | Receiver:     1 |        MsgId.: 17 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     2 |        MsgId.: 17 |       Type:       PONG | Params:
+[VERBOSE] A >> .. Sender:       2 | Receiver:     1 |        MsgId.: 18 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     2 |        MsgId.: 18 |       Type:     RESUME | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     2 |        MsgId.: 18 |       Type:       PONG | Params:
+[VERBOSE] Generated event: BEHAVIOUR_RESUME
+[ INFO  ] Changing state to WORKING

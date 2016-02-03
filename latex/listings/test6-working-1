@@ -1,0 +1,19 @@
+.......
+[ INFO  ] Changing state to WORKING
+[VERBOSE] Behaviour start.
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  0 |       Type:    MEASURE | Params: 2 | 0 |
+........
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 17 |       Type: SENSOR_VAL | Params: 2 | 321 | 1 |
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 18 |       Type:       PING | Params:
+[VERBOSE] Generated event: SENSOR_WATCH
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 19 |       Type: SENSOR_VAL | Params: 2 | 372 | 1 |
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 20 |       Type:       PING | Params:
+[VERBOSE] Generated event: SENSOR_WATCH
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 21 |       Type: SENSOR_VAL | Params: 2 | 908 | 1 |
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 22 |       Type:       PING | Params:
+[VERBOSE] Generated event: SENSOR_WATCH
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 23 |       Type: SENSOR_VAL | Params: 2 | 370 | 1 |
+[VERBOSE] Generated event: SENSOR_WATCH
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 24 |       Type: SENSOR_VAL | Params: 2 | 2387 | 1 |
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 25 |       Type:       PING | Params:
+[ INFO  ] Changing state to PAUSED

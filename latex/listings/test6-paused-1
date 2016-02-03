@@ -1,0 +1,8 @@
+........
+[ INFO  ] Changing state to PAUSED
+[VERBOSE] A >> .. Sender:       2 | Receiver:     1 |        MsgId.: 19 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     2 |        MsgId.: 19 |       Type:       PONG | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 20 |       Type:       PING | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 21 |       Type:       PING | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.: 22 |       Type:       PING | Params:
+[ INFO  ] Changing state to PANIC

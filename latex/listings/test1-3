@@ -1,0 +1,8 @@
+........
+[ INFO  ] Devices correct.
+[VERBOSE] A >> .. Sender:  496324 | Receiver:     1 |        MsgId.:  0 |       Type:      AGENT | Params:
+[VERBOSE] A >> .. Sender:       0 | Receiver:     1 |        MsgId.:  1 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  1 |       Type:  BEHAVIOUR | Params: 1 | 1000 | 1 |
+### IGNORED
+[VERBOSE] A >> .. Sender:  894236 | Receiver:     1 |        MsgId.:  2 |       Type:      AGENT | Params:
+[VERBOSE] A >> .. Sender:  764523 | Receiver:     1 |        MsgId.:  3 |       Type:      AGENT | Params:

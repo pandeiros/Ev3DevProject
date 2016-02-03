@@ -1,0 +1,20 @@
+........
+[ INFO  ] New ID aqcuired: 3
+[ INFO  ] Changing state to ACTIVE
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  2 |       Type:        ACK | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  2 |       Type:  BEHAVIOUR | Params: 1 | 1000 | 1 |
+[VERBOSE] Obtaining Behaviour parameters...
+[ INFO  ] Loading predefined Behaviour: 1
+[ INFO  ] <Robot model A> Drive on square: side length (1000), turning right(1)
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  3 |       Type:        ACK | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  4 |       Type:       PING | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  5 |       Type:       PING | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  6 |       Type:       PING | Params:
+[ INFO  ] Changing state to PANIC
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  7 |       Type:       PING | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  8 |       Type:       PING | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  9 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       0 | Receiver:     0 |        MsgId.:  0 |       Type: AGENT_OVER | Params:
+[ INFO  ] Robot exiting...
+[ INFO  ] Comm. exiting...
+[ INFO  ] Exiting...

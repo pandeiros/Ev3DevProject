@@ -1,0 +1,9 @@
+.......
+[ INFO  ] Changing state to PAUSED
+[VERBOSE] A >> .. Sender:       4 | Receiver:     1 |        MsgId.: 36 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     4 |        MsgId.: 36 |       Type:       PONG | Params:
+[VERBOSE] A >> .. Sender:       4 | Receiver:     1 |        MsgId.: 37 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     4 |        MsgId.: 37 |       Type:       STOP | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     4 |        MsgId.: 37 |       Type:       PONG | Params:
+[VERBOSE] Generated event: BEHAVIOUR_STOP
+[ INFO  ] Changing state to ACTIVE

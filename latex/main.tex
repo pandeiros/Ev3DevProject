@@ -2,10 +2,10 @@
 
 \usepackage{abstract}
 \usepackage[english,polish]{babel}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[titletoc,page]{appendix}
 \usepackage{lmodern,cmap}
-\usepackage[T1]{fontenc}
 
 \usepackage[backend=biber,style=numeric-comp,sorting=nty,defernumbers=true]{biblatex}
 \usepackage[pdftex]{graphicx}
@@ -24,14 +24,35 @@
 \usepackage{float}
 \usepackage[font=small,labelfont=bf,justification=centering]{caption}
 \usepackage{subcaption}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{myred}{rgb}{255,0,0}
 \usepackage{listings}
  \lstset{
-  basicstyle=\footnotesize\ttfamily,
+  basicstyle=\scriptsize\ttfamily,
   captionpos=b,
   breakatwhitespace=true,
   breaklines=true,
-  frame=L,
-  xleftmargin=\parindent,
+  numbers=left,
+  keywordstyle=\bfseries,
+  % color definitions
+  classoffset=1,
+  morekeywords={DEBUG},
+  keywordstyle=\color{NavyBlue},
+  classoffset=2,
+  morekeywords={VERBOSE},
+  keywordstyle=\color{Gray},
+  classoffset=3,
+  morekeywords={INFO, ACTIVE, WORKING},
+  keywordstyle=\color{LimeGreen}\bfseries,
+  classoffset=4,
+  morekeywords={WARNING, PAUSED, IDLE},
+  keywordstyle=\color{Goldenrod}\bfseries,
+  classoffset=5,
+  morekeywords={ERROR, PANIC},
+  keywordstyle=\color{myred}\bfseries,
+  classoffset=5,
+  morekeywords={OBSTACLE_DETECTED, BEHAVIOUR_START, PROXIMITY_ALERT},
+  keywordstyle=\color{BurntOrange}\bfseries
  }
 \usepackage{changepage}
 \usepackage{pgfplots}

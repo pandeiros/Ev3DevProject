@@ -1,0 +1,19 @@
+[VERBOSE] Device connected: lego-ev3-l-motor at outB
+[VERBOSE] Device connected: lego-ev3-l-motor at outC
+[VERBOSE] Device connected: lego-ev3-touch at in2
+[VERBOSE] Device connected: lego-ev3-us at in1
+[ INFO  ] Devices correct.
+[VERBOSE] A >> .. Sender:  496324 | Receiver:     1 |        MsgId.:  0 |       Type:      AGENT | Params:
+[VERBOSE] A >> .. Sender:       0 | Receiver:     1 |        MsgId.:  1 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  0 |       Type:     MASTER | Params:
+[ INFO  ] New ID aqcuired: 3
+[ INFO  ] Changing state to ACTIVE
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  2 |       Type:        ACK | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  2 |       Type:  BEHAVIOUR | Params: 1 | 1000 | 1 |
+[VERBOSE] Obtaining Behaviour parameters...
+[ INFO  ] Loading predefined Behaviour: 1
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  3 |       Type:        NOT | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  4 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  4 |       Type:       PONG | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  5 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  5 |       Type:       PONG | Params:

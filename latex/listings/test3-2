@@ -1,0 +1,17 @@
+.......
+[VERBOSE] .. << M Sender:       1 | Receiver:     2 |        MsgId.:  2 |       Type:  BEHAVIOUR | Params: 1 | 1000 | 1 |
+[VERBOSE] Obtaining Behaviour parameters...
+[ INFO  ] Loading predefined Behaviour: 1
+[ INFO  ] <Robot model A> Explore
+[VERBOSE] A >> .. Sender:       2 | Receiver:     1 |        MsgId.:  3 |       Type:        ACK | Params:
+[VERBOSE] A >> .. Sender:       2 | Receiver:     1 |        MsgId.:  4 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     2 |        MsgId.:  3 |       Type:      START | Params:
+[VERBOSE] Generated event: BEHAVIOUR_START
+[ INFO  ] Changing state to WORKING
+[VERBOSE] Behaviour start.
+[VERBOSE] .. << M Sender:       1 | Receiver:     2 |        MsgId.:  4 |       Type:       PONG | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     2 |        MsgId.:  4 |       Type:    MEASURE | Params: 2 | 0 |
+[VERBOSE] Generated event: SENSOR_WATCH
+[VERBOSE] A >> .. Sender:       2 | Receiver:     1 |        MsgId.:  5 |       Type: SENSOR_VAL | Params: 2 | 2266 | 1 |
+[VERBOSE] Generated event: PROXIMITY_ALERT
+[WARNING] Reaction not found.

@@ -1,0 +1,11 @@
+.......
+[ INFO  ] Changing state to WORKING
+[VERBOSE] Behaviour start.
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  5 |       Type:    MEASURE | Params: 2 | 0 |
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  6 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  6 |       Type:       PONG | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  7 |       Type:      PAUSE | Params:
+[VERBOSE] Generated event: SENSOR_WATCH
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  7 |       Type: SENSOR_VAL | Params: 2 | 578 | 1 |
+[VERBOSE] Generated event: BEHAVIOUR_PAUSE
+[ INFO  ] Changing state to PAUSED

@@ -1,0 +1,17 @@
+.......
+[VERBOSE] .. << M Sender:       1 | Receiver:     5 |        MsgId.:  1 |       Type:  BEHAVIOUR | Params: 1 | 1000 | 1 |
+[VERBOSE] Obtaining Behaviour parameters...
+[ INFO  ] Loading predefined Behaviour: 1
+[1a0414
+[ INFO  ] <Robot model A> Drive on square: side length (1000), turning right(1)
+[VERBOSE] A >> .. Sender:       5 | Receiver:     1 |        MsgId.:  3 |       Type:        ACK | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     5 |        MsgId.:  2 |       Type:       PONG | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     5 |        MsgId.:  3 |       Type:      START | Params:
+[VERBOSE] Generated event: BEHAVIOUR_START
+[ INFO  ] Changing state to WORKING
+[VERBOSE] Behaviour start.
+[VERBOSE] .. << M Sender:       1 | Receiver:     5 |        MsgId.:  0 |       Type:    MEASURE | Params: 2 | 0 |
+[VERBOSE] Generated event: SENSOR_WATCH
+[VERBOSE] A >> .. Sender:       5 | Receiver:     1 |        MsgId.:  4 |       Type: SENSOR_VAL | Params: 2 | 2550 | 1 |
+[VERBOSE] Generated event: OBSTACLE_DETECTED
+[ DEBUG ] Reaction performed.

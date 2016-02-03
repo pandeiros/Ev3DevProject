@@ -1,0 +1,19 @@
+.......
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  2 |       Type:  BEHAVIOUR | Params: 1 | 1000 | 1 |
+[VERBOSE] Obtaining Behaviour parameters...
+[ INFO  ] Loading predefined Behaviour: 1
+[ INFO  ] <Robot model A> Drive on square: side length (1000), turning right(1)
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  3 |       Type:        ACK | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  3 |       Type:      START | Params:
+[VERBOSE] Generated event: BEHAVIOUR_START
+[ INFO  ] Changing state to WORKING
+[VERBOSE] Behaviour start.
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  0 |       Type:    MEASURE | Params: 2 | 0 |
+[VERBOSE] Generated event: SENSOR_WATCH
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  4 |       Type: SENSOR_VAL | Params: 2 | 1799 | 1 |
+[VERBOSE] Generated event: PROXIMITY_ALERT
+[WARNING] Reaction not found.
+[VERBOSE] Generated event: SENSOR_WATCH
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  9 |       Type: SENSOR_VAL | Params: 2 | 72 | 1 |
+[VERBOSE] Generated event: PROXIMITY_ALERT
+[ DEBUG ] Reaction performed.

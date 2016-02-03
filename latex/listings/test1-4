@@ -1,0 +1,18 @@
+........
+[ INFO  ] Devices correct.
+[VERBOSE] A >> .. Sender:   93538 | Receiver:     1 |        MsgId.:  0 |       Type:      AGENT | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     2 |        MsgId.:  0 |       Type:     MASTER | Params:
+[ INFO  ] New ID aqcuired: 2
+[ INFO  ] Changing state to ACTIVE
+[VERBOSE] A >> .. Sender:       2 | Receiver:     1 |        MsgId.:  3 |       Type:        ACK | Params:
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  4 |       Type:       PING | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  3 |       Type:  BEHAVIOUR | Params: 2
+[VERBOSE] Obtaining Behaviour parameters...
+[ INFO  ] Loading predefined Behaviour: 1
+[ INFO  ] <Robot model A> Explore random
+[VERBOSE] A >> .. Sender:       3 | Receiver:     1 |        MsgId.:  5 |       Type:        ACK | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  4 |       Type:       PONG | Params:
+[VERBOSE] .. << M Sender:       1 | Receiver:     3 |        MsgId.:  5 |       Type:      START | Params:
+[VERBOSE] Generated event: BEHAVIOUR_START
+[ INFO  ] Changing state to WORKING
+[VERBOSE] Behaviour start.
