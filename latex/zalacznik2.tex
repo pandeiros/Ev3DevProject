@@ -1,54 +1,12 @@
-\section{Konfiguracja systemu}
-\label{ch:konfiguracja_systemu}
+\section{Zawartość płyty CD}
+\label{ch:zawartosc_plyty}
 
-W tym załączniku znajduje się instrukcja kompilacji aplikacji oraz sposobu uruchamiania.
+Na dołączonej do pracy płycie CD znajdują się następujące katalogi:
 
-\subsection{Kompilacja}
-
-\textbf{Uwaga:} Kompilacja konfiguracji na architekturę typu ARM wymaga zainstalowanego programu {\tt arm-linux-gnueabi-g++}. Pozostałe dwie konfiguracje wymagają standardowego {\tt g++}.
-
-\subsubsection{W środowisku graficznym}
-
-Wgrane na płytę CD pliki zawierają projekt aplikacji dla środowiska NetBeans (użyta wersja: 8.0.2). Po wczytaniu projektu, na górze programu można wybrać z\,listy rozwijanej bieżącą konfigurację i ją skompilować (klawisz F11).
-
-\subsubsection{W oknie konsoli}
-
-Projekt aplikacji NetBeans tak naprawdę korzysta z zapisanych przez siebie plików Makefile. W katalogu głównym znajduje się plik ogólny Makefile, a w folderze {\tt nbproject} pliki poszczególnych konfiguracji. Proces budowania można rozpocząć poleceniem:
-\begin{center}
-    {\tt make <nazwa-konfiguracji>}\  lub\
-    {\tt make all},
-\end{center}
-a usunięcie plików tymczasowych wykonuje komenda: {\tt make clean}
-
-\subsection{Synchronizacja plików}
-
-W celu szybkiego przesłanie plików na wiele robotów, przygotowany został specjalny katalog {\tt sync} wraz ze skryptem kopiującym. Edytując skrypt można podać następujące wartości parametrów:
 \begin{itemize}
-    \item Adresy ip wszystkich docelowych urządzeń, na które mają być wgrane pliki wykonywalne
-    \item Nazwę użytkownika\textsuperscript{*}
-    \item Katalog docelowy\textsuperscript{*}
-    \item Hasło\textsuperscript{*}
+    \item \textbf{doc} - zawiera wygenerowaną w programie Doxygen dokumentację w formie plików html oraz pdf
+    \item \textbf{include} - zawiera pliki nagłówkowe aplikacji pogrupowane w moduły
+    \item \textbf{nbproject} - katalog projektu aplikacji w środowisku NetBeans. Zawiera także pliki Makefile do kompilacji
+    \item \textbf{src} - zawiera pliki źródłowe aplikacji, w szczególności plik startowy
+    \item \textbf{sync} - katalog służący synchronizacji plików. Zawiera skrypt kopiujący odpowiednie pliki wykonywalne i przesyłający je do podanych urządzeń.
 \end{itemize}
-\textsuperscript{*} - w przypadku, jeśli ten parametr jest identyczny na każdym urządzeniu.
-
-Skrypt wykonuje kopię plików binarnych z katalogu {\tt dist} dla konfiguracji ARM i umieszcza ją w katalogu {\tt sync}. Następnie, przy pomocy polecenia {\tt rsync} z użyciem podanego hasła, zawartość katalogu zdalnego będzie dokładnym odwzorowaniem bieżącego katalogu.
-
-\subsection{Uruchomienie aplikacji}
-
-Aplikacja może być uruchomiona na dwa sposoby: z poziomu interfejsu graficznego klocka centralnego lub przez zdalne uruchomienie za pomocą połączenia ssh. Ten drugi wariant pozwala lepiej kontrolować komunikaty wyświetlane na ekranie, ale bardziej obciąża urządzenie. Z tego powodu nie powinno się uruchamiać wersji mobilnej z ustawieniami logowania na standardowe wyjście, ale jeśli jest to wymagane, należy ograniczyć rodzaj wyświetlanych wiadomości do minimum.
-
-Przesłany plik wykonywalny można uruchomić w dwóch trybach: agent i master (domyśnie agent). Ponadto, aplikacja przyjmuje następujące opcjonalne argumenty wywołania:
-\begin{itemize}
-    \item model - rodzaj uruchomionego na robocie modelu (tylko w przypadku wariantu {\tt agent})
-    \item port=<numer> - numer portu do komunikacji
-    \item loglevel=<numer> - sprecyzowanie minimalnego poziomu logowania wiadomości, gdzie 0 to brak logowania, a 4 to poziom rozwlekły (verbose).
-\end{itemize}
-
-Zakończenie programu można przedwcześnie wymusić przez przesłanie sygnału SIGINT za pomocą kombinacji klawiszy CTRL+C.\\
-
-%TODO Dodać obsługę touch sensora, w przypadku uruchomienia aplikacji nie z poziomu ssh.
-
-Przykładowe uruchomienie:
-\begin{center}
-    {\tt ./ev3dev agent port=12233 model=A loglevel=2}
-\end{center}

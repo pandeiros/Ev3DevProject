@@ -19,6 +19,10 @@ namespace ev3
          */
         CommandMotor(Motor & motor);
         
+        /**
+         * Get motor associated with Command.
+         * @return Motor class object.
+         */
         Motor getMotor();
 
     protected:
@@ -32,10 +36,11 @@ namespace ev3
         Motor _motor;
     };
     
-
+    
+    
     /**
      * @class CommandMotorReset
-     * Call <CODE>reset()</CODE> method of containing Motor.
+     * Calls <CODE>reset()</CODE> method of containing Motor.
      */
     class CommandMotorReset : public CommandMotor
     {
@@ -45,16 +50,16 @@ namespace ev3
          * @param motor Motor to execute CommandMotor on.
          */
         CommandMotorReset(Motor & motor);
-        
+
         /**
-         * @see Command
+         * Perform <CODE>reset()</CODE> method on Motor.
          */
         void execute() override;
     };
 
     /**
      * @class CommandMotorRunForever
-     * Call <CODE>run_forever()</CODE> method of containing Motor.
+     * Calls <CODE>run_forever()</CODE> method of containing Motor.
      */
     class CommandMotorRunForever : public CommandMotor
     {
@@ -66,14 +71,14 @@ namespace ev3
         CommandMotorRunForever(Motor & motor);
         
         /**
-         * @see Command
+         * Perform <CODE>run_forever()</CODE> method on Motor.
          */
         void execute() override;
     };
 
     /**
      * @class CommandMotorStop
-     * Call <CODE>stop()</CODE> method of containing Motor.
+     * Calls <CODE>stop()</CODE> method of containing Motor.
      */
     class CommandMotorStop : public CommandMotor
     {
@@ -85,14 +90,14 @@ namespace ev3
         CommandMotorStop(Motor & motor);
         
         /**
-         * @see Command
+         * Perform <CODE>stop()</CODE> method on Motor.
          */        
         void execute() override;
     };
 
     /**
      * @class CommandMotorSetSpeedRegEnabled
-     * Call <CODE>set_speed_regulation_enabled()</CODE> method of containing Motor.
+     * Calls <CODE>set_speed_regulation_enabled()</CODE> method of containing Motor.
      */
     class CommandMotorSetSpeedRegEnabled : public CommandMotor
     {
@@ -105,7 +110,7 @@ namespace ev3
         CommandMotorSetSpeedRegEnabled(Motor & motor, bool value);
         
         /**
-         * @see Command
+         * Perform <CODE>set_speed_regulation_enabled()</CODE> on Motor.
          */
         void execute() override;
 
@@ -131,7 +136,7 @@ namespace ev3
         CommandMotorSetSpeed(Motor & motor, int value);
         
         /**
-         * @see Command
+         * Perform <CODE>set_speed_sp()</CODE> method on Motor.
          */
         void execute() override;
 
@@ -140,28 +145,37 @@ namespace ev3
         int _value;
     };
     
+    /**
+     * @class CommandMotorSetStopMode
+     * Calls <CODE>set_stop_command()</CODE> method of containing Motor.
+     */
     class CommandMotorSetStopMode : public CommandMotor
     {
     public:
+        
+        /**
+         * Stop modes for motors.
+         */
         enum StopMode {
-            COAST,
-            BRAKE,
-            HOLD
+            COAST,      /**< No voltage. Motor slowly stops.*/
+            BRAKE,      /**< Passive braking. Motor stops faster.*/
+            HOLD        /**< Active braking. Hardly prevent motor from any movement. */
         };
         
         /**
          * Constructor with ev3dev::motor parameter.
          * @param motor Motor to execute CommandMotor on.
-         * @param mode TODO
+         * @param mode Stop mode chosen from StopMode.
          */
         CommandMotorSetStopMode(Motor & motor, StopMode mode);
         
         /**
-         * @see Command
+         * Perform <CODE>set_stop_command()</CODE> method on Motor.
          */
         void execute() override;
 
     private:
+        /// Mode chosen to be selected on Motor when exeuted.
         StopMode _mode;
     };
 }

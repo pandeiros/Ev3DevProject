@@ -21,13 +21,18 @@ namespace ev3
         Command();
 
         /**
-         * Execute stored function as a device command.
+         * Execute device specific command.
          */
         virtual void execute();
         
+        /**
+         * Return Command's name.
+         * @return 
+         */
         virtual std::string getString();
+        
     protected:
-        /// String containing Command's debug name.
+        /// String containing Command's name.
         std::string _debugInfo = "";
     };
 }

@@ -21,7 +21,7 @@ W klasie {\tt CommUtils} zdefiniowane są metody {\tt sendMessage, receiveMessag
 
 \subsection{Synchronizacja z nadzorcą}
 
-Na samym początku, tuż po uruchomieniu agentów i nadzorcy, następuje synchronizacja. Nadzorca nasłuchuje sieć, oczekując na wiadomości typu AGENT. Uruchomiony agent jest w stanie IDLE i wysyła wiadomość typu AGENT na adres rozgłoszeniowy z losowym identyfikatorem agenta, oczekując na komunikat MASTER. Czekanie nie trwa dłużej niż zadany interwał czasu (domyślnie nadzorca ma 10 sekund na odpowiedź). Nadzorca odbiera żądanie od agenta i dodaje go do swojej bazy, jednocześnie przypisując mu identyfikator oraz zapamiętując adres ip. Następnie na adres wysyłany jest komunikat MASTER z nowo przydzielonym identyfikatorem wpisanym w miejsce odbiorcy. Jeśli agent przyjmie taki pakiet, zwraca wiadomość typu ACK. Po takiej wymianie wiadomości (rysunek \ref{fig:comm_synch}), dany robot jest zsynchronizowany, ma przypisany numer identyfikujący oraz jest odnotowany w bazie. Następuje przejście do stanu ACTIVE, oznaczające danego agenta, jako aktywnego w systemie.
+Na samym początku, tuż po uruchomieniu agentów i nadzorcy, następuje synchronizacja. Nadzorca nasłuchuje sieć, oczekując na wiadomości typu AGENT. Uruchomiony agent jest w stanie IDLE i wysyła wiadomość typu AGENT na adres rozgłoszeniowy z losowym identyfikatorem agenta, oczekując na komunikat MASTER. Czekanie nie trwa dłużej niż zadany interwał czasu (domyślnie nadzorca ma 10 sekund na odpowiedź). Nadzorca odbiera żądanie od agenta i dodaje go do swojej bazy, jednocześnie przypisując mu identyfikator oraz zapamiętując adres ip. Następnie na adres wysyłany jest komunikat MASTER z nowo przydzielonym identyfikatorem wpisanym w miejsce odbiorcy. Jeśli agent przyjmie taki pakiet, zwraca wiadomość typu ACK. Po wymianie wiadomości (rysunek \ref{fig:comm_synch}), dany robot jest zsynchronizowany, ma przypisany numer identyfikujący oraz jest odnotowany w bazie. Następuje przejście do stanu ACTIVE, oznaczające danego agenta, jako aktywnego w systemie.
 
 \begin{figure}[!ht]
     \centering
@@ -29,7 +29,7 @@ Na samym początku, tuż po uruchomieniu agentów i nadzorcy, następuje synchro
     \caption{Diagram komunikacji dla poprawnego rozpoczęcia zachowania.\label{fig:comm_synch}}
 \end{figure}
 
-W przypadku braku aktywnego agenta, nadzorca pozostaje bezczynny. Jeśli\,aktywny agent nie zostanie zsynchronizowany, przechodzi on do stanu PANIC (rysunek \ref{fig:comm_idle_panic}, patrz:~\ref{sec:utrata_polaczenia} \hyperref[sec:utrata_polaczenia]{Utrata połączenia z nadzorcą}).
+W przypadku braku aktywnego agenta, nadzorca pozostaje bezczynny. \\Jeśli\,aktywny agent nie zostanie zsynchronizowany, przechodzi on do stanu PANIC (rysunek \ref{fig:comm_idle_panic}, patrz:~\ref{sec:utrata_polaczenia} \hyperref[sec:utrata_polaczenia]{Utrata połączenia z nadzorcą}).
 
 \begin{figure}[!ht]
     \centering
@@ -47,15 +47,15 @@ W każdym stanie oprócz stanu PANIC, z zadanym interwałem czasowym wysyłane s
 
 \subsection{Oczekiwanie na aktywację}
 
-W stanie ACTIVE agent oczekuje na przydzielenie zadania. Jeśli takie nie nadchodzi, wysyłane są pakiety podtrzymujące połączenie. W przypadku braku komunikatów zwrotnych, robot przechodzi do stanu PANIC (rysunek \ref{fig:comm_active_panic}).
+W stanie ACTIVE agent oczekuje na przydzielenie zadania. Jeśli żadna definicja zachowania nie nadchodzi, wysyłane są pakiety podtrzymujące połączenie. W przypadku braku komunikatów zwrotnych, robot przechodzi do stanu PANIC (rysunek \ref{fig:comm_active_panic}).
 
-Nadzorca decyduje o przydzieleniu konkretnego zachowania danemu agentowi. Wysyła do niego wiadomość typu BEHAVIOUR z parametrami zawierającymi jego typ oraz ewentualne dodatkowe argumenty. Jeśli agent zdolny jest do wykonywania danego zadania, zwraca pakiet ACK, w przeciwnym razie pakiet NOT. Komunikat ACK skutkuje odpowiedzią START, po której agent przechodzi do stanu WORKING. W przypadku komnunikatu NOT, nadzorca może zdefiniować inne zadanie lub pozostować agenta tymczasowo nieaktywnego (rysunek \ref{fig:comm_synch}).
+Nadzorca decyduje o przydzieleniu konkretnego zachowania danemu agentowi. Wysyła do niego wiadomość typu BEHAVIOUR z parametrami zawierającymi jego typ oraz ewentualne dodatkowe argumenty. Jeśli agent zdolny jest do wykonywania danego zadania, zwraca pakiet ACK, w przeciwnym razie pakiet NOT. Komunikat ACK skutkuje odpowiedzią START, po której agent przechodzi do stanu WORKING. W przypadku komnunikatu NOT, nadzorca może zdefiniować inne zadanie lub zostawić agenta tymczasowo nieaktywnego (rysunek \ref{fig:comm_synch}).
 
 \subsection{Przetwarzanie zachowania}
 
 Agent może przetwarzać zlecone instrukcje tylko w stanie WORKING. Po każdej prawidłowo zakończonej akcji, wysyłana jest wiadomość typu ACTION\_OK z identyfikatorem poprawnie wykonanej akcji. Pozwala to nadzorcy logować przebieg pray agentów. W przypadku zakłócenia przebiegu wykonania, robot może wysłać pakiet ACTION\_INTERR, jeśli zaszło jakieś zdarzenie wymagające zmiany postępowania, a także pakiet ACTION\_ERR, jeśli wystąpił błąd. W pierwszym przypadku, jeśli robot sam nie może określić następnej czynności, następuje oczekiwanie na pakiet CONTINUE. W drugim przypadku, robot bezwarunkowo zawiesza aktualną działalność i oczekuje na wiadomość RESTART, która rozpocznie przebieg bieżącego zachowania od nowa lub w przypadku wiadomości BEHAVIOUR, przebieg nowego zachowania. Niezależnie od rodzaju wiadomości wznawiającej, agent odpowiada komunikatami ACK lub NOT.
 
-W czasie wykonywania akcji, pobierane są odczyty z sensorów. Jeśli zachowanie ma zdefiniowane konkretne sensory, których pomiary są potrzebne, wysyłane są wiadomości typu SENSOR\_VALUE wraz z pomiarem (rysunek \ref{fig:comm_working_process}). Nadzorca interpretuje je i w miarę możliwości zapamiętuje. Mogą one zadecydować o zmianie zachowania danego robota.
+W czasie wykonywania akcji, pobierane są odczyty z sensorów. Jeśli zachowanie ma zdefiniowane konkretne sensory, których pomiary są potrzebne, wysyłane są wiadomości typu SENSOR\_VALUE wraz z pomiarem (rysunek \ref{fig:comm_working_process}). Nadzorca interpretuje przesłane dane i w miarę możliwości zapamiętuje. Mogą one zadecydować o zmianie zachowania danego robota.
 
 \begin{figure}[!ht]
     \centering
@@ -110,7 +110,7 @@ Odebrany i zakwalifikowany do przyjęcia prototyp zostaje zdekodowany do postaci
 
 \subsection{Zdarzenia}
 
-W celu usprawnienia komunikacji oraz zwiększenia czytelności całej aplikacji, konkretne warstwy i moduły komunikują się z klasą {\tt Robot} za pomocą zdarzeń opisanych klasą {\tt Event}. Kolejka przechowująca zdarzenia jest wspólna dla całej instancji aplikacji. Dodawać nowe elementy mogą klasy zachowań, akcji czy urządzeń, a jedynym punktem wyjścia jest główna klasa robota (rysunek \ref{fig:event_queue}), który interpretuje zdarzenie i reaguje na nie.
+W celu usprawnienia komunikacji oraz zwiększenia czytelności całej aplikacji, konkretne warstwy i moduły komunikują się z klasą {\tt Robot} za pomocą zdarzeń opisanych klasą {\tt Event}. Zaimplementowana kolejka ({\tt EventQueue}) przechowująca zdarzenia jest wspólna dla całej instancji aplikacji. Generować nowe zdarzenia mogą klasy zachowań, akcji czy urządzeń, a jedynym punktem wyjścia kolejki jest główna klasa robota (rysunek \ref{fig:event_queue}), który interpretuje zdarzenie i reaguje na nie.
 
 Rozróżniane są zdarzenia zwykłe oraz krytyczne, które przerywają wykonywanie części bądź wszystkich działań. Do takich zdarzeń należą np. odłączenie urządzenia czy niski poziom baterii robota. Pozostałe zdarzenia mogą przyjmować formę czysto informacyjną (np. poprawnie podłączone urządzenia), ostrzegającą (np. wykryto zderzenie) lub zgłaszającą wystąpienie wyjątku. Taka forma wewnętrznej komunikacji zdejmuje konieczność przekazywania zdarzeń w argumentach wielu funkcji lub pamiętania bezpośrednich referencji do obiektów generujących zdarzenia oraz pozwala łatwo koordynować cały cykl życia obiektu {\tt Event} z poziomu jednej kolejki. Ponadto, dodanie lub usunięcie nowego obiektu generującego bądź nasłuchującego jest proste i nie ingeruje zbyt mocno w istniejącą strukturę komunikacji (rysunek \ref{fig:event_graph}).
 
@@ -137,7 +137,7 @@ Robot przechodzi do stanu PANIC i przez adres rozgłoszeniowy informuje pozosta�
 
 \subsection{Wszyscy agenci tracą połączenie z nadzorcą}
 
-Wszystkie roboty utraciły połączenie i żaden nie otrzymał odpowiedzi na zapytanie o przekierowanie. W takim przypadku odbywa się głosowanie. Każdy agent wysyła na adres rozgłoszeniowy swój osobisty wynik\footnote{Wynik agenta zależy m. in. od ilości przesłanych danych, poprawności wykonanych akcji czy czasu aktywności.}. Po pewnym czasie, kiedy wszystkie roboty znają już swoje wyniki, ten z najniższym rezultatem mianuje siebie nadzorcą. W przypadku tych samych wyników, o wyborze decyduje czynnik losowy. Wybierany zostaje najsłabszy rezultat, ponieważ warto pozwolić dobremu agentowi na kontynuację działań.
+Wszystkie roboty utraciły połączenie i żaden nie otrzymał odpowiedzi na zapytanie o przekierowanie. W takim przypadku odbywa się głosowanie. Każdy agent wysyła na adres rozgłoszeniowy swój osobisty wynik\footnote{Wynik agenta zależy m. in. od ilości przesłanych danych, poprawności wykonanych akcji czy czasu aktywności.}. Po pewnym czasie, kiedy wszystkie roboty znają już swoje wyniki, ten z najniższym rezultatem mianuje siebie nadzorcą. W przypadku tych samych wyników, o wyborze decyduje czynnik losowy. Wybrany zostaje najsłabszy rezultat, ponieważ system zyska więcej, jesli aktywni pozostaną agenci najlepsi.
 
 Problem jaki może napotkać grupa robotów, to jednoczesny wybór dwóch nadzorców. Ograniczenie użycia jednej wspólnej sieci nie eliminuje problemu gubienia pakietów, a przez to potencjalnej sytuacji, w której mamy wiele niezależnych głosowań, bądź głosowania są niepełne. W tym celu, oprócz wysłania przez danego agenta swoich danych, wysyła on dodatkowo liczbę oznaczającą ilość otrzymanych rekordów. W ten sposób agent A może dowiedzieć się od agenta B, że nie dostał informacji od innego agenta, np. C, kiedy połączenie między A i C jest niemożliwe. Ponadto, własny wynik jest ponownie rozsyłany za każdym zwiększeniem ilości informacji o pozostałych agentach (rysunek \ref{fig:comm_panic_master}). Jednostki nie posiadające kompletu informacji nie biorą udziału w finalnym głosowaniu, ponieważ mogą podjąć złą decyzję, a ponadto utrudniona komunikacja jest dla nich dodatkowo niekorzystna.
 

@@ -1,16 +1,25 @@
 #pragma once
 
 #include "CommandMotor.h"
-
 #include <memory>
+
+/**
+ * @file Action.h
+ * Contains all Action classes.
+ */
 
 namespace ev3
 {
     class Action;
 
+    /// Type for Action shared_ptr.
     typedef std::shared_ptr<Action> SharedPtrAction;
-    typedef std::vector<Action*> StoredActions;
-
+    
+    /// Type for storing many Actions in one container.
+    /// @see ActionRepeat
+    typedef std::vector<SharedPtrAction> StoredActions;
+    
+    /// Type for Command shared_ptr.
     typedef std::shared_ptr<Command> SharedPtrCommand;
 
     /// Type for containing associated Command pointers.
@@ -88,6 +97,10 @@ namespace ev3
          */
         virtual bool isFinished();
 
+        /**
+         * Check if action was executed.
+         * @return True if actcion was already executed, false otherwise.
+         */
         virtual bool isExecuted();
 
         /**
@@ -96,6 +109,10 @@ namespace ev3
          */
         virtual std::string getActionPrototype();
 
+        /**
+         * Get human-readable Action name.
+         * @return String containing Action name.
+         */
         virtual std::string getString();
 
         /**
@@ -131,65 +148,147 @@ namespace ev3
 
         bool _isExecuted = false;
 
-        //TODO supported events
+        // TODO supported events
     };
 
+    /**
+     * @class ActionRepeat
+     * 
+     * Stores many Actions in a vector and executes them in loop.
+     * Number of iterations is given and may be infinite.
+     */
     class ActionRepeat : public Action
     {
     public:
+        /**
+         * Constructor with StoredActions and iterations parameters.
+         * @param actions Vector of Actions to be executed in a loop.
+         * @param n Number of iterations. If 0 is given, loop will be infinite.
+         */
         ActionRepeat(StoredActions actions, unsigned int n);
+        
+        /**
+         * Continue with executing stored Actions.
+         */
         virtual void execute();
 
-        //void setRepeatCondition(EndCondition condition);
-
-
+        /**
+         * Return human-readable ActionRepeat name.
+         * @return String containing Action name.
+         */
         virtual std::string getString();
 
     private:
+        /// Vector of stored Actions to be executed.
         StoredActions _actions;
+        
+        /// Number of iterations.
         unsigned int _n;
+        
+        /// Keeps track of iterations already passed.
         unsigned int _currentIteration = 0;
+        
+        /// Keeps track of which Action is currently in progress.
         unsigned int _currentAction = 0;
-
-        //        EndCondition _repeatCondition = []()
-        //        {
-        //            return true;
-        //        };
     };
 
+    /**
+     * @class ActionDriveDistance
+     * 
+     * Implements Robot simple task to drive straight for a
+     * given distance.
+     */
     class ActionDriveDistance : public Action
     {
     public:
+        /**
+         * Constructor with distance parameter.
+         * @param distance Integer value in Robot units to be driven.
+         */
         ActionDriveDistance(int distance);
+        
+        /**
+         * Constructor with CommandsVector and distance parameters.
+         * @param commands Sequence of commands to be executed.
+         * @param distance Integer value in Robot units to be driven.
+         */
         ActionDriveDistance(CommandsVector commands, int distance);
 
+        /**
+         * Get distance the Robot has to drive.
+         * @return Integer value in Robot units.
+         */
         int getDistance();
 
+        /**
+         * Get ActionDriveDistance encoded name and its parameters.
+         * @return String with encoded name and parameters.
+         */
         virtual std::string getActionPrototype();
 
+        /**
+         * Get ActionDriveDistance human-readable name.
+         * @return String with name and parameters
+         */
         virtual std::string getString() override;
 
-
     private:
+        /// Distance for the robot to drive in units.
         int _distance;
     };
 
+    /**
+     * @class ActionRotate
+     * 
+     * Implements Robot simple task to rotate a given angle,
+     * while not driving. Rotation is made in place. 
+     */
     class ActionRotate : public Action
     {
     public:
+        /**
+         * Constructor with rotation parameter in degrees.
+         * @param rotation Number of degrees to rotate. Positive value rotates clockwise.
+         */
         ActionRotate(int rotation);
+        
+        /**
+         * Constructor with CommandsVector and rotation parameters.
+         * @param commands Sequence of commands to be executed.
+         * @param rotation Integer value of Robot rotation in degrees.
+         */
         ActionRotate(CommandsVector commands, int rotation);
 
+        /**
+         * Get Robot rotation.
+         * @return Integer value of rotation in degrees.
+         */
         int getRotation();
 
+        /**
+         * Get ActionRotate encoded name and its parameters.
+         * @return String with encoded name and parameters.
+         */
         virtual std::string getActionPrototype();
 
-        virtual std::string getString() override;;
+        /**
+         * Get ActionRotate human-readable name.
+         * @return String with name and parameters
+         */
+        virtual std::string getString() override;
 
     protected:
+        /// Angle of rotation in degrees for the Robot.
         int _rotation;
     };
     
+    /**
+     * @class ActionRotateRandDirection
+     * 
+     * Implements Robot simple task to rotate a random angle.
+     * Rotation is performed in place.
+     * Maximum
+     */
     class ActionRotateRandDirection : public ActionRotate
     {
     public:

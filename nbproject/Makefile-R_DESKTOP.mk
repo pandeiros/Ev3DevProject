@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/action/Behaviour.o \
 	${OBJECTDIR}/src/action/Command.o \
 	${OBJECTDIR}/src/action/CommandMotor.o \
+	${OBJECTDIR}/src/action/CommandSensor.o \
 	${OBJECTDIR}/src/communication/CommUtils.o \
 	${OBJECTDIR}/src/communication/Communication.o \
 	${OBJECTDIR}/src/communication/Event.o \
@@ -110,6 +111,11 @@ ${OBJECTDIR}/src/action/CommandMotor.o: src/action/CommandMotor.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/CommandMotor.o src/action/CommandMotor.cpp
+
+${OBJECTDIR}/src/action/CommandSensor.o: src/action/CommandSensor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/action
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/CommandSensor.o src/action/CommandSensor.cpp
 
 ${OBJECTDIR}/src/communication/CommUtils.o: src/communication/CommUtils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/communication

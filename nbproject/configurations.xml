@@ -10,6 +10,8 @@
       <itemPath>include/action/Command.h</itemPath>
       <itemPath>src/action/CommandMotor.cpp</itemPath>
       <itemPath>include/action/CommandMotor.h</itemPath>
+      <itemPath>src/action/CommandSensor.cpp</itemPath>
+      <itemPath>include/action/CommandSensor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f5" displayName="Communication" projectFiles="true">
       <itemPath>src/communication/CommUtils.cpp</itemPath>
@@ -119,6 +121,8 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/CommandSensor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
@@ -173,6 +177,8 @@
       <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/CommandMotor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/action/CommandSensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/communication/CommUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -258,6 +264,8 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/CommandSensor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
@@ -312,6 +320,8 @@
       <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/CommandMotor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/action/CommandSensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/communication/CommUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -387,6 +397,8 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/CommandSensor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
@@ -441,6 +453,8 @@
       <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/CommandMotor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/action/CommandSensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/communication/CommUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -526,6 +540,8 @@
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/CommandSensor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/communication/CommUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/communication/Communication.h"
@@ -580,6 +596,8 @@
       <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/action/CommandMotor.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/action/CommandSensor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/communication/CommUtils.cpp" ex="false" tool="1" flavor2="9">
       </item>
