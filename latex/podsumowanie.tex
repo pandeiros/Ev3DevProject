@@ -4,18 +4,18 @@
 Praca z robotem LEGO EV3 Mindstorms w środowisku ev3dev przyniosła następuje rezultaty:
 
 \begin{itemize}
-    \item Przeprowadzony został przegląd dostępnych środowisk dla LEGO EV3 i wybrany został projekt ev3dev
+    \item Przeprowadzony został przegląd środowisk dostępnych dla LEGO EV3 i wybrany został projekt ev3dev
     \item Robot z zainstalowanym nowym oprogramowaniem został poprawnie skonfigurowany, a testy motorów oraz sensorów przebiegły pomyślnie
     \item Podłączenie robota do sieci WiFi za pomocą dodatkowego adaptera zakończyło się sukcesem
     \item Napisana została aplikacja w C++, działająca na systemie Linux, w której zawarte są poniższe funkcjonalności:
     \begin{itemize}
-        \item Implementacja prostych akcji, wykonujących sekwencje komend na urządzeniach robota
-        \item Możliwość wykonywania parametryzowalnych, złożonych zachowań, zaprogramowanych w postaci maszyny stanów
+        \item Implementacja prostych akcji, wykonujących sekwencje komend na\,urządzeniach robota
+        \item Możliwość wykonywania parametryzowalnych, złożonych zachowań,\\zaprogramowanych w postaci maszyny stanów
         \item Pełna kontrola nad udostępnionymi przez sensory i motory interfejsami
         \item Kontrola przebiegu wykonania za pomocą zdarzeń
         \item Oddzielenie poszczególnych działań robota za pomocą zdefiniowanych stanów
-        \item Elastyczność definiowania nowych modeli robotów oraz interpretacji akcji przez rozszerzanie funkcjonalności za pomocą klas pochodnych
-        \item Komunikacja między fizycznymi jednostkami z wykorzystaniem protokołu UDP za pomocą interfejsu klas zawierających implementację systemowych funkcji przesyłania danych
+        \item Elastyczność definiowania nowych modeli robotów oraz interpretacji\\akcji przez rozszerzanie funkcjonalności za pomocą klas pochodnych
+        \item Komunikacja między fizycznymi jednostkami z wykorzystaniem protokołu UDP za pomocą interfejsu klas zawierających implementację\\systemowych funkcji przesyłania danych
         \item Obsługa sygnałów dostarczanych do programu
         \item Możliwość wydzielenia nadzorcy systemu, kontrolującego pracę agentów
         \item Funkcja logowania, opatrzonego etykietami oraz kontrolą nad zapisywanymi rodzajami komunikatów.
@@ -25,14 +25,14 @@ Praca z robotem LEGO EV3 Mindstorms w środowisku ev3dev przyniosła następuje 
 
 Dzięki pracy nad tym projektem powstała aplikacja, realizująca przede wszystkim funkcje agenta, jego zachowania oraz komunikację, a także warstwa nadzorcza, monitorująca przebieg działań i zbierająca dane od zarządzanych przez nią agentów.
 
-\section{Dalszy rozwój projektu}
+\section{Perspektywy rozwoju}
 
 Istnieje wiele aspektów projektu, których implementacja ułatwi lub rozszerzy bieżące możliwości. Do takich należy na przykład:
 \begin{itemize}
     \item Dodanie ujednoliconego interfejsu obsługi sensorów produkowanych przez osoby trzecie
     \item Dodanie funkcji przywracania połączenia między agentami w przypadku całkowitej utraty wykorzystywanej sieci
-    \item Umożliwienie wykonywania konkretnych akcji bez wymaganego połączenia agenta z nadzorcą.
-    \item Parametryzacja konfiguracji agenta przy pomocy zewnętrznych plików (np. XML)
+    \item Umożliwienie wykonywania konkretnych akcji bez wymaganego połączenia agenta z nadzorcą
+    \item Parametryzacja konfiguracji agenta przy pomocy zewnętrznych plików (na przykład XML)
     \item Dodanie konfiguracji, umożliwiającej kompilację projektu do zewnętrznej biblioteki w celu wykorzystania jej w innej aplikacji.
 \end{itemize}
 

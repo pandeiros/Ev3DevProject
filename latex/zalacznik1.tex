@@ -22,7 +22,7 @@ a usunięcie plików tymczasowych wykonuje komenda: {\tt make clean}
 
 \subsection{Synchronizacja plików}
 
-W celu szybkiego przesłanie plików na wiele robotów, przygotowany został specjalny katalog {\tt sync} wraz ze skryptem kopiującym. Edytując skrypt można podać następujące wartości parametrów:
+W celu szybkiego wysłania plików do wielu robotów, przygotowany został specjalny katalog {\tt sync} wraz ze skryptem kopiującym. Edytując skrypt można podać następujące wartości parametrów:
 \begin{itemize}
     \item Adresy ip wszystkich docelowych urządzeń, na które mają być wgrane pliki wykonywalne
     \item Nazwę użytkownika\textsuperscript{*}
@@ -37,11 +37,10 @@ Skrypt wykonuje kopię plików binarnych z katalogu {\tt dist} dla konfiguracji 
 
 Aplikacja może być uruchomiona na dwa sposoby: z poziomu interfejsu graficznego klocka centralnego lub przez zdalne uruchomienie za pomocą połączenia ssh. Ten drugi wariant pozwala lepiej kontrolować komunikaty wyświetlane na ekranie, ale bardziej obciąża urządzenie. Z tego powodu nie powinno się uruchamiać wersji mobilnej z ustawieniami logowania na standardowe wyjście, ale jeśli jest to wymagane, należy ograniczyć rodzaj wyświetlanych wiadomości do minimum.
 
-Przesłany plik wykonywalny można uruchomić w dwóch trybach: agent i master (domyśnie agent). Ponadto, aplikacja przyjmuje następujące opcjonalne argumenty wywołania:
+Przesłany plik wykonywalny można uruchomić w dwóch trybach: agent i master. Ponadto, aplikacja przyjmuje następujące opcjonalne argumenty wywołania:
 \begin{itemize}
-    \item model - rodzaj uruchomionego na robocie modelu (tylko w przypadku wariantu {\tt agent})
-    \item port=<numer> - numer portu do komunikacji
-    \item loglevel=<numer> - sprecyzowanie minimalnego poziomu logowania wiadomości, gdzie 0 to brak logowania, a 4 to poziom rozwlekły (verbose).
+    % \item model - rodzaj uruchomionego na robocie modelu (tylko w przypadku wariantu {\tt agent})
+    \item log=<tryb> - sprecyzowanie minimalnego poziomu logowania wiadomości za pomocą jednego z następujących trybów: {\tt none error warning info verbose debug}.
 \end{itemize}
 
 Zakończenie programu można przedwcześnie wymusić przez przesłanie sygnału SIGINT za pomocą kombinacji klawiszy CTRL+C.\\
@@ -50,5 +49,5 @@ Zakończenie programu można przedwcześnie wymusić przez przesłanie sygnału 
 
 Przykładowe uruchomienie:
 \begin{center}
-    {\tt ./ev3dev agent port=12233 model=A loglevel=2}
+    {\tt ./ev3dev agent log=warning}
 \end{center}

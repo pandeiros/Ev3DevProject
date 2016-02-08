@@ -10,9 +10,9 @@ Komendy zostały podzielone na dwie podgrupy:
 \begin{description}
     \item[Komendy motorów:] Klasa bazowa - {\tt CommandMotor}. Zawierają referencje do\,klasy {\tt Motor} oraz opcjonalnie przechowują także przekazywane\\parametry. \\Np przykład: {\tt CommandMotorStop}, {\tt CommandMotorRunForever}.
 
-    \item[Komendy sensorów:] Klasa bazowa - {\tt CommandSensor}. Zawierają referencje do\,klasy {\tt Sensor}. Definiują obsługiwane tryby danego sensora. Komendy te nie służą do pobierania wartości, lecz tylko do zmiany ich ustawień.\\Pobieranie wartości używane jest przy pomocy specjalnej klasy {\tt Devices}. \\Przykładowa komenda: {\tt CommandSensorSetMode}.
+    \item[Komendy sensorów:] Klasa bazowa - {\tt CommandSensor}. Zawierają referencje do\,klasy {\tt Sensor}. Definiują obsługiwane tryby danego sensora. Komendy te nie służą do pobierania wartości, lecz tylko do zmiany ustawień sensora. Pobieranie wartości używane jest przy pomocy specjalnej klasy {\tt Devices}. \\Przykładowa komenda: {\tt CommandSensorSetMode}.
 \end{description}
-Klasą bazową dla wszystkich komend jest {\tt Command}.
+Klasą bazową dla wszystkich komend jest klasa {\tt Command}.
 
 \subsection{Akcje}
 \indent \indent Akcje są kolejnym stopniem abstrakcji definiowania zachowań robota. Klasy akcji przechowują przede wszystkim sekwencje komend, które mają zostać wykonane. Ponadto, z powodu natychmiastowego charakteru wykonywania wszystkich zgromadzonych komend, akcja może mieć zdefiniowany warunek jej zakończenia. Przyjmuje ona postać funkcji anonimowej, w której następuje zwrócenie wartości logicznej na podstawie dowolnie sprecyzowanych instrukcji. Pozwala to wyższej warstwie sterującej sprawdzić, czy kolejna akcja może zostać wykonana. Dodatkowo, akcje mogą deklarować dopuszczalne zdarzenia, które przerywają jej działanie lub zmieniają jej parametry.

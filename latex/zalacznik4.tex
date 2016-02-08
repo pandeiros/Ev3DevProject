@@ -1,4 +1,44 @@
 \section{Rozwój projektu}
 \label{app:rozwoj_projektu}
 
-Główne pliki projektu znajdują się w katalogach {\tt include} oraz {\tt src}. Pierwszy z nich zawiera pliki nagłówkowe, drugi źródłowe. Rozdzielenie plików podyktowane jest
+Główne pliki projektu znajdują się w katalogach {\tt include} oraz {\tt src}. Pierwszy\,z nich zawiera pliki nagłówkowe, drugi źródłowe. Rozdzielenie plików pozwala w\,przyszłości skompilować projekt do osobnej biblioteki i w trakcie jej używania korzystać z już wyodrębionych plików z definicjami klas.
+
+Poniżej przestawiono kilka możliwych aspektów rozwinięcia bieżącego projektu o nowe funkcjonalności.
+
+\subsection{Elastyczność konfiguracji}
+
+Dużym udogodnieniem, jakie można wprowadzić do aplikacji, jest możliwość zmiany konfiguracji za pomocą zewnętrznych plików, na przykład w formacie XML. Taka modyfikacja pozwoliłaby na:
+\begin{itemize}
+    \item Dynamiczną zmianę konfiguracji w trakcie działania programu
+    \item Łatwe zwiększanie liczby dostępnych zachowań a bilbiotece
+    \item Elastyczną specyfikację każdego nowego modelu robota
+    \item Szybsze definiowanie sposobu wykonywania akcji przez dany model agenta.
+\end{itemize}
+
+W celu osiągnięcia powyższych założeń, należałoby napisać parser plików konfiguracyjnych, który sprawdzałby ich poprawność oraz generował gotowe obiekty odpowiadające wczytanym parametrom. Ponadto, należałoby dodać metodę sprawdzającą co pewien interwał czasu, czy zawartość wczytanych plików nie uległa zmianie. Jeśli tak, konieczne byłoby ponowne ich załadowanie.
+
+\subsection{Nowe modele agentów}
+
+Aplikacja nie ogranicza użytkownika do korzystania z jednego modelu robota. Wręcz przeciwnie, dowolna konstrukcja może być użyta jako agent systemu. Osiągnięcie pełni funkcjonalności nowego robota wymaga następujących modyfikacji:
+\begin{itemize}
+    \item Stworzenia klasy reprezentującej nowy model robota, która dziedziczy po\,głównej klasie {\tt Robot}
+    \item Zdefiniowanie wymaganych urządzeń oraz możliwych do wykonania akcji w\,konstruktorach nowej klasy
+    \item Przeciążenie odpowiednich metod, odpowiedzialnych za generowanie struktury zachowań oraz konkretnych postaci akcji. Są to metody {\tt generateBehaviour} oraz {\tt generateAction}.
+\end{itemize}
+
+\subsection{Komunikacja}
+
+Sprawna komunikacja między agentami to podstawa całego systemu. Na obecnym etapie, wykorzystywana jest istniejąca sieć WiFi, z którą łączą się wszyscy agenci. Każdy z nich komunikuje się tylko z nadzorcą, który zna stan wszystkich innych agentów. Niestety to rozwiązanie ma dwie podstawowe wady:
+
+\begin{enumerate}
+    \item Nadzorca jest najsłabszym ogniwem całej komunikacji w systemie
+    \item System nie jest w stanie funkcjonować w przypadku błędów lub braku wspólnej sieci.
+\end{enumerate}
+
+Pierwszy problem częściowo rozwiązuje przekazanie odpowiedzialności nadzorcy jednemu z agentów, ale w przypadku dużej ich ilości zasoby agenta mogą nie wystarczyć, żeby utrzymać system w pełni sprawnym.
+
+Oba powyższe problemy można rozwiązać tworząc własną sieć dynamicznie przez jednego z agentów lub nadzorcę. Największą trudnością jest ustalenie, który agent tworzy sieć dla pozostałych i w jakiej kolejności przebiega cały proces.\\W przypadku nagłej utraty połączenia, trzeba określić sposób jego odtworzenia.\\W związku z tym, każda jednostka musi wiedzieć o wszystkich pozostałych, co przeczy pierwotnemu założeniu, że wszyscy agenci są niezależni.
+
+% \subsection{Wyelimowanie konieczności aktywnego nadzorcy}
+%
+% System nie zawsze może sobie pozwolić na bycie kontrolowanym przez jedną, główną jednostkę. Ograniczać to może przede wszystkim stan połączenia. Należy więc udostępnić możliwość komunikowania się robotom bezpośrednio między sobą. Takie rozwiązanie zmusza wszystkich agentów do

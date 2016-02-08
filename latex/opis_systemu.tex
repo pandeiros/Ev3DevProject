@@ -60,7 +60,7 @@ Parametry klocka centralnego:
 Każda jednostka z wgraną biblioteką ev3dev posiada użytkownika {\tt robot} z hasłem {\tt maker}. Konfiguracja nowego systemu odbyła się w kilku krokach:
 
 \begin{enumerate}
-    \item Na kartę microSDHC wgrany został specjalne spreparowany obraz systemu, pobrany ze strony głównej projektu ev3dev
+    \item Na kartę microSDHC wgrany został specjalne przygotowany obraz systemu, pobrany ze strony głównej projektu ev3dev
     \item Pierwsze uruchomienie robota z wgranym obrazem na karcie było poprzedzone długim przygotowaniem wszystkich plików
     \item Przy użyciu połączenia SSH przez kabel USB, system został skonfigurowany i pobrane zostały wszystkie wymagane pakiety
     \item Dalsza komunikacja odbywała się bezprzewodowo z użyciem urządzenia NETGEAR WNA1100, podłączonego do portu USB klocka centralnego
@@ -73,7 +73,7 @@ W ramach projektu ev3dev dostępne są dwa pliki źródłowe napisane w języku 
 \noindent Wersja użytej biblioteki: 0.9.3-pre, rev 2.
 
 \subsubsection{Wprowadzone zmiany}
-Początkowo, w wersji 0.9.2-pre, biblioteka nie była kompatybilna ze wszystkimi urządzeniami dostarczonymi przez LEGO. Wymagane było dopisanie rozpoznawalnych nazw sterowników dla sensorów oraz zaimplementowanie własnej obsługi diod LED przedniego panelu, w szczególności funkcji migania. Ponadto dopisane zostało specjalne pole klasy {\tt ev3dev::motor} pamiętające jego typ.
+Początkowo, w wersji 0.9.2-pre, biblioteka nie była kompatybilna ze wszystkimi urządzeniami dostarczonymi przez LEGO. Wymagane było dopisanie rozpoznawalnych nazw sterowników dla sensorów oraz zaimplementowanie własnej obsługi diod LED przedniego panelu, w szczególności funkcji migania. Ponadto dopisane zostało specjalne pole klasy {\tt ev3dev::motor} pamiętające typ użytego efektora.
 
 W finalnej fazie projektowania, biblioteka została zaktualizowana do najnowszej wersji 0.9.3-pre, co zdjęło konieczność posiadania specjalnych nazw sterowników, a także znacząco przyspieszyło obsługę interfejsu klocka oraz transmisję danych.
 
