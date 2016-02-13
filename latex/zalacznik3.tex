@@ -1,2 +1,14 @@
 \section{Zdalne debugowanie aplikacji}
-\label{app:gbd}
+\label{app:gdb}
+
+Narzędzie {\tt brickstrap}, którego twórcy biblioteki ev3dev używają głównie do przygotowywania obrazu systemu dla LEGO EV3, może posłużyć również do debugowania aplikacji na klocku. Możliwe jest także utworzenie zdalnego systemu plików do synchronizacji danych pomiędzy dwoma systemami Linux za pomocą {\tt nfs}. Konfiguracja środowiska wirtualnego\cite{gdb} składa się z następujących kroków:
+
+\begin{enumerate}
+    \item Instalacja narzędzia {\tt brickstrap}
+    \item Stworzenie wirtualnego środowiska na bazie obrazu systemu identycznego z tym zainstalowanym na robocie LEGO
+    \item Kompilacja programu z poziomu powłoki maszyny witualnej (z flagą {\tt -g} w\,celu dołączenia symboli debugowania)
+    \item Instalacja {\tt gdbserver} po stronie klocka LEGO oraz {\tt gdb} po stronie środowiska wirtualnego
+    \item Uruchomienie skompilowanego pliku binarnego za pomocą {\tt gdbserver} po stronie klocka.
+\end{enumerate}
+
+Po wykonaniu wszystkich kroków, opisanych szczegółowo na portalu ev3dev\cite{gdb}, można uruchomić {\tt gdb} z parametrem identycznym jak nazwa programu uruchomiona na robocie. W ten sposób stworzona została interaktywna sesja debuggera i za pomocą komend wpisywanych bezpośrednio do terminala można np. ustalać punkty przerwań czy podglądać wartości zmiennych lokalnych. Z racji tego, że program {\tt gdb} uruchamiany jest w środowisku wirtualnym, można czasami natrafić na nieobsługiwane wywołania systemowe. Większość napotykanych błędów lub ostrzeżeń nie powinna sprawiać problemów, ale może ograniczać niektóre funkcjonalności debuggera.

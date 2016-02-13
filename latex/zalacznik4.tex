@@ -37,8 +37,9 @@ Sprawna komunikacja między agentami to podstawa całego systemu. Na obecnym eta
 
 Pierwszy problem częściowo rozwiązuje przekazanie odpowiedzialności nadzorcy jednemu z agentów, ale w przypadku dużej ich ilości zasoby agenta mogą nie wystarczyć, żeby utrzymać system w pełni sprawnym.
 
-Oba powyższe problemy można rozwiązać tworząc własną sieć dynamicznie przez jednego z agentów lub nadzorcę. Największą trudnością jest ustalenie, który agent tworzy sieć dla pozostałych i w jakiej kolejności przebiega cały proces.\\W przypadku nagłej utraty połączenia, trzeba określić sposób jego odtworzenia.\\W związku z tym, każda jednostka musi wiedzieć o wszystkich pozostałych, co przeczy pierwotnemu założeniu, że wszyscy agenci są niezależni.
+Oba powyższe problemy można rozwiązać tworząc własną sieć dynamicznie przez jednego z agentów lub nadzorcę. Największą trudnością jest ustalenie, który agent tworzy sieć dla pozostałych i w jakiej kolejności przebiega cały proces.\\W przypadku nagłej utraty połączenia, trzeba określić sposób jego odtworzenia.\\W związku z tym, każda jednostka musi wiedzieć o wszystkich pozostałych, co przeczy pierwotnemu założeniu, że wszyscy agenci są niezależni (patrz \ref{sub:no_master}).
 
-% \subsection{Wyelimowanie konieczności aktywnego nadzorcy}
-%
-% System nie zawsze może sobie pozwolić na bycie kontrolowanym przez jedną, główną jednostkę. Ograniczać to może przede wszystkim stan połączenia. Należy więc udostępnić możliwość komunikowania się robotom bezpośrednio między sobą. Takie rozwiązanie zmusza wszystkich agentów do
+\subsection{Wyelimowanie konieczności aktywnego nadzorcy}
+\label{sub:no_master}
+
+System nie zawsze może sobie pozwolić na bycie kontrolowanym przez jedną, główną jednostkę. Ograniczać to może przede wszystkim stan połączenia. Należy więc udostępnić możliwość komunikowania się robotom bezpośrednio między sobą. Takie rozwiązanie uzależnia agentów od siebie, a przez to pozwala na niezależną od zewnętrznych jednostek egzystencję. Implementacja inteligencji zbiorowej oraz sprawnego protokołu komunikacji umożliwiłaby samodzielne wykonywanie zadań jako grupa oraz eksplorację trudno dostępnych obszarów. Wada jednego agenta osłabiała by cały system, ale nie powodowałaby jego awarii, a zdolność działania wszystkich robotów byłaby ograniczona tylko poziomem naładowania akumulatora każdego z nich.

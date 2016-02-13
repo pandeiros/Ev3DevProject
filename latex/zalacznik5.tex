@@ -1,0 +1,32 @@
+\section{Używanie niestandardowych sensorów}
+\label{app:other_sensors}
+
+\subsection{Typy sensorów}
+
+Klocek LEGO EV3 posiada cztery wejścia dedykowane różnorodnym sensorom, multiplekserom sensorów lub kontrolerom motorów. Wyróżnia się cztery typy komunikacji wykorzystywane przez sensory: analogowy, NXT Color Sensor, \Gls{i2c} oraz \Gls{uart}.
+
+\subsubsection{Typ analogowy}
+
+Jest to najprostszy typ sensorów. Mierzona wartość zamieniana jest na napięcie z przedziału 0-5V, które jest odczytywane przez klocek EV3. Wśród typów analogowych można wydzielić kilka kategorii:
+\begin{description}
+    \item[EV3/Analog]- zaprojektowane specjalnie dla EV3 i nie są kompatybilne z poprzednimi generacjami LEGO. Zawierają specjalny rezystor, który umożliwia identyfikację typu użytego sensora
+    \item[NXT/Analog]- dedykowane LEGO NXT, ale mogą współpracować z EV3. Z reguły wymagane jest podanie rodzaju sensora, ponieważ klocek centralny nie potrafi sam go zidentyfikować
+    \item[WeDo/Analog]- pod kątem elektroniki są niemal identyczne z sensorami analogowymi EV3 (napięcie 5V i rezystor identyfikujący). Obecnie nie wszystkie z nich są w pełni rozpoznawalne i wymagane są własne sterowniki
+    \item[RCX]- nie są kompatybilne z EV3, ponieważ inaczej wykorzystują wejściowe piny.
+\end{description}
+
+\subsubsection{LEGO NXT Color Sensor}
+
+Ten sensor jest potraktowany wyjątkowo, ponieważ łączy analogową z cyfrową (niestandardową) komunikacją. Dla obecnej wersji systemu nie ma jednakże napisanego sterownika obsługi, ale klocek potrafi automatycznie wykryć obecność tego urządzenia.
+
+\subsubsection{Typ I\textsuperscript{2}C}
+
+Sensory tego typu komunikują się z inteligentnym klockiem za pomocą protokołu \Gls{i2c}. Są to cyfrowe sensory, z których można wyróżnić te projektowane zgodnie z wytycznymi LEGO oraz te używające niestandardowych czipów \Gls{i2c}. Tylko sensory pierwszego typu są wykrywane automatycznie. Na stronach projektu ev3dev, pierwszy typ jest wyróżniany jako NXT/I2C, a drugi jako Other/I2C.
+
+\subsubsection{Typ UART}
+
+Urządzenia wykorzytujące układ scalony UART do asynchronicznej komunikacji są zaprojektowane specjalnie dla EV3 i działają tylko z tą generacją robotów LEGO. Oprócz zwykłych danych o przeprowadzonych pomiarach, przekazują one informacje o swoich możliwościach. Oznaczałoby to, że sensory powinny od razu działać, bez konieczności pisania osobno każdego sterownika. Sensory typu EV3/UART, z racji tego, że ''U'' oznacza uniwersalny, powinny działać z każdym urządzeniem obsługującym UART, nie tylko portami wejściowymi klocka LEGO. Wszystkie domyślne sensory będące częścią zestawów EV3 są typu UART.\\\\
+
+W zakładce ''sensors'' witryny ev3dev.org widnieje lista producentów oraz ich sensorów, które są automatycznie obsługiwane przez EV3. Najbardziej interesującym rodzajem sensorów\footnote{Obsługa sensorów I\textsuperscript{2}C - \url{http://www.ev3dev.org/docs/sensors/using-i2c-sensors/}}, są te wykorzystujące protokół I\textsuperscript{2}C. Stanowią one przeważająca większość obecnych na rynku urządzeń pomiarowych dla LEGO.
+
+% \subsection{Używanie sensorów I\textsuperscript{2}C}
