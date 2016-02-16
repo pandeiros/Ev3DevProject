@@ -40,7 +40,6 @@ void Devices::update()
     }
 
     // Check safety touch sensors.
-//    unsigned int index = 0;
     for (auto & touch : _safetyTouchSensors)
     {
         if (_status.find(touch.first) != _status.end())

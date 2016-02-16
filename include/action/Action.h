@@ -370,6 +370,7 @@ namespace ev3
         
         /**
          * Constructor with CommandsVector and direction parameter.
+         * @param commands Sequence of commands to be executed.
          * @param forward True to drive forward, false otherwise.
          */
         ActionDriveForever(CommandsVector commands, bool forward = true);

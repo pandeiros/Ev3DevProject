@@ -1,9 +1,6 @@
 #include "Master.h"
 #include "Logger.h"
 
-//#include <future>
-//#include <functional>
-//#include <unistd.h>
 #include <iostream>
 
 using namespace ev3;
@@ -62,9 +59,7 @@ void Master::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
             }
 
         }
-//        else if (_agents.find(msg.getSenderId()) != _agents.end())
-//            _agents[msg.getSenderId()].processMessage(&msg, &retMessage);
-        
+
         for (auto & agent : _agents)
             agent.second.processMessage(&msg, &retMessage);
 

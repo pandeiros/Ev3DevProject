@@ -155,7 +155,7 @@ int CommUtils::sendMessageTo(unsigned int socket, std::string ipAddress, unsigne
     return return_code;
 }
 
-int CommUtils::receiveMessage(unsigned int socket, Message& msg, NetworkNode & sender)
+int CommUtils::receiveMessage(unsigned int socket, Message& message, NetworkNode & sender)
 {
     Buffer buffer;
     buffer.buffer = malloc(MAX_PACKET_LENGTH);
@@ -178,7 +178,7 @@ int CommUtils::receiveMessage(unsigned int socket, Message& msg, NetworkNode & s
         return -1;
     }
     
-    msg = Message::decodeMessage(proto);
+    message = Message::decodeMessage(proto);
     _packetBuffer.push(proto);
 
     char * ipAddress = (char*) malloc(INET_ADDRSTRLEN);
@@ -190,10 +190,10 @@ int CommUtils::receiveMessage(unsigned int socket, Message& msg, NetworkNode & s
     sender.ipAddress = std::string(ipAddress);
     sender.port = ntohs(sender_addr.sin_port);
 
-    if (!msg.empty() && msg.getType() != Message::AGENT)
-        _remotes[msg.getSenderId()] = sender;
+    if (!message.empty() && message.getType() != Message::AGENT)
+        _remotes[message.getSenderId()] = sender;
 
-    if (msg.getType() == Message::AGENT)
+    if (message.getType() == Message::AGENT)
         _unregisteredRemotes.push(sender);
 
     free(buffer.buffer);
@@ -201,7 +201,7 @@ int CommUtils::receiveMessage(unsigned int socket, Message& msg, NetworkNode & s
     return return_code;
 }
 
-int CommUtils::receiveMessageDelay(unsigned int socket, Message& msg, NetworkNode& sender, unsigned int delay)
+int CommUtils::receiveMessageDelay(unsigned int socket, Message& message, NetworkNode& sender, unsigned int delay)
 {
     Buffer buffer;
     buffer.buffer = malloc(MAX_PACKET_LENGTH);
@@ -226,7 +226,7 @@ int CommUtils::receiveMessageDelay(unsigned int socket, Message& msg, NetworkNod
     if (_packetBuffer.contain(proto))
         return -1;
     
-    msg = Message::decodeMessage(proto);
+    message = Message::decodeMessage(proto);
     _packetBuffer.push(proto);
 
     char * ipAddress = (char*) malloc(INET_ADDRSTRLEN);
@@ -238,10 +238,10 @@ int CommUtils::receiveMessageDelay(unsigned int socket, Message& msg, NetworkNod
     sender.ipAddress = std::string(ipAddress);
     sender.port = ntohs(sender_addr.sin_port);
 
-    if (!msg.empty() && msg.getType() != Message::AGENT)
-        _remotes[msg.getSenderId()] = sender;
+    if (!message.empty() && message.getType() != Message::AGENT)
+        _remotes[message.getSenderId()] = sender;
 
-    if (msg.getType() == Message::AGENT)
+    if (message.getType() == Message::AGENT)
         _unregisteredRemotes.push(sender);
 
     free(buffer.buffer);
@@ -266,15 +266,15 @@ int CommUtils::makeSockAddr(std::string ipAddress, int portNumber, sockaddr_in *
     return 0;
 }
 
-CommUtils::Buffer CommUtils::getBufferFromString(std::string msg)
+CommUtils::Buffer CommUtils::getBufferFromString(std::string message)
 {
     Buffer result;
     void* buffer;
     size_t size;
 
-    size = strlen(msg.c_str()) + 1;
+    size = strlen(message.c_str()) + 1;
     buffer = malloc(size);
-    memcpy(buffer, msg.c_str(), size);
+    memcpy(buffer, message.c_str(), size);
 
     result.buffer = buffer;
     result.size = size;
