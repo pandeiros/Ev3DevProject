@@ -6,6 +6,8 @@
       <itemPath>include/action/Action.h</itemPath>
       <itemPath>src/action/Behaviour.cpp</itemPath>
       <itemPath>include/action/Behaviour.h</itemPath>
+      <itemPath>src/action/BehaviourState.cpp</itemPath>
+      <itemPath>include/action/BehaviourState.h</itemPath>
       <itemPath>src/action/Command.cpp</itemPath>
       <itemPath>include/action/Command.h</itemPath>
       <itemPath>src/action/CommandMotor.cpp</itemPath>
@@ -117,6 +119,8 @@
       </item>
       <item path="include/action/Behaviour.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/BehaviourState.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/action/Command.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
@@ -173,6 +177,8 @@
       <item path="src/action/Action.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/Behaviour.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/action/BehaviourState.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -260,6 +266,8 @@
       </item>
       <item path="include/action/Behaviour.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/BehaviourState.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/action/Command.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
@@ -316,6 +324,8 @@
       <item path="src/action/Action.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/Behaviour.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/action/BehaviourState.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -393,6 +403,8 @@
       </item>
       <item path="include/action/Behaviour.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/BehaviourState.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/action/Command.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
@@ -449,6 +461,8 @@
       <item path="src/action/Action.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/Behaviour.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/action/BehaviourState.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -536,6 +550,8 @@
       </item>
       <item path="include/action/Behaviour.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/action/BehaviourState.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/action/Command.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/action/CommandMotor.h" ex="false" tool="3" flavor2="0">
@@ -592,6 +608,8 @@
       <item path="src/action/Action.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/action/Behaviour.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/action/BehaviourState.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/action/Command.cpp" ex="false" tool="1" flavor2="8">
       </item>

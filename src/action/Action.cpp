@@ -7,6 +7,7 @@ using namespace ev3;
 
 const std::string Action::EMPTY_PROTO("::");
 
+/* ACTION */
 Action::Action(CommandsVector commands, ActionType type)
 : _commands(commands), _type(type) { };
 
@@ -25,7 +26,6 @@ void Action::execute()
     for (auto c : _commands)
     {
         c->execute();
-        //        Logger::getInstance()->log("Command " + c->getString(), Logger::DEBUG);
     }
 
     _isExecuted = true;
@@ -66,6 +66,7 @@ Action::ActionType Action::getType()
     return _type;
 }
 
+/* ACTION REPEAT */
 ActionRepeat::ActionRepeat(StoredActions actions, unsigned int n)
 : Action(ActionType::REPEAT), _actions(actions), _n(n) { }
 
@@ -113,6 +114,7 @@ std::string ActionRepeat::getString()
     return "Action repeat";
 }
 
+/* ACTION DRIVE DISTANCE */
 ActionDriveDistance::ActionDriveDistance(int distance)
 : Action(ActionType::DRIVE_DISTANCE), _distance(distance) { }
 
@@ -123,8 +125,6 @@ int ActionDriveDistance::getDistance()
 {
     return _distance;
 }
-
-//bool ActionDriveDistance::isFinished() { }
 
 std::string ActionDriveDistance::getActionPrototype()
 {
@@ -139,6 +139,7 @@ std::string ActionDriveDistance::getString()
     return "Action drive distance";
 }
 
+/* ACTION ROTATE */
 ActionRotate::ActionRotate(int rotation)
 : Action(ActionType::ROTATE), _rotation(rotation) { }
 
@@ -163,6 +164,7 @@ std::string ActionRotate::getString()
     return "Action rotate";
 }
 
+/* ACTION ROTATE RAND ROTATION */
 ActionRotateRandDirection::ActionRotateRandDirection(int rotation)
 : ActionRotate(rotation)
 {
@@ -208,6 +210,7 @@ void ActionRotateRandDirection::execute()
     right2->execute();
 }
 
+/* ACTION STOP */
 ActionStop::ActionStop()
 : Action(ActionType::STOP) { }
 
@@ -224,6 +227,7 @@ std::string ActionStop::getString()
     return "Action stop";
 }
 
+/* ACTION DRIVE FOREVER */
 ActionDriveForever::ActionDriveForever(bool forward)
 : Action(ActionType::DRIVE_FOREVER), _isForward(forward) { }
 

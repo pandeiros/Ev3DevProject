@@ -146,9 +146,8 @@ namespace ev3
             return true;
         };
 
+        /// True if action is already executed, false otherwise.
         bool _isExecuted = false;
-
-        // TODO supported events
     };
 
     /**
@@ -287,44 +286,114 @@ namespace ev3
      * 
      * Implements Robot simple task to rotate a random angle.
      * Rotation is performed in place.
-     * Maximum
+     * Maximum angle in degrees is passed via constructor argument.
      */
     class ActionRotateRandDirection : public ActionRotate
     {
     public:
+        /**
+         * Constructor with rotation parameter in degrees.
+         * @param rotation Upper limit of degrees to rotate randomly. Positive value rotates clockwise.
+         */
         ActionRotateRandDirection(int rotation);
+        
+        /**
+         * Constructor with CommandsVector and rotation parameters.
+         * @param commands Sequence of commands to be executed.
+         * @param rotation Upper limit of degrees to rotate randomly. Positive value rotates clockwise.
+         */
         ActionRotateRandDirection(CommandsVector commands, int rotation);
 
+        /**
+         * Get ActionRotateRandDirection encoded name and its parameters.
+         * @return String with encoded name and parameters.
+         */
         virtual std::string getActionPrototype();
 
-        virtual std::string getString() override;;
+        /**
+         * Get ActionRotateRandDirection human-readable name.
+         * @return String with name and parameters
+         */
+        virtual std::string getString() override;
 
+        /**
+         * @see Action::execute
+         */
         virtual void execute() override;
     };
     
+    /**
+     * @class ActionStop
+     * 
+     * Implements Robot simple task to stop all active motors.
+     */
     class ActionStop : public Action
     {
     public:
+        /**
+         * Default constructor.
+         */
         ActionStop();
+        
+        /**
+         * Constructor with CommandsVector parameter.
+         * @param commands Sequence of commands to be executed.
+         */
         ActionStop(CommandsVector commands);
 
+        /**
+         * Get ActionStop encoded name and its parameters.
+         * @return String with encoded name and parameters.
+         */
         virtual std::string getActionPrototype();
 
-        virtual std::string getString() override;;
+        /**
+         * Get ActionStop human-readable name.
+         * @return String with name and parameters
+         */
+        virtual std::string getString() override;
     };
     
+    /**
+     * @class ActionDriveForever
+     * 
+     * Implements Robot simple task to drive straight forever.
+     */
     class ActionDriveForever : public Action
     {
     public:
+        /**
+         * Constructor with direction parameter.
+         * @param forward True to drive forward, false otherwise.
+         */
         ActionDriveForever(bool forward = true);
+        
+        /**
+         * Constructor with CommandsVector and direction parameter.
+         * @param forward True to drive forward, false otherwise.
+         */
         ActionDriveForever(CommandsVector commands, bool forward = true);
 
+        /**
+         * Get ActionDriveForever encoded name and its parameters.
+         * @return String with encoded name and parameters.
+         */
         virtual std::string getActionPrototype();
 
+        /**
+         * Get ActionDriveForever human-readable name.
+         * @return String with name and parameters
+         */
         virtual std::string getString() override;
         
+        /**
+         * Return specified direction.
+         * @return True for forward, false for backward.
+         */
         bool isForward();
+    
     private:
+        /// Direction of driving. Either forward (true) or backward (false).
         bool _isForward;
     };
 }

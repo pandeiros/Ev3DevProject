@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Program.o \
 	${OBJECTDIR}/src/action/Action.o \
 	${OBJECTDIR}/src/action/Behaviour.o \
+	${OBJECTDIR}/src/action/BehaviourState.o \
 	${OBJECTDIR}/src/action/Command.o \
 	${OBJECTDIR}/src/action/CommandMotor.o \
 	${OBJECTDIR}/src/action/CommandSensor.o \
@@ -101,6 +102,11 @@ ${OBJECTDIR}/src/action/Behaviour.o: src/action/Behaviour.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/action
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/Behaviour.o src/action/Behaviour.cpp
+
+${OBJECTDIR}/src/action/BehaviourState.o: src/action/BehaviourState.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/action
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Iinclude/communication -Iinclude/control -Iinclude/ev3dev -Iinclude/master -Iinclude/robot -Iinclude/utils -Iinclude/action -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/action/BehaviourState.o src/action/BehaviourState.cpp
 
 ${OBJECTDIR}/src/action/Command.o: src/action/Command.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/action

@@ -91,10 +91,10 @@ void Message::reset()
     _parameters.clear();
 }
 
-Message Message::decodeMessage(const std::string msg)
+Message Message::decodeMessage(const std::string message)
 {
     std::vector<std::string> parts;
-    std::istringstream f(msg);
+    std::istringstream f(message);
     std::string s;
     while (std::getline(f, s, MESSAGE_DELIM))
     {

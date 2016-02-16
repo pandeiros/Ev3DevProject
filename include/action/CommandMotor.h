@@ -5,6 +5,7 @@
 
 namespace ev3
 {
+
     /**
      * @class CommandMotor
      * Base class for all motor controlling commands.
@@ -18,7 +19,7 @@ namespace ev3
          * @param motor Motor to execute CommandMotor on.
          */
         CommandMotor(Motor & motor);
-        
+
         /**
          * Get motor associated with Command.
          * @return Motor class object.
@@ -28,16 +29,14 @@ namespace ev3
     protected:
         /// Command parameter to turn speed regulation on a Motor on.
         const std::string SPEED_REGULATION_ON = "on";
-        
+
         /// Command parameter to turn speed regulation on a Motor off.
         const std::string SPEED_REGULATION_OFF = "off";
-        
+
         /// Motor on which this CommandMotor will be executed.
         Motor _motor;
     };
-    
-    
-    
+
     /**
      * @class CommandMotorReset
      * Calls <CODE>reset()</CODE> method of containing Motor.
@@ -69,7 +68,7 @@ namespace ev3
          * @param motor Motor to execute CommandMotor on.
          */
         CommandMotorRunForever(Motor & motor);
-        
+
         /**
          * Perform <CODE>run_forever()</CODE> method on Motor.
          */
@@ -88,10 +87,10 @@ namespace ev3
          * @param motor Motor to execute CommandMotor on.
          */
         CommandMotorStop(Motor & motor);
-        
+
         /**
          * Perform <CODE>stop()</CODE> method on Motor.
-         */        
+         */
         void execute() override;
     };
 
@@ -108,7 +107,7 @@ namespace ev3
          * @param value If true, turn speed regulation on, false to turn it off.
          */
         CommandMotorSetSpeedRegEnabled(Motor & motor, bool value);
-        
+
         /**
          * Perform <CODE>set_speed_regulation_enabled()</CODE> on Motor.
          */
@@ -134,7 +133,7 @@ namespace ev3
          * @see CommandMotorSetSpeedRegEnabled
          */
         CommandMotorSetSpeed(Motor & motor, int value);
-        
+
         /**
          * Perform <CODE>set_speed_sp()</CODE> method on Motor.
          */
@@ -144,7 +143,7 @@ namespace ev3
         /// Speed value in tacho pulses per second.
         int _value;
     };
-    
+
     /**
      * @class CommandMotorSetStopMode
      * Calls <CODE>set_stop_command()</CODE> method of containing Motor.
@@ -152,23 +151,24 @@ namespace ev3
     class CommandMotorSetStopMode : public CommandMotor
     {
     public:
-        
+
         /**
          * Stop modes for motors.
          */
-        enum StopMode {
-            COAST,      /**< No voltage. Motor slowly stops.*/
-            BRAKE,      /**< Passive braking. Motor stops faster.*/
-            HOLD        /**< Active braking. Hardly prevent motor from any movement. */
+        enum StopMode
+        {
+            COAST, /**< No voltage. Motor slowly stops.*/
+            BRAKE, /**< Passive braking. Motor stops faster.*/
+            HOLD /**< Active braking. Hardly prevent motor from any movement. */
         };
-        
+
         /**
          * Constructor with ev3dev::motor parameter.
          * @param motor Motor to execute CommandMotor on.
          * @param mode Stop mode chosen from StopMode.
          */
         CommandMotorSetStopMode(Motor & motor, StopMode mode);
-        
+
         /**
          * Perform <CODE>set_stop_command()</CODE> method on Motor.
          */

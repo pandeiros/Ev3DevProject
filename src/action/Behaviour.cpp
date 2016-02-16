@@ -7,11 +7,7 @@
 
 using namespace ev3;
 
-Behaviour::~Behaviour() {
-    //    for (auto & state : _states)
-    //        delete(state.getAction());
-}
-
+/* BEHAVIOUR */
 Behaviour::Behaviour(BehaviourType type, BehaviourStates states)
 : _type(type), _states(states)
 {
@@ -84,8 +80,6 @@ void Behaviour::setStopState(BehaviourState state)
 
 StringVector Behaviour::getPrototype() { }
 
-StringVector Behaviour::getParameters(StringVector proto) { }
-
 std::string Behaviour::getString()
 {
     return "";
@@ -132,12 +126,13 @@ void Behaviour::react(Event::EventType type)
         EventQueue::getInstance()->push(
                 std::make_shared<EventAction>(Event::ACTION_FINISHED, _currentState.getAction()->getType()));
         _currentState = _reactionStates[reaction];
-       
+
     }
     else
         Logger::getInstance()->log("Reaction not found. ", Logger::WARNING);
 }
 
+/* BEHAVIOUR DRIVE ON SQUARE */
 BehaviourDriveOnSquare::BehaviourDriveOnSquare(unsigned int side, bool turningRight)
 : Behaviour(DRIVE_ON_SQUARE), _squareSide(side), _isTurningRight(turningRight) { }
 
@@ -158,6 +153,7 @@ std::string BehaviourDriveOnSquare::getString()
             "), turning right(" + std::to_string(_isTurningRight) + ")";
 }
 
+/* BEHAVIOUR EXPLORE RANDOM */
 BehaviourExploreRandom::BehaviourExploreRandom()
 : Behaviour(EXPLORE_RANDOM) { }
 
@@ -176,65 +172,3 @@ std::string BehaviourExploreRandom::getString()
 {
     return "Explore random.";
 }
-
-BehaviourState::BehaviourState(SharedPtrAction action, unsigned int nextState, bool isStopState)
-: _action(action), _nextStateId(nextState), _isStopState(isStopState) { }
-
-BehaviourState::BehaviourState(SharedPtrAction action, unsigned int nextState, ReactionsTransitions reactions)
-: _action(action), _nextStateId(nextState), _reactions(reactions) { }
-
-void BehaviourState::setReactions(ReactionsTransitions reactions)
-{
-    _reactions = reactions;
-}
-
-int BehaviourState::getReaction(Event::EventType type)
-{
-    if (_reactions.find(type) != _reactions.end())
-        return _reactions[type];
-    else
-        return -1;
-}
-
-unsigned int BehaviourState::process()
-{
-    if (!_action)
-    {
-        Logger::getInstance()->log("Null Action pointer!", Logger::ERROR);
-    }
-    else if (_action->getType() == Action::REPEAT || !_isExecuted)
-    {
-        _action->execute();
-        _isExecuted = true;
-    }
-    else if (_action->isFinished())
-    {
-        EventQueue::getInstance()->push(
-                std::make_shared<EventAction>(Event::ACTION_FINISHED, _action->getType()));
-        return _nextStateId;
-    }
-
-    return -1;
-}
-
-SharedPtrAction BehaviourState::getAction()
-{
-    return _action;
-}
-
-void BehaviourState::setNextState(const unsigned int next)
-{
-    _nextStateId = next;
-}
-
-bool BehaviourState::isStopState()
-{
-    return _isStopState;
-}
-
-
-
-
-
-
-
