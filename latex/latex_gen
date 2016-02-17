@@ -9,4 +9,4 @@ pdflatex main
 pdflatex main
 pdflatex main
 
-mv main.pdf ../Praca.pdf
+mv main.pdf ../PDI Kaczyński.pdf

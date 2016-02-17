@@ -1,12 +1,13 @@
 #! /bin/bash
 
 IP_ADDRESSES=(
-    "192.168.1.109"
-    #"192.168.1.109"
+    "192.168.1.100"
+    #"10.42.0.93"
+    # "192.168.1.109"
     )
-USER=panda
+USER=robot
 REMOTE_DIR=sync
-PASSWORD=pandaev3dev
+PASSWORD=maker
 
 echo Copying files to 'sync' directory.
 cp ../dist/D_ARM/GNU-Linux-x86/ev3dev ev3dev_d

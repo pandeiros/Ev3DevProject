@@ -3,8 +3,6 @@
 
 \section{Testy poprawności}
 
-% TODO
-
 \subsection{Testowanie pojedynczych akcji}
 
 \begin{description}
@@ -12,9 +10,6 @@
     \item[Zatrzymywanie -]robot wprawiony w ruch zatrzymuje się niemal natychmiastowo. W zależności od sposobu zatrzymywania się, czas po którym prędkość jest równa zeru, a co za tym idzie, dystans hamowania, zmienia się. W\,przypadku trybu {\tt coast} jest on największy i równy od 1 do 5 cm w zależności od szybkości jazdy. Zaś w przypadku trybu {\tt hold}, koła zatrzymują się natychmiast i dystans maleje do maksymalnie 2 cm na śliskiej powierzchni
     \item[Ruch na zadaną odległość -]akcja wykonywana poprawnie z dokładnością do\,kilku nadmiarowych centymetrów. Nadwyżka odległości zależy od ustalonego trybu zatrzymywania oraz rodzaju nawierzchni, a wynika z opóźnienia odczytów z efektorów. Na podstawie zmierzonego promienia koła, zadanej odległości oraz ilości jednostek w jednym pełnym obrocie, można wyliczyć docelową pozycję motoru i zatrzymać go, gdy ta zostanie osiągnięta
     \item[Obrót -]jest wykonywany wokół osi równo oddalonej od obu kół. Podobnie jak w przypadku ruchu, sprawdzana jest zmiana położenia motoru, której docelowa wartość wyliczana jest na podstawie rozstawu kół i kąta. Gdy jeden efektor ma zadaną wartość dodatnią prędkości, drugi ma wartość przeciwną. Wykryto odchylenie o kilka stopni przy większych prędkościach. Zalecana jest zatem mała prędkość obrotu, w celu uzyskania większej precyzji.
-
-    % TODO
-    % \item[Skręt -]
 \end{description}
 
 \subsection{Testowanie obsługi zdarzeń}
@@ -113,25 +108,10 @@ Komunikaty niezarządzające przetwarzaniem danego stanu są ignorowane.
         \lstinputlisting{listings/test6-paused-3}
 \end{description}
 
-% TODO
-% \subsubsection{\underline{Stan PANIC}}
-%
-% \begin{description}
-%     \item[Początek stanu -]Dioda miga na czerwono
-%     \item[Brak odpowiedzi od nadzorcy -]Wysłanie komunikatów PANIC na adres rozgłoszeniowy
-%     \item[Odebranie komunikatu od innych agentów -]Bez zmian
-%     \item[Odebranie komunikatu od nadzorcy -]Przejście do stanu ACTIVE, nadanie nowego identyfikatora.
-% \end{description}
-
-
 \section{Testy funkcjonalne}
-
-% TODO
 
 \subsection{Testowanie zachowania złożonego i komunikacji}
 
 Na poniższym listingu przedstawiono jeden pełny przebieg zachowania wraz z komunikatami komunikacyjnymi i przejściami między stanami.
 
 \lstinputlisting{listings/test-explore}
-
-% \subsection{Testowanie komunikacji}

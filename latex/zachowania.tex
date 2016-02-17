@@ -17,8 +17,6 @@ Każde zachowanie składa się z kilku elementów:
 
 Stworzenie zachowania może odbyć się na dwa sposoby. Pierwszym z nich jest skorzystanie z zachowania już zdefiniowanego w bibliotece. W tym przypadku zbierane są ustalone wcześniej, odpowiednio ukonkretnione akcje razem z warunkami przejść. Drugim wariantem jest stworzenie własnego zachowania. Jeśli taki typ zostanie wykryty, do agenta należy dostarczyć dodatkowe dane opisujące użyte akcje, przejścia i zdarzenia.
 
-% TODO XML ?
-
 \subsection{Sterowanie wykonywanymi akcjami}
 
 Klasa {\tt Behaviour} przechowuje informację o bieżącym stanie. W każdej iteracji pętli głównej robota, następuje sprawdzenie, czy nie otrzymano instrukcji zakończenia z warsty wyższej lub czy nie wystąpiło zdarzenie krytyczne. Następnie przetwarzany jest bieżący stan. Jeżeli akcja została wykonana, sprawdzany jest jej warunek zakończenia. W przypadku pomyślnego zakończenia akcji, następuje przejście do\,domyślnego stanu następnego. Jeśli natomiast w trakcie wykonywania akcji zostanie przechwycone zdarzenie, jest ono porównywane z listą obsługiwanych zdarzeń danego stanu. Typowy scenariusz zakłada wybranie stanu pośredniego, który prawidłowo zareaguje na zaistniałe zdarzenie, a następnie przekaże kontrolę dalej, zapewniając normalny dalszy przebieg (rysunek \ref{fig:behaviour_transitions}). Jeśli zdarzenie nie jest obsługiwane, ewentualna zmiana stanu jest ignorowana (zdarzenia krytyczne obsługiwane są przez warstwę wyższą).
@@ -54,6 +52,3 @@ Na rysunku \ref{fig:explore} znajduje się przykładowy algorytm zwiedzania otoc
         \includegraphics[width=1\textwidth]{diagrams/explore.png}
     \caption{Szczegółowy diagram zwiedzania otoczenia.\label{fig:explore}}
 \end{figure}
-
-% TODO
-% \subsection{Ruch po podłożu o zadanym kolorze}
