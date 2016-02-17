@@ -108,25 +108,25 @@ namespace ev3
         
     protected:
         /**
-         * Default private constructor (preventing object construction).
+         * Default protected constructor (preventing object construction).
          */
         Devices();
         
         /**
-         * Default private copy constructor (preventing object construction by copying).
+         * Default protected copy constructor (preventing object construction by copying).
          * @param other Other Devices object.
          */
         Devices(const Devices& other);
         
         /**
-         * Private assignment operator (preventing object assignment).
+         * Protected assignment operator (preventing object assignment).
          * @param other Other Devices object.
          * @return Copy of passed object.
          */
         Devices& operator=(const Devices& other);
         
         /**
-         * Default private destructor (preventing object unwanted destruction).
+         * Default protected destructor (preventing object unwanted destruction).
          */
         ~Devices(); // Prevent unwanted destruction
         

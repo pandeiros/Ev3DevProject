@@ -10,26 +10,24 @@
 namespace ev3
 {
 
+    /**
+     * @class SignalHandler
+     * Simple class catching system signals.
+     * Stops Robot and Master if break signal is received.
+     */
     class SignalHandler
     {
     public:
+        /**
+         * Main signal catching method.
+         * @param signum Signal code to catch.
+         */
+        static void HandleSignal(int signum);
 
-        static void
-        HandleSignal(int signum)
-        {
-            Logger::getInstance()->log("Signal caught: " + std::to_string(signum), 
-                    ev3::Logger::WARNING);
-            if (SignalHandler::robot)
-                SignalHandler::robot->stop();
-            if (SignalHandler::master)
-                SignalHandler::master->stop();
-            
-            Devices::destroy();
-
-            exit(signum);
-        };
-
+        /// Pointer to Robot instance.
         static Robot * robot;
+        
+        /// Pointer to Master instance.
         static Master * master;
     };
 }

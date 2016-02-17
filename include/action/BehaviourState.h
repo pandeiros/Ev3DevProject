@@ -25,13 +25,13 @@ namespace ev3
          * Default constructor.
          */
         BehaviourState() = default;
-        
+
         /**
          * Default copy constructor.
-         * @param Other BehaviourState object.
+         * @param other Other BehaviourState object.
          */
-        BehaviourState(const BehaviourState &) = default;
-        
+        BehaviourState(const BehaviourState & other) = default;
+
         /**
          * Constructor with action, next state id and stop state flag.
          * @param action Action object to be executed within this state.
@@ -39,7 +39,7 @@ namespace ev3
          * @param isStopState Flag defining this state as a in-between, stopping state.
          */
         BehaviourState(SharedPtrAction action, unsigned int nextState, bool isStopState = false);
-        
+
         /**
          * Constructor with action, next state id and event-state map.
          * @param action Action object to be executed within this state,
@@ -53,31 +53,31 @@ namespace ev3
          * @return Id of the next state.
          */
         unsigned int process();
-        
+
         /**
          * State's Action getter.
          * @return Action shared_ptr object.
          */
         SharedPtrAction getAction();
-        
+
         /**
          * Next state id setter.
          * @param next Integer defining next state id.
          */
         void setNextState(const unsigned int next);
-        
+
         /**
          * Stop flag getter.
          * @return True if state is flagged as a stop state, false otherwise.
          */
         bool isStopState();
-        
+
         /**
          * Reactions setter.
          * @param reactions Map with Event-State pair.
          */
         void setReactions(ReactionsTransitions reactions);
-        
+
         /**
          * Reaction getter.
          * @param type EventType to which reaction occurs.
@@ -88,13 +88,13 @@ namespace ev3
     private:
         /// Encapsulated action.
         SharedPtrAction _action = nullptr;
-        
+
         /// True if state was executed, false otherwise.
         bool _isExecuted = false;
-        
+
         /// Stop flag.
         bool _isStopState = false;
-        
+
         /// Id of the next state.
         unsigned int _nextStateId;
 

@@ -19,12 +19,12 @@ void EventQueue::destroy()
     _instance = nullptr;
 }
 
-void EventQueue::push(SharedPtrEvent element)
+void EventQueue::push(SharedPtrEvent event)
 {
     std::lock_guard<std::mutex> guard(_mutex);
-    _queue.push(element);
+    _queue.push(event);
 
-    Logger::getInstance()->log("Generated event: " + element->getStringType(), Logger::VERBOSE);
+    Logger::getInstance()->log("Generated event: " + event->getStringType(), Logger::VERBOSE);
 }
 
 SharedPtrEvent EventQueue::pop()

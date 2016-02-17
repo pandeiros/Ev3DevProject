@@ -65,7 +65,7 @@ int main(int argc, char * argv[])
 
     logger->setLogOutput(ev3::Logger::STD_OUT);
 
-//    ev3::ColorUtils::printColorTest();
+    //ev3::ColorUtils::printColorTest();
 
     if (mode == ev3::MODE_MASTER)
     {
@@ -79,7 +79,7 @@ int main(int argc, char * argv[])
         ev3::Queue<ev3::Message> * receiveQueue = new ev3::Queue<ev3::Message>;
         std::thread communicationThread = comm.createThread(sendQueue, receiveQueue, true);
 
-        // MIND SWITCHED QUEUES!
+        // MIND THE SWITCHED QUEUES!
         master.run(receiveQueue, sendQueue);
 
         communicationThread.join();
@@ -99,9 +99,9 @@ int main(int argc, char * argv[])
         ev3::Queue<ev3::Message> * receiveQueue = new ev3::Queue<ev3::Message>;
         std::thread communicationThread = comm.createThread(sendQueue, receiveQueue);
 
-        // MIND SWITCHED QUEUES!
+        // MIND THE SWITCHED QUEUES!
         robot->run(receiveQueue, sendQueue);
-        
+
         logger->log("Robot exiting...", ev3::Logger::INFO);
 
         communicationThread.join();
