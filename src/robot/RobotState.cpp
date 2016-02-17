@@ -21,6 +21,7 @@ using namespace ev3;
 const float RobotState::MASTER_TIMEOUT = 10.f * 1000; // In milliseconds.
 const float RobotState::MASTER_PING_TIME = 3.f * 1000; // In milliseconds.
 
+/* ROBOT STATE */
 RobotState::RobotState(ChangeMap changes, LedControl * led)
 : _changes(changes), _led(led), _masterTimeout(HighResClock::now()) { }
 
@@ -98,6 +99,7 @@ RobotState* RobotState::changeState(States state)
     return newState;
 }
 
+/* ROBOT STATES CONSTRUCTORS  */
 RobotStateIdle::RobotStateIdle(LedControl * led)
 : RobotState({
     {Message::MASTER, ACTIVE}
@@ -141,6 +143,7 @@ RobotStatePanic::RobotStatePanic(LedControl* led)
     led->flashColor(LedControl::RED, 200, 0);
 }
 
+/* ROBOT STATES PROCESSING METHODS */
 RobotState* RobotStateIdle::process(Message msg)
 {
     if (DurationMilli(HighResClock::now() - _masterTimeout).count() >= MASTER_TIMEOUT)

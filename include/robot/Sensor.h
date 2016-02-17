@@ -26,63 +26,63 @@ namespace ev3
         };
         
         /**
-         * 
-         * @param sensor
-         * @param type
+         * Constructor with sensor object and type.
+         * @param sensor ev3dev sensor object.
+         * @param type Sensor type value.
          */
         Sensor(ev3dev::sensor sensor, SensorType type);
 
         /**
-         * 
-         * @return 
+         * Sensor getter.
+         * @return Stored ev3dev::sensor object.
          */
         ev3dev::sensor getSensor();
         
         /**
-         * 
-         * @param n
-         * @return 
+         * Value getter.
+         * @param n Id of the value desired.
+         * @return Integer with Sensor's value.
          */
         int getValue(unsigned int n);
         
         /**
-         * 
-         * @param n
-         * @return 
+         * Float value getter.
+         * @param n Id of the value desired.
+         * @return Float with Sensor's value.
          */
         float getValueF(unsigned int n);
         
         /**
-         * 
-         * @return 
+         * Number of decimal places getter.
+         * @return Integer with number of places that a true Sensor value has.
          */
         int getDecimals();
         
         /**
-         * 
-         * @return 
+         * Number of different values getter.
+         * @return Integer with number of different measurements available.
          */
         unsigned int getNumValues();
         
         /**
-         * 
-         * @return 
+         * Sensor type getter.
+         * @return SensorType value.
          */
         SensorType getType();
         
         /**
-         * 
-         * @param value
-         * @param type
-         * @return 
+         * Prepare vector of parameters for Message object.
+         * @param value Measured values.
+         * @param type Used Sensor type.
+         * @return Vector with Sensor values as strings.
          */
         static StringVector prepareMessage(SensorValue value, SensorType type);
 
     private:
-        ///
+        /// This Sensor type.
         SensorType _type;
         
-        ///
+        /// Stored motor.
         ev3dev::sensor _sensor;
 
     };

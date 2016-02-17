@@ -29,8 +29,6 @@ std::string RobotModelA::getString()
 
 SharedPtrBehaviour RobotModelA::generateBehaviour(Behaviour::BehaviourType type, StringVector parameters)
 {
-    // TODO czemu behaviour uzalezniony od robota?
-
     BehaviourStates states;
     BehaviourStates reactionStates;
     BehaviourState stopState;
@@ -190,11 +188,11 @@ SharedPtrAction RobotModelA::generateAction(SharedPtrAction action, Action::Acti
                 std::make_shared<CommandMotorReset>(motorLeft),
                 std::make_shared<CommandMotorReset>(motorRight),
                 std::make_shared<CommandMotorSetSpeedRegEnabled>(motorLeft, true),
-//                std::make_shared<CommandMotorSetSpeed>(motorLeft, 200 * ccw),
-//                std::make_shared<CommandMotorRunForever>(motorLeft),
+                //                std::make_shared<CommandMotorSetSpeed>(motorLeft, 200 * ccw),
+                //                std::make_shared<CommandMotorRunForever>(motorLeft),
                 std::make_shared<CommandMotorSetSpeedRegEnabled>(motorRight, true)
-//                std::make_shared<CommandMotorSetSpeed>(motorRight, 200 * -ccw),
-//                std::make_shared<CommandMotorRunForever>(motorRight)
+                //                std::make_shared<CommandMotorSetSpeed>(motorRight, 200 * -ccw),
+                //                std::make_shared<CommandMotorRunForever>(motorRight)
             });
             action->setEndCondition([&, position]()-> bool
             {

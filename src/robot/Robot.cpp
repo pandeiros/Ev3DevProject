@@ -34,8 +34,6 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 {
     _sendQueue = sendQueue;
     _receiveQueue = receiveQueue;
-    //    _currentBehaviour.reset();
-
     _state->getBehaviour().reset();
 
     bool devicesChecked = true;
@@ -48,22 +46,9 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
         return;
     }
     else
+    {
         Logger::getInstance()->log("Devices correct.", Logger::INFO);
-
-    // TEST ====================
-    //        _state->getBehaviour()->setMeasurements({Sensor::ULTRASONIC});
-
-    //    generateBehaviour(_currentBehaviour, Behaviour::DRIVE_ON_SQUARE,
-    //            StringVector({"400", "1"}));
-    //
-    //    while (true)
-    //    {
-    //        if (_currentBehaviour.get() != nullptr)
-    //            _currentBehaviour->process();
-    //        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    //    }
-    //    return;
-    // =========================
+    }
 
     _currentMessage = receiveQueue->pop();
     while (true)
@@ -85,10 +70,6 @@ void Robot::run(Queue<Message> * sendQueue, Queue<Message> * receiveQueue)
 
         ping();
 
-        //        processBehaviour();
-
-        //respond();
-
         if (!receiveQueue->empty() || _currentMessage.getType() != Message::EMPTY)
             _currentMessage = receiveQueue->pop();
 
@@ -106,8 +87,6 @@ void Robot::processState()
         _state->updateTimer();
 
     _state = _state->process(_currentMessage);
-
-    //std::cout << "ROBOT STATE " << _state->getBehaviour().get() << "\n";
 
     Message::MessageType pending = _state->getPendingMessage();
     bool allowed = _state->isPendingEnabled();
@@ -249,7 +228,6 @@ void Robot::processEvents()
 
 void Robot::send(Message message)
 {
-
     message.setMessageId(_commId++);
     Logger::getInstance()->log(AGENT_SEND + message.getString(), Logger::VERBOSE);
 
@@ -258,21 +236,16 @@ void Robot::send(Message message)
 
 std::string Robot::getString()
 {
-
     return "<Base class Robot>";
 }
 
 SharedPtrBehaviour Robot::generateBehaviour(Behaviour::BehaviourType type, StringVector parameters)
 {
-
     return std::shared_ptr<Behaviour>(nullptr);
 }
 
-void Robot::sendInfo() { }
-
 void Robot::stop()
 {
-
     Devices::getInstance()->stopAllDevices();
     _ledControl.endFlashing();
 

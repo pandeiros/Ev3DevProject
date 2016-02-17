@@ -45,7 +45,7 @@ StringVector Sensor::prepareMessage(SensorValue value, SensorType type)
         result.push_back(std::to_string(v.first));
         result.push_back(std::to_string(v.second));
     }
-    
+
     return result;
 }
 
